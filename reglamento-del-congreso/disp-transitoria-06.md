@@ -1,0 +1,2 @@
+# Disposición transitoria, art. 6
+MEDIOS ELECTRÓNICOS PARA REGULAR EL USO DE LA PALABRA. Las Mesas Directivas de cada Cámara en un término no mayor de treinta (30), días a partir de la vigencia de esta ley, ordenarán la instalación de los procedimientos electrónicos (semáforos y demás ayudas) para regular las intervenciones en el tiempo de los oradores. Vencido el término indicado por el Presidente y señalado por este Reglamento el uso de la palabra será suspendido en forma inmediata una vez aparezca la señal pertinente.
