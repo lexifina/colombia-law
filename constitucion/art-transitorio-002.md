@@ -1,0 +1,3 @@
+# Art. transitorio 2
+No podrán ser candidatos en dicha elección los delegatarios de la Asamblea Constituyente de pleno derecho ni los actuales Ministros del Despacho.
+Tampoco podrán serlo los funcionarios de la Rama Ejecutiva que no hubieren renunciado a su cargo antes del 14 de junio de 1991.

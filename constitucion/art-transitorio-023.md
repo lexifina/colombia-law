@@ -1,0 +1,4 @@
+# Art. transitorio 23
+Revístese al Presidente de la República de precisas facultades extraordinarias para que dentro de los dos meses siguientes a la promulgación de la Constitución dicte mediante decreto, el régimen procedimental de los juicios y actuaciones que deban surtirse ante la Corte Constitucional.
+En todo tiempo el Congreso podrá derogar o modificar las normas así establecidas.
+Mientras se expide el decreto previsto en el inciso primero, el funcionamiento de la Corte Constitucional y el trámite y despacho de los asuntos a su cargo, se regirán por las normas pertinentes del decreto 432 de 1969.

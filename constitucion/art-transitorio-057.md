@@ -1,0 +1,3 @@
+# Art. transitorio 57
+El Gobierno formará una comisión integrada por representantes del Gobierno, los sindicatos, los gremios económicos, los movimientos políticos y sociales, los campesinos y los trabajadores informales, para que en un plazo de ciento ochenta días a partir de la entrada en vigencia de esta Constitución, elabore una propuesta que desarrolle las normas sobre seguridad social.
+Esta propuesta servirá de base al Gobierno para la preparación de los proyectos de ley que sobre la materia deberá presentar a consideración del Congreso.

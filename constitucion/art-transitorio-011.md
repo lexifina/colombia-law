@@ -1,0 +1,3 @@
+# Art. transitorio 11
+Las facultades extraordinarias a que se refiere el Artículo Transitorio 5, cesarán el día en que se instale el Congreso elegido el 27 de octubre de 1991.
+En la misma fecha la comisión especial creada por el artículo transitorio 6 también cesará en sus funciones.
