@@ -1,0 +1,2 @@
+# Título IV, art. 51
+El administrador, dueño o empleado de prendería o establecimiento donde se adquieran objetos con pacto de retroventa, que negocie con persona que no se identifique debidamente ni declare la procedencia legítima de los bienes, u omita dejar testimonio escrito de estas circunstancias con la firma del contratante en libro foliado y registrado en Cámara de Comercio incurrirá en multa de trescientos a diez mil pesos.
