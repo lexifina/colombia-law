@@ -1,0 +1,2 @@
+# Art. transitorio 12
+TÉRMINO PARA RECIBIR INDAGATORIA. En los procesos de competencia de los Jueces Penales de Circuito Especializado se recibirá la indagatoria en el término señalado en el artículo 340 de este código. Cuando los hechos sucedan en lugar distinto a la sede del fiscal delegado, el fiscal del lugar al cual la unidad de Policía entregue las diligencias, deberá avocar la investigación e indagará a los imputados enviando las diligencias inmediatamente a la Dirección de Fiscalías correspondiente.
