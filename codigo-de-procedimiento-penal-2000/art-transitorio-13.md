@@ -1,0 +1,2 @@
+# Art. transitorio 13
+En los delitos de competencia de los jueces penales de circuito especializados, recibida la indagatoria, el fiscal definirá la situación jurídica dentro de los diez (10) días siguientes, si aquella hubiere sido recibida por un fiscal de sede distinta a la suya. Si es necesaria la práctica de alguna prueba y el término anterior resultare insuficiente, el término para definir la situación jurídica será de veinte (20) días.
