@@ -1,0 +1,2 @@
+# Art. transitorio 50
+Mientras se dictan las normas generales a las cuales debe sujetarse el Gobierno para regular la actividad financiera, bursátil, aseguradora y cualquier otra relacionada con el manejo, aprovechamiento e inversión de los recursos captados del público, el Presidente de la República ejercerá, como atribución constitucional propia, la intervención en estas actividades.

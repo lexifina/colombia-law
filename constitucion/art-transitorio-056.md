@@ -1,0 +1,2 @@
+# Art. transitorio 56
+Mientras se expide la ley a que se refiere el artículo 329, el Gobierno podrá dictar las normas fiscales necesarias y las demás relativas al funcionamiento de los territorios indígenas y su coordinación con las demás entidades territoriales.
