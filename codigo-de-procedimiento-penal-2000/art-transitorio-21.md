@@ -1,0 +1,2 @@
+# Art. transitorio 21
+Las normas incluidas en este capítulo tendrán una vigencia máxima hasta el 30 de junio del año 2007. En la mitad de tal período, el Congreso de la República hará una revisión de su funcionamiento y si lo considera necesario, le hará las modificaciones pertinentes. Las normas de competencia del Código de Procedimiento Penal que se opongan a lo dispuesto en este capítulo, quedan suspendidas durante la vigencia del mismo.
