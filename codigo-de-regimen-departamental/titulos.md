@@ -14,11 +14,9 @@
 ### II. Impuesto al Consumo de Licores.
 ### III. Impuesto al consumo de cigarrillos y tabaco.
 ### IV. Impuesto a la gasolina.
-### V. Impuesto sobre el consumo de cervezas.
 ### VI. lmpuesto de degüello de ganado mayor.
 ### VII. Impuesto sobre los premios de loterías.
 ### VIII. Impuesto sobre la venta de loterías.
-### IX. lmpuesto de registro y anotación.
 ### X. Impuesto de Previsión Social.
 ### XI. Impuesto Sobre Eventos Hípicos, Deportivos y Similares.
 ### XII. Estampillas.
