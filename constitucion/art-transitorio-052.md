@@ -1,0 +1,2 @@
+# Art. transitorio 52
+A partir de la entrada en vigencia de esta Constitución, la Comisión Nacional de Valores tendrá el carácter de Superintendencia. El Gobierno Nacional dispondrá lo necesario para la adecuación de dicha institución a su nueva naturaleza, sin perjuicio de lo que al respecto podrá disponer el Gobierno en desarrollo de lo establecido en el artículo transitorio 20.

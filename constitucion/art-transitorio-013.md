@@ -1,0 +1,3 @@
+# Art. transitorio 13
+Dentro de los tres años siguientes a la entrada en vigencia de esta Constitución, el Gobierno podrá dictar las disposiciones que fueren necesarias para facilitar la reinserción de grupos guerrilleros desmovilizados que se encuentren vinculados a un proceso de paz bajo su dirección; para mejorar las condiciones económicas y sociales de las zonas donde ellos estuvieran presentes; y para proveer a la organización territorial, organización y competencia municipal, servicios públicos y funcionamiento e integración de los cuerpos colegiados municipales en dichas zonas.
+El Gobierno Nacional entregará informes periódicos al Congreso de la República sobre el cumplimiento y desarrollo de este artículo.
