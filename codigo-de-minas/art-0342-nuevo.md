@@ -1,0 +1,2 @@
+# Art. nuevo (después del art. 342)
+ARTÍCULO. Las empresas mineras promoverán y efectuarán actividades de responsabilidad social, en un marco de desarrollo humano sostenible, que propendan por la promoción de comportamientos voluntarios, socialmente responsables, a partir del diseño, desarrollo y ejecución de políticas, planes, programas y proyectos que permitan el logro de objetivos sociales de mejoramiento en la calidad de vida de la población y la prevención y reparación de los daños ambientales en las regiones, subregiones y/o zonas de su influencia.
