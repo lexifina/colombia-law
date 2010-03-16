@@ -1,0 +1,2 @@
+# Art. transitorio 1
+Facúltese a los Gobernadores y Alcaldes municipales y distritales, hasta el 31 de diciembre de 2009, para decretar amnistías a los infractores de tránsito y para adoptar medidas para el saneamiento de cartera de infracciones que no haya sido objeto de notificación del mandamiento de pago por vía ejecutiva y no supere los cinco (5) años de ocurridos los hechos que dieron lugar a la actuación.
