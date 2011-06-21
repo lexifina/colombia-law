@@ -1,0 +1,2 @@
+# Art. transitorio 63
+Dentro de los seis meses siguientes a la entrada de vigencia del presente acto legislativo, el Congreso expedirá las normas mediante las cuales se defina la distribución de competencias entre las entidades del Estado que tendrán a su cargo la formulación de planes, la regulación, la dirección, la gestión y el control de los servicios de televisión. Mientras se dicten las leyes correspondientes, la Comisión Nacional de Televisión continuará ejerciendo las funciones que le han sido atribuidas por la legislación vigente.
