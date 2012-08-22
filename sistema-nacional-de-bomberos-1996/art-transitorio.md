@@ -1,2 +1,0 @@
-# Art. transitorio
-Mientras se organizan los Cuerpos de Bomberos, los departamentos que no cuenten con el número suficiente de Cuerpos de Bomberos a que se refiere el presente artículo, la Junta Directiva quedará conformada de la siguiente manera: El gobernador del departamento o su delegado quien la presidirá, el coordinador de la Oficina de Atención y Prevención de Desastres, la Defensa Civil y los comandantes existentes.
