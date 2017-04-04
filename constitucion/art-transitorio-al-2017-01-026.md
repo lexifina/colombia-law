@@ -1,0 +1,2 @@
+# Art. transitorio 26 (AL 1 de 2017)
+EXCLUSIÓN DE LA ACCIÓN DE REPETICIÓN Y LLAMAMIENTO EN GARANTÍA PARA MIEMBROS DE LA FUERZA PÚBLICA. En el caso de miembros de la Fuerza Pública que hayan cometido conductas punibles por causa, con ocasión o en relación directa o indirecta con el conflicto armado interno, no procederá la acción de repetición y el llamamiento en garantía establecidos en el artículo 90 de la Constitución Política. En todo caso, deberán contribuir al esclarecimiento de la verdad, a la reparación no monetaria de las víctimas y garantizar la no repetición.

@@ -1,0 +1,5 @@
+# Art. transitorio 25 (AL 1 de 2017)
+SANCIONES EN LA JURISDICCIÓN ESPECIAL PARA LA PAZ. En el caso de miembros de la Fuerza Pública, las sanciones propias del Sistema tendrán un contenido reparador, así como de restricción de libertades y derechos.
+La ley reglamentará las modalidades de ejecución de las sanciones propias, así como los mecanismos idóneos de monitoreo, vigilancia y control del cumplimiento de dichas sanciones.
+Las sanciones alternativas u ordinarias aplicables a los miembros de la Fuerza Pública que impliquen la privación efectiva de la libertad se cumplirán en todo caso en los establecimientos previstos en el régimen penitenciario y carcelario establecido para ellos, conforme al principio de tratamiento diferenciado.
+Para el caso de las sanciones ordinarias, se podrá obtener redenciones, subrogados penales o beneficios adicionales en la privación de libertad, siempre y cuando el sancionado se comprometa a contribuir con su resocialización a través del trabajo, capacitación o estudio durante el tiempo que permanezca privado de la libertad y a promover actividades orientadas a la no repetición del daño causado una vez puesto en libertad.
