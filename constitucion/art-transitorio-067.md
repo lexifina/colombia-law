@@ -1,2 +1,0 @@
-# Art. transitorio 67
-Una ley estatutaria regulará cuáles serán los delitos considerados conexos al delito político para efectos de la posibilidad de participar en política. No podrán ser considerados conexos al delito político los delitos que adquieran la connotación de crímenes de lesa humanidad y genocidio cometidos de manera sistemática, y en consecuencia no podrán participar en política ni ser elegidos quienes hayan sido condenados y seleccionados por estos delitos.
