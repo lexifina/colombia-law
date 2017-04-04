@@ -1,0 +1,2 @@
+# Art. transitorio 13 (AL 1 de 2017)
+SANCIONES. Las sanciones que imponga la JEP tendrán como finalidad esencial satisfacer los derechos de las víctimas y consolidar la paz. Deberán tener la mayor función restaurativa y reparadora del daño causado, siempre en relación con el grado de reconocimiento de verdad y responsabilidad. Las sanciones podrán ser propias, alternativas u ordinarias y en todos los casos se impondrán en los términos previstos en los numerales 60, 61, 62 y en el listado de sanciones del subpunto 5.1.2 del Acuerdo Final.
