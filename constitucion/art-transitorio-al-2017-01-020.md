@@ -1,0 +1,3 @@
+# Art. transitorio 20 (AL 1 de 2017)
+PARTICIPACIÓN EN POLÍTICA. La imposición de cualquier sanción en la JEP no inhabilitará para la participación política ni limitará el ejercicio de ningún derecho, activo o pasivo, de participación política.
+PARÁGRAFO. Respecto a aquellas personas que pertenezcan a organizaciones rebeldes que hayan firmado un acuerdo de paz con el Gobierno, a efectos de reincorporación, quedarán en efecto suspensivo las condenas derivadas de delitos competencia del Tribunal para la Paz impuestas por la justicia ordinaria o disciplinaria, hasta que estas condenas hayan sido tratadas por la Jurisdicción Especial para la Paz para lo de su competencia.
