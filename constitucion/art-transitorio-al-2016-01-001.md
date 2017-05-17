@@ -9,8 +9,8 @@ e) Los proyectos de ley serán aprobados con las mayorías previstas en la Const
 f) Los actos legislativos serán tramitados en una sola vuelta de cuatro debates. El tránsito del proyecto entre una y otra Cámara será de 8 días.
 g) Los proyectos de acto legislativo serán aprobados por mayoría absoluta;
 l0005_92+44
-h) Los proyectos de ley y de acto legislativo solo podrán tener modificaciones siempre que se ajusten al contenido del Acuerdo Final y que cuenten con el aval previo del Gobierno nacional;
+h)
 i) Todos los proyectos y de acto legislativo podrán tramitarse en sesiones extraordinarias;
-j) En la comisión y en las plenarias se decidirá sobre la totalidad de cada proyecto, con las modificaciones avaladas por el Gobierno nacional, en una sola votación;
+j)
 k) Los proyectos de ley y de acto legislativo tramitados mediante el Procedimiento Legislativo Especial para la Paz tendrán control automático y único de constitucionalidad, posterior a su entrada en vigencia. Las Leyes Estatuarias tendrán control previo, de conformidad con lo previsto en el artículo 153 de la Constitución. El control de constitucionalidad de los actos legislativos se hará solo por vicios de procedimiento en su formación. Los términos de esta revisión para leyes y actos legislativos se reducirán a la tercera parte de los del procedimiento ordinario y no podrán ser prorrogados.
 En lo no establecido en este procedimiento especial, se aplicará el reglamento del Congreso de la República.
