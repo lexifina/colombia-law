@@ -1,0 +1,11 @@
+# Art. transitorio 3 (AL 2 de 2021)
+INSCRIPCIÓN DE CANDIDATOS. Las Circunscripciones Transitorias Especiales de Paz contarán con reglas especiales para la inscripción y elección de candidatos. Las campañas contarán con financiación estatal especial y acceso a medios regionales. Se desarrollarán mecanismos especiales de acompañamiento para asegurar la transparencia del proceso electoral y la libertad del voto del electorado.
+Los candidatos solo pueden ser inscritos por organizaciones de víctimas, organizaciones campesinas u organizaciones sociales, incluyendo las de las mujeres, y grupos significativos de ciudadanos.
+Cuando la circunscripción coincida en todo o en parte con territorios étnicos, adicionalmente podrán inscribir candidatos:
+a) Los consejos comunitarios;
+b) Los resguardos y las autoridades indígenas en sus territorios, debidamente reconocidos, en coordinación con sus respectivas organizaciones nacionales;
+c) Las Kumpañy legalmente constituidas.
+PARÁGRAFO 1o. Los partidos y movimientos políticos que cuentan con representación en el Congreso de la República o con personería jurídica, incluido el partido o movimiento político que surja del tránsito de las Farc-EP, a la actividad política legal, no podrán inscribir listas ni candidatos para estas circunscripciones. Ningún grupo significativo de ciudadanos u organización social podrá inscribir listas de candidatos para las circunscripciones de Paz simultáneamente con otras circunscripciones.
+PARÁGRAFO 2o. Se entiende por organizaciones sociales, las asociaciones de todo orden sin ánimo de lucro que demuestren su existencia en el territorio de la circunscripción, mediante personería jurídica reconocida al menos cinco años antes de la elección, o mediante acreditación ante la autoridad electoral competente del ejercicio de sus actividades en el respectivo territorio durante el mismo periodo.
+PARÁGRAFO 3o. Los candidatos, además de los requisitos generales, deberán ser ciudadanos en ejercicio y cuyo domicilio corresponda a la circunscripción o desplazados de estos territorios en proceso de retorno.
+PARÁGRAFO 4o. La inscripción de candidatos por grupos significativos de ciudadanos, requerirá respaldo ciudadano equivalente al 10% del censo electoral de la respectiva Circunscripción Transitoria Especial de Paz. En ningún caso se requerirá más de 20.000 firmas.
