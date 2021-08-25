@@ -1,0 +1,3 @@
+# Art. transitorio 9 (AL 2 de 2021)
+ACCESO A MEDIOS DE COMUNICACIÓN. Cuando se utilicen medios de comunicación que hagan uso del espectro electromagnético, las campañas únicamente podrán utilizar los espacios gratuitos otorgados por el Estado. Para ello, la autoridad electoral reglamentará la asignación de espacios gratuitos en los medios de comunicación social regional que hagan uso del espectro electromagnético, sin perjuicio de que puedan ampliarse en caso de que se creen espacios en nuevos medios de comunicación.
+El Ministerio de Tecnologías de la Información y las Comunicaciones y la Autoridad Nacional de Televisión señalarán los espacios de que se puede disponer. Tal distribución se hará conforme a las normas electorales vigentes.

@@ -1,0 +1,2 @@
+# Art. transitorio 1 (AL 2 de 2021)
+CREACIÓN DE CIRCUNSCRIPCIONES TRANSITORIOS ESPECIALES DE PAZ. La Cámara de Representantes tendrá 16 representantes adicionales para los períodos constitucionales 2022-2026 y 2026-2030, estos serán elegidos en igual número de Circunscripciones Transitorias Especiales de Paz, uno por cada una de dichas Circunscripciones. La curul se asignará al candidato de la lista con mayor cantidad de votos. Las listas deberán elaborarse teniendo en cuenta el principio de equidad e igualdad de género.
