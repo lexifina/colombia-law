@@ -1,0 +1,5 @@
+# Art. transitorio 6 (AL 2 de 2021)
+FORMA DE ELECCIÓN. En cada una de las Circunscripciones Transitorias Especiales de Paz se elegirá un Representante a la Cámara. Las listas tendrán voto preferente y estarán integradas por dos candidatos que deberán acreditar su condición de víctimas del conflicto. La Lista tendrá un candidato de cada género.
+Para efectos del proceso de elección, la curul se adjudicará al Candidato más votado dentro de la lista que obtenga el mayor número de votos dentro de la respectiva circunscripción.
+La votación de las Circunscripciones Transitorias Especiales de Paz se hará en tarjeta separada de las que corresponden a las circunscripciones ordinarias para la Cámara de Representantes.
+Los candidatos y las listas de Circunscripciones Transitorias Especiales de Paz, no podrán realizar alianzas, coaliciones o acuerdos con candidatos o listas inscritas para, las circunscripciones ordinarias para la Cámara de Representantes. La violación de esta norma generará la pérdida de la curul en caso de resultar electos a la Circunscripción Transitoria Especial de Paz.
