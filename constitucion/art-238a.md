@@ -1,0 +1,2 @@
+# Art. 238A
+CRÉASE LA JURISDICCIÓN AGRARIA Y RURAL. La ley determinará su competencia y funcionamiento, así como el procedimiento especial agrario y rural, con base en los principios y criterios del derecho agrario señalados en la ley, y con la garantía del acceso efectivo a la justicia y la protección a los campesinos y a los Grupos étnicos: Comunidades negras o afrocolombianas, palenqueras, raizales, pueblos y comunidades indígenas, comunidad Rom y las víctimas del conflicto armado.
