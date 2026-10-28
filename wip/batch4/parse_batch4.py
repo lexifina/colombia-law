@@ -70,7 +70,7 @@ DEFERRED = [
      "Ciudadana (arts. 47 to 75, the right of assembly) INEXEQUIBLE, deferring the effect 'hasta antes del 20 de junio de "
      "2019' so that Congress could pass a statutory law; the articles leave the text on 20 June 2019."),
 ]
-DEFERRED_ART = re.compile(r"\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
+DEFERRED_ART = re.compile(r"(?:\s*<[^<>]*>)*?\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
 SYNTH: list[str] = []
 _units_b3 = B3.doc_units
 
@@ -170,6 +170,12 @@ def main(argv: list[str]) -> None:
     only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else list(BUILDERS)
     acts = [BUILDERS[s]() for s in BUILDERS if s in only]
     fix_deferred()
+    arts = sorted({x.split(" ")[1] for x in SYNTH if x.startswith("ley_1801_2016 ")}, key=lambda a: (len(a), a))
+    if arts:
+        DECISIONS.append("Código Nacional de Seguridad y Convivencia Ciudadana: arts. " + ", ".join(arts) + " were never "
+                         "amended; the page still prints them under '<Artículo INEXEQUIBLE. Efectos diferidos ...>'. That "
+                         "printed text is their text from the code's first day until the deferral ended (Sentencia C-223 "
+                         "de 2017); from 20 June 2019 they are absent.")
     problems = B3.anachronisms(acts)
     for p in problems:
         E.note("anachronism " + p)
