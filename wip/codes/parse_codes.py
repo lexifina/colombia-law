@@ -18,6 +18,7 @@ Usage:  python -X utf8 parse_codes.py            (writes ../corpus.d/50-codes.js
 """
 from __future__ import annotations
 
+import collections
 import difflib
 import hashlib
 import html
@@ -809,111 +810,243 @@ def article_history(u: dict, jv_extra=None) -> dict:
     return {"states": states, "notes": notes_}
 
 
-# ---------------------------------------------------------------- the Constitution
+# ---------------------------------------------------------------- in-force days of the amending acts
 
-CONST = "constitucion_politica_1991"
+CC = "codigo_civil"
+DP = "ley_1581_2012"
+DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}\s+de\s+[a-z]+\s+(?:de\s+)?\d{4})")
+VIG_RE = re.compile(r"\b(rige|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
+                    r"comenzar[áa] a regir)\b", re.I)
+NUMS = {"un": 1, "uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "seis": 6, "doce": 12, "dieciocho": 18, "veinticuatro": 24}
 
+
+def add_months(day: str, n: int) -> str:
+    import calendar
+    y, m, d = map(int, day.split("-"))
+    m += n
+    y, m = y + (m - 1) // 12, (m - 1) % 12 + 1
+    return f"{y:04d}-{m:02d}-{min(d, calendar.monthrange(y, m)[1]):02d}"
+
+
+def add_days(day: str, n: int) -> str:
+    import datetime
+    return (datetime.date.fromisoformat(day) + datetime.timedelta(days=n)).isoformat()
+
+
+def page_paras(page: str) -> list[str]:
+    """Plain paragraphs of a cached basedoc act: its base page and its last continuation page."""
+    base = read(BASE + page + ".html") or ""
+    nums = sorted(set(re.findall(r'value="_pr(\d{3})', base)) | set(re.findall(re.escape(page) + r"_pr(\d{3})\.html", base)))
+    out = []
+    for pg in [page] + ([f"{page}_pr{nums[-1]}"] if nums else []):
+        h = read(BASE + pg + ".html") or ""
+        i, j = h.find("<!--Inicio documento-->"), h.find("<!--Fin documento-->")
+        out += [tidy(plain(strip_markers(p))) for p in
+                re.findall(r"<p\b[^>]*>(.*?)</p>", h[max(i, 0):j if j > 0 else len(h)], re.S | re.I)]
+    return [p for p in out if p]
+
+
+def page_header(page: str, year: str) -> tuple[str | None, str | None]:
+    """(enacted, published) from an act page's heading: '(julio 8)' and 'Diario Oficial No. 53.176 de 9 de julio de 2025'."""
+    enacted = pub = None
+    for p in page_paras(page)[:14]:
+        m = re.fullmatch(r"\(([a-z]+)\s+(\d{1,2})(?:o\.|º)?\)", p.lower())
+        if m and m.group(1) in MONTHS and not enacted:
+            enacted = f"{int(year):04d}-{MONTHS[m.group(1)]:02d}-{int(m.group(2)):02d}"
+        m = DO_RE.search(p)
+        if m and not pub:
+            pub = date_es(m.group(1))
+    return enacted, pub
+
+
+def page_clause(page: str) -> str | None:
+    """The act's own vigencia clause: the last article that says when the act 'rige'."""
+    hits = [p for p in page_paras(page) if VIG_RE.search(p)
+            and re.search(r"promulgaci|publicaci|sanci[óo]n|expedici|meses|enero", p)
+            and len(p) < 900 and re.match(r"(ART[IÍ]CULO|Esta|La presente|Este|\d\. Los)", p)]
+    return hits[-1] if hits else None
+
+
+# Clauses read by hand from the cached act pages (or quoted on the Código Civil page), where the act's rule does not
+# fit the simple patterns of rule_from_clause. law key -> (day or rule, the clause as the source gives it).
+HAND_RULES = {
+    "ley-57-1887": ("pub+90d", "Ley 57 de 1887, art. 1 (quoted on the Código Civil page): 'Regirán en la República, noventa "
+                               "días despues de la publicación de esta ley, con las condiciones y reformas de que ella trata, "
+                               "los códigos siguientes: El Civil de la Nación, sancionado el 26 de mayo de 1873 ...'"),
+    "ley-1564-2012": ("pub", "Ley 1564 de 2012, art. 627 num. 1: 'Los artículos 24, 30 numeral 8 y parágrafo, 31 numeral 2, "
+                             "33 numeral 2, 206, 467, 610 a 627 entrarán a regir a partir de la promulgación de esta ley' (art. "
+                             "626, the derogations, is among them; the derogations of its literal c) take effect on the day "
+                             "the provision's own note gives, 1 January 2014, under art. 627 num. 6)"),
+    "ley-1934-2018": ("2019-01-01", "Ley 1934 de 2018, art. 22: 'Esta ley entrará a regir a partir del 1 de enero del año "
+                                    "siguiente de su expedición ...'"),
+    "dec-2150-1995": ("pub", "Decreto 2150 de 1995, art. 152: 'Las normas contenidas en el presente decreto entrarán a regir a "
+                             "partir de su publicación, con excepción de las contenidas en el Capítulo II del Título I y en el "
+                             "Capítulo XV del Título II, las cuales entrarán a regir 3 meses después ...'"),
+}
+
+
+def rule_from_clause(clause: str) -> str | None:
+    t = clause.lower()
+    m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?meses\s+(?:después|contados|siguientes)", t)
+    if m:
+        return f"pub+{NUMS[m.group(1)]}m"
+    if re.search(r"promulgaci|publicaci", t):
+        return "pub"
+    if re.search(r"sanci[óo]n|expedici", t):
+        return "enacted"
+    return None
+
+
+def apply_rule(rule: str, pub: str | None, enacted: str | None) -> str | None:
+    if re.fullmatch(r"\d{4}-\d\d-\d\d", rule):
+        return rule
+    if rule == "pub":
+        return pub
+    if rule == "enacted":
+        return enacted or pub
+    m = re.fullmatch(r"pub\+(\d+)([md])", rule)
+    if m and pub:
+        return add_months(pub, int(m.group(1))) if m.group(2) == "m" else add_days(pub, int(m.group(1)))
+    return None
+
+
+def scan_law_dates(units: list[dict]) -> None:
+    """Diario Oficial days and titles of the amending acts, from every note that names them."""
+    days: dict[str, collections.Counter] = collections.defaultdict(collections.Counter)
+    for u in units:
+        for it in u["items"]:
+            if it[0] != "box" or it[1] not in ("Notas de Vigencia", "Resumen de Notas de Vigencia"):
+                continue
+            for ph in box_paras(it[2]):
+                t = norm_refs(plain(ph))
+                ms = list(AL_RE.finditer(t))
+                for i, m in enumerate(ms):
+                    key = al_key(*m.groups())
+                    seg = t[m.end():ms[i + 1].start() if i + 1 < len(ms) else len(t)]
+                    dm = DO_RE.search(seg)
+                    d = date_es(dm.group(1)) if dm else None
+                    if d and 0 <= int(d[:4]) - int(key.split("-")[2]) <= 2:
+                        days[key][d] += 1
+                    if it[1].startswith("Resumen") and key not in TITLES:
+                        tm = re.match(r"\s*(?:,\s*)?(?:-\s*|')([^']{8,}?)(?:'|,\s*publicad|;|$)", seg)
+                        if tm:
+                            TITLES[key] = norm(tm.group(1)).strip(" .,'-")
+    for key, c in days.items():
+        best = sorted(c.items(), key=lambda kv: (-kv[1], kv[0]))
+        PUB[key] = best[0][0]
+        if len(best) > 1:
+            note(f"law {key}: Diario Oficial days in the notes {dict(c)}; {PUB[key]} taken")
+
+
+def compute_in_force(key: str) -> None:
+    law = LAWS[key]
+    kind, n, y = key.split("-")
+    enacted = pub = None
+    if key in LAW_PAGE:
+        enacted, pub = page_header(LAW_PAGE[key], y)
+    pub = PUB.get(key) or pub
+    law["enacted"], law["published"] = enacted, pub
+    rule = why = None
+    if key in HAND_RULES:
+        rule, why = HAND_RULES[key]
+    elif key in LAW_PAGE and page_clause(LAW_PAGE[key]):
+        cl = page_clause(LAW_PAGE[key])
+        rule, why = rule_from_clause(cl), f"{law['label']}: '{cl[:300]}'"
+    if rule is None:
+        if pub and int(y) < 1913:
+            rule, why = "pub", ("rule before 1913 (Código Civil arts. 11 and 12: a law binds after its promulgation, "
+                                "which in the capital is the day of its insertion in the Diario Oficial)")
+        elif pub:
+            rule, why = "pub+2m", "default rule (Ley 4 de 1913, art. 52: two months after promulgation)"
+    day = apply_rule(rule, pub, enacted) if rule else None
+    if day:
+        IN_FORCE[key], IN_FORCE_WHY[key] = day, why
+    else:
+        note(f"law {key}: no in-force day (published {pub}, rule {rule})")
+
+
+def unit_day(key: str, text: str) -> None:
+    """A provision's own note may give the day its change took effect ('La derogatoria rige a partir del 1o. de enero
+    de 2014'); that day applies to this provision only."""
+    m = re.search(r"(?:rige|entra a regir|empieza a regir|comienza a regir) a partir del?\s+"
+                  r"(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+de\s+\d{4})", text)
+    if m and date_es(m.group(1)):
+        d = date_es(m.group(1))
+        if d != law_day(key):
+            UNIT_DAYS[key] = d
+
+
+# ---------------------------------------------------------------- the codes
 
 def unit_key(name: str) -> tuple[str, str] | None:
-    """Anchor name -> (unit key, label)."""
-    m = re.fullmatch(r"(\d+)([A-Z]?)", name)
+    m = re.fullmatch(r"(\d+)([A-Z]?)(?:-(\d+))?", name)
     if m:
-        return f"art-{int(m.group(1)):03d}{m.group(2).lower()}", f"Art. {int(m.group(1))}{m.group(2)}"
-    m = re.fullmatch(r"TRANSITORIO (\d+)", name)
-    if m:
-        return f"art-transitorio-{int(m.group(1)):03d}", f"Art. transitorio {int(m.group(1))}"
-    if name == "TRANSITORIO FINAL":
-        return "art-transitorio-059-final", "Art. transitorio (final)"
-    m = re.fullmatch(r"TRANSITORIO ACL0(\d)0(\d\d)-(\d+)", name)
-    if m:
-        n, yy, a = m.groups()
-        return (f"art-transitorio-al-20{yy}-{int(n):02d}-{int(a):03d}",
-                f"Art. transitorio {int(a)} (AL {int(n)} de 20{yy})")
+        k = f"art-{int(m.group(1)):04d}{m.group(2).lower()}" + (f"-{int(m.group(3)):02d}" if m.group(3) else "")
+        return k, f"Art. {int(m.group(1))}{m.group(2)}" + (f"-{m.group(3)}" if m.group(3) else "")
     return None
 
 
 def heading_level(label: str) -> int | None:
     l = label.upper()
-    if l.startswith(("TÍTULO", "TITULO", "DISPOSICIONES")):
+    if l.startswith("LIBRO"):
         return 1
-    if l.startswith(("CAPÍTULO", "CAPITULO", "<CIRCUNSCRIPCIONES")):
+    if l.startswith(("TÍTULO", "TITULO")):
         return 2
+    if l.startswith(("CAPÍTULO", "CAPITULO")):
+        return 3
+    if l.startswith(("SECCIÓN", "SECCION", "PARTE")):
+        return 4
     return None
 
 
-CONST_FIRST = "constitucion-1991"
+def split_libro(u: dict) -> tuple[dict, list[str]]:
+    """The publisher puts a 'LIBRO ...' heading (and its name) at the end of the article before it."""
+    for k, it in enumerate(u["items"]):
+        if it[0] == "p" and re.match(r"\s*LIBRO\b", plain(it[1])):
+            rest = [tidy(to_text(x[1])) for x in u["items"][k:] if x[0] == "p"]
+            return dict(u, items=u["items"][:k]), [r for r in rest if r]
+    return u, []
 
 
-def build_constitution() -> dict:
-    units = doc_units(CONST)
-    load_al_table(units)
-    LAWS[CONST_FIRST] = {"label": "Constitución Política de 1991",
-                         "title": "Constitución Política de Colombia, promulgada en la Gaceta Constitucional No. 114 de 4 de julio de 1991",
-                         "kind": "law", "enacted": "1991-07-04", "published": "1991-07-04",
-                         "url": BASE + CONST + ".html", "temporary_until": None, "restores": None, "note": None}
-    LAWS[GACETA125] = {"label": "Aclaración, Gaceta Constitucional No. 125",
-                       "title": "Aclaración de la Secretaría General de la Asamblea Nacional Constituyente, publicada en la Gaceta Constitucional No. 125",
-                       "kind": "decree", "enacted": None, "published": None, "url": None,
-                       "temporary_until": None, "restores": None,
-                       "note": "Corrections to the published text, issued by the Secretariat of the National Constituent "
-                               "Assembly in 1991; the source gives the earlier and corrected wording."}
-    start = "1991-07-04"
-    # The Aclaración's day, from the source's own note.
-    for u in units:
-        for it in u["items"]:
-            if it[0] == "box" and it[1] == "Notas de Vigencia" and "Gaceta" in it[2] and "Aclaraci" in it[2]:
-                t = plain(it[2])
-                m = re.search(r"Gaceta Constitucional No\. 125,? (?:de|del)\s+(\d+ de \w+ de \d{4})", t)
-                if m:
-                    LAWS[GACETA125]["published"] = date_es(m.group(1))
-                    m2 = re.search(r"Aclaraci[óo]n de la Secretar[íi]a General de la Asamblea Nacional Constituyente del? (\d+ de \w+ de \d{4})", t)
-                    if m2:
-                        LAWS[GACETA125]["enacted"] = date_es(m2.group(1))
-                    break
-    AL_DATES[GACETA125] = (LAWS[GACETA125]["published"] or LAWS[GACETA125]["enacted"], LAWS[GACETA125]["published"])
-
-    # Preamble.
-    head = units[0]
-    pre_lines, on = [], False
-    for it in head["items"]:
-        if it[0] != "p":
-            continue
-        t = tidy(to_text(it[1]))
-        if t.upper().startswith("PRE") and "MBULO" in t.upper():
-            on = True
-            continue
-        if on and t:
-            pre_lines.append(t)
+def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: str | None = None) -> dict:
+    """Rebuild every provision of one basedoc act and assemble its dated versions."""
+    units = doc_units(name)
     timelines: dict[str, list] = {}
     labels: dict[str, str] = {}
     notes_all: dict[str, list] = {}
     order = []
-    timelines["preambulo"] = [("", pre_lines, "")]
-    labels["preambulo"] = "Preámbulo"
-    order.append(("unit", "preambulo"))
-
-    headings = []  # (key, level, line)
     for u in units[1:]:
+        if stop_anchor and u["name"].upper().startswith(stop_anchor):
+            break
+        u, libro = split_libro(u)
         lvl = heading_level(u["label"])
-        if u["name"].startswith("Nivel") or lvl:
-            title = " ".join(t for t in (tidy(to_text(p)) for k, p in [(it[0], it[1]) for it in u["items"] if it[0] == "p"]) if t)
+        if u["name"].startswith("Nivel") or lvl or re.match(r"(T[ÍI]TULO|CAP[ÍI]TULO)\b", u["name"]):
+            title = " ".join(t for t in (tidy(to_text(it[1])) for it in u["items"] if it[0] == "p") if t and t != ".")
             line = tidy(f"{u['label']} {title}".replace("<", "").replace(">", ""))
-            headings.append(line)
-            order.append(("head", (lvl or 2, line)))
+            order.append(("head", (lvl or 3, line)))
             continue
         uk = unit_key(u["name"])
         if not uk:
-            note(f"skipped anchor {u['name']!r} {u['label']!r}")
+            note(f"{name}: skipped anchor {u['name']!r} {u['label']!r}")
             continue
+        if tail_stop:
+            for k, it in enumerate(u["items"]):
+                if it[0] == "p" and re.match(tail_stop, plain(it[1])):
+                    u = dict(u, items=u["items"][:k])
+                    break
         key, label = uk
-        h = article_history(u)
         if key in timelines:
-            note(f"duplicate unit {key}")
+            note(f"{name}: duplicate unit {key}")
             continue
+        UNIT_DAYS.clear()
+        h = article_history(u)
+        UNIT_DAYS.clear()
         timelines[key] = h["states"]
         notes_all[key] = h["notes"]
         labels[key] = label
         order.append(("unit", key))
+        if libro:
+            order.append(("head", (1, tidy(" ".join(libro)))))
     return assemble(timelines, labels, notes_all, order, start)
 
 
