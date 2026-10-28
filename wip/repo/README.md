@@ -10,7 +10,12 @@ It follows the shared design of [lexifina/global-law](https://github.com/lexifin
 | --- | --- | --- |
 | `constitucion/` | Constitución Política de Colombia (1991) | From promulgation (4 July 1991) to today: every Acto Legislativo that amended it, the 1991 Aclaración of Gaceta Constitucional No. 125, and the Constitutional Court rulings that struck amendments or parts of them |
 
-Other acts (Código Civil, Ley 1581 de 2012) are being added in separate parts of the same build. The per-act `README.md` in each folder lists every provision, how often it changed and when.
+| `codigo-penal/` | Código Penal (Ley 599 de 2000) | From its entry into force (24 July 2001, one year after promulgation, art. 476) to today |
+| `codigo-general-del-proceso/` | Código General del Proceso (Ley 1564 de 2012) | From promulgation (12 July 2012; art. 627 staggers the start of most articles, see the first commit) to today |
+
+The Código Civil and Ley 1581 de 2012 come from a separate part of the same build. The Código Sustantivo del Trabajo is being checked and is not on `main` yet.
+
+**The Código Penal's penalties after 2005.** Ley 890 de 2004, art. 14, raised every penalty of the Parte Especial by a third in the minimum and a half in the maximum, from 1 January 2005, without rewriting the articles. The source prints each article with the raised figures ("con las penas aumentadas") and keeps the earlier wording; this history follows it, so those changes are commits of Ley 890 de 2004 on 1 January 2005. The figures are the publisher's computation of art. 14, as its own warning says. The per-act `README.md` in each folder lists every provision, how often it changed and when.
 
 ## A lawyer's questions as git commands
 

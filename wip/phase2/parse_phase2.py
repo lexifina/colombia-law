@@ -255,8 +255,9 @@ def full_versions(versions: list[dict]) -> list[dict]:
     return out
 
 
-PARTS = [("60-phase2.json", ["codigo-penal", "codigo-general-del-proceso"], ("Código Penal", "Código General del Proceso")),
-         ("61-cst.json", ["codigo-sustantivo-del-trabajo"], ("Código Sustantivo del Trabajo",))]
+# The Código Sustantivo del Trabajo belongs to another agent's part (corpus.d/70-cst.json) since 2026-10-28 19:20Z;
+# build_cst() is kept for reference only and is not run.
+PARTS = [("60-phase2.json", ["codigo-penal", "codigo-general-del-proceso"], ("Código Penal", "Código General del Proceso"))]
 PREFIX = {"codigo-penal": ("ley_0599_2000", "CP"), "codigo-general-del-proceso": ("ley_1564_2012", "CGP"),
           "codigo-sustantivo-del-trabajo": ("codigo_sustantivo_trabajo", "CST")}
 
@@ -313,7 +314,7 @@ def write_part(acts: list[dict], out: str, names: tuple) -> None:
 
 def main(argv: list[str]) -> None:
     """Writes corpus.d/60-phase2.json (Código Penal, CGP) and corpus.d/61-cst.json (CST); --out-dir DIR elsewhere."""
-    acts = {s: b() for s, b in BUILDERS.items()}
+    acts = {s: BUILDERS[s]() for _, slugs, _ in PARTS for s in slugs}
     d = argv[argv.index("--out-dir") + 1] if "--out-dir" in argv else os.path.dirname(OUT)
     for fname, slugs, names in PARTS:
         write_part([acts[s] for s in slugs], os.path.join(d, fname), names)
