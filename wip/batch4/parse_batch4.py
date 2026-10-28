@@ -115,6 +115,20 @@ def replaced_words(h: str) -> str:
     return h
 
 
+# Ruling notes the engine would misread: the note dates the ruling that struck these words by a ruling on an older act's
+# same words. (page, text in the Jurisprudencia Vigencia note, read as, why)
+JV_FIXES = [
+    ("ley_1952_2019", "- La Corte Constitucional declar&oacute; estarse a lo resuelto en la Sentencia C-181-02, que "
+                      "declar&oacute; INEXEQUIBLE la expresi&oacute;n &#8220;grave&#8221; que figuraba en el "
+                      "art&iacute;culo 25 de la Ley 200 de 1995 y, en consecuencia, declara INEXEQUIBLE la "
+                      "expresi&oacute;n &#8220;grave&#8221;, mediante",
+     "- Aparte tachado (la expresi&oacute;n &#8220;grave&#8221;) declarado INEXEQUIBLE por la Corte Constitucional mediante",
+     "Código General Disciplinario, art. 52: the word 'grave' (num. 1 lit. b) was struck by Sentencia C-560 de 2019 (20 "
+     "November 2019), which applied Sentencia C-181 de 2002 on the same words of Ley 200 de 1995; the 2002 ruling and "
+     "C-1076 de 2002 (on Ley 734 de 2002) are about earlier acts and are not credited"),
+    ("ley_1952_2019", "- El aparte tachado, que en similar sentido corresponde a parte del",
+     "(Ley 200 de 1995:) El aparte tachado, que en similar sentido corresponde a parte del", None),
+]
 DEFERRED_ART = re.compile(r"(?:\s*<[^<>]*>)*?\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
 SYNTH: list[str] = []
 _units_b3 = B3.doc_units
@@ -126,7 +140,7 @@ def doc_units(name: str) -> list[dict]:
     hits = {old: 0 for old, _ in fixes}
     defer = [(old, new) for page, old, new, *_ in DEFERRED if page == name]
     dhits = {old: 0 for old, _ in defer}
-    nhits = {o: 0 for page, o, _, _ in NOTE_FIXES if page == name}
+    nhits = {o: 0 for page, o, _, _ in NOTE_FIXES + JV_FIXES if page == name}
     for u in units:
         items = []
         for it in u["items"]:
@@ -139,6 +153,13 @@ def doc_units(name: str) -> list[dict]:
             if it[0] == "box" and it[1] == "Notas de Vigencia":
                 h = it[2]
                 for page, o, n, _ in NOTE_FIXES:
+                    if page == name:
+                        nhits[o] = nhits.get(o, 0) + h.count(o)
+                        h = h.replace(o, n)
+                it = (it[0], it[1], h) + tuple(it[3:])
+            if it[0] == "box" and it[1] == "Jurisprudencia Vigencia":
+                h = it[2]
+                for page, o, n, _ in JV_FIXES:
                     if page == name:
                         nhits[o] = nhits.get(o, 0) + h.count(o)
                         h = h.replace(o, n)
@@ -184,6 +205,13 @@ DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + why
 DECISIONS.extend("Ley 100 de 1993: " + why for page, _, _, why in HEADING_FIXES + NOTE_FIXES if page == "ley_0100_1993")
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + d[-1] + " The commit is dated from the end of the "
                  "deferral; the law's enacted day is the decision's." for d in DEFERRED if d[0] == "ley_1801_2016")
+
+
+E.HAND_RULES["dec-207-2022"] = ("pub", "Decreto 207 de 2022 (corrects errors in Ley 2197 de 2022), art. 29: 'El presente "
+                                       "decreto se entiende incorporado a la Ley 2197 de 2022 y rige a partir de la fecha "
+                                       "de publicación.' (Diario Oficial No. 51.942 of 8 February 2022; the basedoc does "
+                                       "not hold it: read from the Secretaría Jurídica Distrital de Bogotá's Régimen Legal, "
+                                       "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=120878, in the cache)")
 
 
 def start_1801(units, enacted, pub):
@@ -235,6 +263,16 @@ def unit_day(key: str, text: str) -> None:
 
 
 E.unit_day = unit_day
+
+
+E.HAND_RULES["dec-1656-2021"] = ("2022-03-29", "Decreto 1656 de 2021 corrected errors in Ley 2094 de 2021 (Diario Oficial "
+                                              "No. 51.880 of 6 December 2021); the basedoc does not hold it. Its "
+                                              "corrections here (arts. 225D and 238A of the Código General Disciplinario) "
+                                              "are to articles Ley 2094 de 2021 added, which took effect on 29 March 2022 "
+                                              "(its art. 73), so they are shown from that day (no text before the act that "
+                                              "inserted it)")
+DECISIONS.append("Código General Disciplinario: " + E.HAND_RULES["dec-1656-2021"][1] + ".")
+DECISIONS.extend("Código General Disciplinario: " + why for page, _, _, why in JV_FIXES if page == "ley_1952_2019" and why)
 
 
 def start_cgd(units, enacted, pub):
