@@ -433,7 +433,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 dm = re.search(r"DECLARAD[OA]S?\s+(CONDICIONALMENTE\s+)?(IN)?EXEQUIBLES?", up)
                 if not dm:
                     continue
-                if dm.group(2) or re.search(r"DECLARAD[OA]S?\s+INEXEQUIBLES?(?![\s,]+(EN|POR) LA (SENTENCIA )?C-)", up):
+                if dm.group(2) or re.search(r"(?:DECLARAD|DELCRAD)[OA]S?\s+INEXEQUIBLES?(?![\s,]+(EN|POR) LA (SENTENCIA )?C-)", up):
                     dec = "inexequible"
                 elif dm.group(1) or "EN EL ENTENDIDO" in up or "BAJO EL ENTENDIDO" in up:
                     dec = "conditional"
@@ -706,6 +706,8 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 else:
                     evs.append((law_day(law), law))
                 known.setdefault(law, lines)
+                if re.match(r"Texto adicionado", blk["head"], re.I) and not re.search(r"modificad", blk["head"], re.I):
+                    added.add(law)
                 if (blk["struck"] or strike_slot) and law not in sstruck:
                     r = ruling_for(jv, law) or (part_ruling and {"id": None, "key": part_ruling})
                     if r:
@@ -775,6 +777,8 @@ def article_history(u: dict, jv_extra=None) -> dict:
     # Before `start`: the article-level history.
     if art_list:
         last_art = compose(start)
+        if os.environ.get("CO_DEBUG") == u["name"]:
+            print("START", start, "LAST_ART", last_art if last_art is UNKNOWN else len(last_art or []), art_list, [ (h[0][1] is UNKNOWN) for h in shist])
         evs = [(d, l) for d, l in art_list]
         ch = chain(evs, whole, orig_full if orig_full is not None else UNKNOWN, last_art, struck_als,
                    {l for l in art_events if any(e["law"] == l and e["verb"] == "adicionad" and e["article"] for e in nv)}
