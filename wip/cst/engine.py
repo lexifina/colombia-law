@@ -624,11 +624,11 @@ def article_history(u: dict, jv_extra=None) -> dict:
             art_events.add(e["law"])
             if e["struck"]:
                 struck_als[e["law"]] = None
-    if cur and not any(c["post"] for c in cur):
-        # An article gone today that several acts derogated: it was gone after each of them.
-        for e in nv:
-            if e["article"] and e["verb"] == "derogad":
-                whole.setdefault(e["law"], None)
+    # An article an act derogated whole was gone after it (cst: also when a later act wrote it again, as Ley 50 de 1990
+    # did for art. 267 after Ley 171 de 1961 repealed it); the engine's copy only did this for articles gone today.
+    for e in nv:
+        if e["article"] and e["verb"] == "derogad":
+            whole.setdefault(e["law"], None)
     art_added = set()
     for m in art_marks:
         # One marker may name several acts ("Artículo modificado por ... Ley 733 de 2002. Penas aumentadas por ...

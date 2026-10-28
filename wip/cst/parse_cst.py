@@ -99,12 +99,14 @@ DECISIONS_FIXED = [
     "original de la Ley 171 de 1961' boxes on arts. 260 and 267 quote that act's own articles 6, 7 and 8; they are not read "
     "as texts of the code. Ley 171 de 1961 is in force from 1 February 1962 (its art. 15: 'desde el día 1o. del mes "
     "siguiente al de su promulgación'; Diario Oficial No. 30.696 of 16 January 1962 in the source's notes).",
-    "Código Sustantivo del Trabajo: art. 260 (pensión de jubilación) was repealed by Ley 100 de 1993, art. 289; the source "
-    "still prints its original words under the marker '<Artículo derogado por el artículo 289 de la Ley 100 de 1993. El "
-    "texto derogado continua vigente para los trabajadores sometidos al régimen de transición creado por el artículo 36 de "
-    "la Ley 100 ...>'. The history removes the article on Ley 100's in-force day, like arts. 268 to 272 that the same "
-    "article repealed; its words remain in the history before that day, and they still govern workers under the "
-    "transition regime of Ley 100, art. 36 (Corte Constitucional, Sentencia C-862-06, conditioned them).",
+    "Código Sustantivo del Trabajo: arts. 260, 273, 275, 277, 278 and 280 to 284 were repealed or replaced ('subrogado') by "
+    "Ley 100 de 1993; the source still prints their original words under markers such as '<Artículo derogado por el "
+    "artículo 289 de la Ley 100 de 1993. El texto derogado continua vigente para los trabajadores sometidos al régimen de "
+    "transición creado por el artículo 36 de la Ley 100. El texto original es el es el siguiente:>' or '<Artículo subrogado "
+    "por La ley 100 de 1993. Ver Notas del Editor. El texto original es el siguiente:>'. Those words are read as the "
+    "articles' original text, and the articles are removed on Ley 100's in-force day, like arts. 268 to 272 that the same "
+    "act repealed. Court rulings on the repealed words (art. 260: Sentencia C-862-06, on the text kept for the transition "
+    "regime of Ley 100, art. 36) are not recorded.",
 ]
 E.HAND_RULES.update({
     "ley-171-1961": ("1962-02-01", "Ley 171 de 1961, art. 15: 'Esta ley regirá desde el día 1o. del mes siguiente al de su "
@@ -120,7 +122,7 @@ def drop_paras(box: str, rx: str, block: bool) -> tuple[str, int]:
         m = re.match(r"<p\b[^>]*>(.*?)</p>", s, re.S | re.I)
         if m:
             t = E.plain(m.group(1))
-            if block and "b_aj" in m.group(1):
+            if block and re.match(r"\s*Texto\b", t):
                 dropping = bool(re.search(rx, t))
             if dropping or (not block and re.search(rx, t)):
                 n += 1
@@ -141,15 +143,47 @@ def set_aside(u: dict) -> None:
                 hit += n
         if not hit:
             raise SystemExit(f"CST: nothing set aside for {anchor} {title} {rx!r}: the source changed; check the rule")
-    if u["name"] == "260":
-        # Repealed by Ley 100 de 1993, art. 289 (DECISIONS_FIXED): today the article has no words in force.
-        ps = [k for k, it in enumerate(u["items"]) if it[0] == "p"]
-        mk = u["items"][ps[0]][1] if ps else ""
-        if not re.search(r"&lt;Art&iacute;culo derogado por el art&iacute;culo .{0,80}289.{0,20} de la Ley 100 de 1993\. El "
-                         r"texto derogado continua vigente", mk):
-            raise SystemExit("CST: art. 260's marker changed; check the Ley 100 rule")
-        u["items"] = [it for k, it in enumerate(u["items"]) if it[0] != "p" or k == ps[0]]
-        u["items"][ps[0]] = ("p", " &lt;Art&iacute;culo derogado por el art&iacute;culo 289 de la Ley 100 de 1993.&gt;")
+    repealed_text_shown(u)
+
+
+# "<Artículo derogado por el artículo 289 de la Ley 100 de 1993. El texto derogado continua vigente para ... El texto
+# original es el es el siguiente:>" (art. 260), "<Artículo subrogado por La ley 100 de 1993. Ver Notas del Editor. El
+# texto original es el siguiente:>" (arts. 273, 275, 277, 278, 280 to 284): the words that follow are the repealed text.
+SHOWN_REPEALED = re.compile(r"\s*&lt;(Art&iacute;culo (?:derogado|subrogado) por (?:el art&iacute;culo (?:<[^>]*>)?\d+(?:</A>)? de )?"
+                            r"[Ll]a [Ll]ey 100 de 1993)\.(?:(?!&gt;).)*?El texto original es el (?:es el )?siguiente:&gt;", re.I)
+SHOWN_REPEALED_UNITS: list[str] = []
+
+
+def repealed_text_shown(u: dict) -> None:
+    """The repealed words become the article's original text (a 'Texto original' block, as the source gives every other
+    earlier text), and the marker alone stays: the article has no words in force today. Court rulings on the repealed
+    words (Jurisprudencia Vigencia) are set aside with them: they concern the text kept for the transition regime."""
+    ps = [k for k, it in enumerate(u["items"]) if it[0] == "p" and "antsig" not in it[1]]
+    m = SHOWN_REPEALED.match(u["items"][ps[0]][1]) if ps else None
+    if not m:
+        return
+    SHOWN_REPEALED_UNITS.append(u["name"])
+    first = u["items"][ps[0]][1][m.end():]
+    paras = [p for p in [first] + [u["items"][k][1] for k in ps[1:]] if E.plain(p).strip()]
+    has_orig = any(it[0] == "box" and it[1] == "Legislación Anterior" and
+                   re.search(r"Texto original del C(?:&oacute;|ó)digo", it[2]) for it in u["items"])
+    marker = "&lt;" + re.sub(r"\s+", " ", m.group(1)).replace("La ley", "la Ley") + ".&gt;"
+    items = [it for k, it in enumerate(u["items"]) if (it[0] == "p" and k not in ps[1:])
+             or (it[0] == "box" and it[1] != "Jurisprudencia Vigencia")]
+    items = [("p", " " + marker) if it[0] == "p" and it[1] == u["items"][ps[0]][1] else it for it in items]
+    if not has_orig:
+        # As the source writes earlier texts: the heading, then the first paragraph on the same line.
+        paras = [html_escape(u["label"]) + " " + (paras[0] if paras else "")] + paras[1:]
+        body = "".join(f"<p>{p}</p>" for p in paras)
+        items.append(("box", "Legislación Anterior",
+                      "<tbody><tr><td><p><span class='b_aj'>Texto original del Código Sustantivo del Trabajo:</span></p>"
+                      f"{body}</td></tr></tbody>"))
+    u["items"] = items
+
+
+def html_escape(s: str) -> str:
+    import html
+    return html.escape(s, quote=False)
 
 
 _doc_units = E.doc_units
