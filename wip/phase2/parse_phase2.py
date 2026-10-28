@@ -322,6 +322,11 @@ def write_part(acts: list[dict], out: str, names: tuple) -> None:
             "In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the "
             "default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives "
             "applies to that provision. The list below gives the day and the rule for each act.",
+            "Dates come only from the act itself: the Diario Oficial day on the act's own page wins over a day the code's "
+            "notes give; a note's Diario Oficial day is not given to an act named only inside another act's quoted title; "
+            "and an act whose vigencia clause has a general rule and exceptions is dated by the rule that covers the "
+            "changed provision (Ley 890 de 2004: arts. 7 to 13 immediately, the rest from 1 January 2005; Ley 2502 de "
+            "2025: art. 296 of the Código Penal one year after promulgation; Ley 2080 de 2021: from publication).",
             "The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text "
             "differs from today's only by that or by a change no note names, today's text is used from the latest "
             "named act's day. Articles where that happened: " + (", ".join(approx) or "none") + ".",
