@@ -89,13 +89,16 @@ def strip_markers(h: str) -> str:
 
 
 def markers(h: str) -> list[str]:
-    return [norm(html.unescape(re.sub(r"<[^>]+>", "", m))) for m in re.findall(r"&lt;(.*?)&gt;", h, flags=re.S)]
+    return [norm(html.unescape(re.sub(r"<[^>]+>", "", m))).replace('"', "").replace("'", "")
+            for m in re.findall(r"&lt;(.*?)&gt;", h, flags=re.S)]
 
 
-def to_text(h: str, keep_struck: bool = True) -> str:
+def to_text(h: str, keep_struck: bool = True, drop_underlined: bool = False) -> str:
     h = strip_markers(h)
     if not keep_struck:
         h = re.sub(r"<s\b[^>]*>.*?</s>", " ", h, flags=re.S | re.I)
+    if drop_underlined:
+        h = re.sub(r"<u\b[^>]*>.*?</u>", " ", h, flags=re.S | re.I)
     h = re.sub(r"<br\s*/?>", " ", h, flags=re.I)
     h = re.sub(r"<[^>]+>", "", h)
     return norm(html.unescape(h))
@@ -386,7 +389,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
         elif title == "Jurisprudencia Vigencia":
             for ph in box_paras(b):
                 t = plain(ph)
-                if not t.startswith("-") or "estarse a lo resuelto" in t or "INHIBID" in t.upper():
+                if not t.startswith("-") or "estarse a lo resuelto" in t or re.match(r"- La Corte Constitucional se declar\S+ INHIBID", t, re.I):
                     continue
                 m = RULING_RE.search(t)
                 if not m:
@@ -394,9 +397,12 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 d = date_es(m.group(2))
                 href = re.search(r"href='([^'#]+\.html)", ph)
                 up = t.upper()
-                if re.search(r"\bINEXEQUIBLES?\b", up):
+                dm = re.search(r"DECLARAD[OA]S?\s+(CONDICIONALMENTE\s+)?(IN)?EXEQUIBLES?", up)
+                if not dm:
+                    continue
+                if dm.group(2):
                     dec = "inexequible"
-                elif "CONDICIONAL" in up or "EN EL ENTENDIDO" in up or "BAJO EL ENTENDIDO" in up:
+                elif dm.group(1) or "EN EL ENTENDIDO" in up or "BAJO EL ENTENDIDO" in up:
                     dec = "conditional"
                 else:
                     dec = "exequible"
@@ -422,6 +428,9 @@ def ruling_for(jv: list[dict], al: str | None) -> dict | None:
         hit = [r for r in inex if re.search(rf"Acto Legislativo\s+(?:No\.\s*)?0?{int(n)}\s+de\s+{y}", r["text"])]
         if hit:
             return min(hit, key=lambda r: r["date"])
+        whole = [r for r in inex if re.match(r"- Art\S+ (?:\d+\S* del Acto Legislativo [^,]* )?declarad", r["text"])]
+        if whole:
+            return min(whole, key=lambda r: r["date"])
         after = [r for r in inex if r["date"] >= (law_day(al) or "")]
         if len(after) == 1:
             return after[0]
@@ -478,13 +487,27 @@ def article_history(u: dict, jv_extra=None) -> dict:
         if it[0] == "box" and it[1] in ("Legislación Anterior", "Redacción Anterior"):
             for blk in la_blocks(it[2]):
                 blk["full"] = is_full(blk["paras"])
+                if any("INEXEQUIBLE" in m.upper() for ph in blk["paras"] for m in markers(ph)):
+                    blk["struck"] = True
                 la.append((i, blk))
 
-    # The current paragraphs, with their markers.
+    # The current paragraphs, with their markers. Avance's "Nota Aclaratoria" paragraphs are editorial.
     cur = []
+    skip_next = False
     for i, ph in paras:
+        t0 = plain(ph)
+        if skip_next and re.match(r"(Art[íi]culo|Inciso|Numeral|Literal|Par[áa]grafo)s? corregid", t0):
+            skip_next = False
+            continue
+        skip_next = False
+        if re.fullmatch(r"Nota Aclaratoria:?", t0):
+            skip_next = True
+            continue
+        if re.match(r"(Anterior|Siguiente)\b", t0) and "antsig" in ph:
+            continue
         mk = markers(ph)
-        cur.append({"idx": i, "pre": tidy(to_text(ph, True)), "post": tidy(to_text(ph, False)), "marks": mk,
+        corr = any(re.search(r"subrayad\w* corresponde a la correcci", m, re.I) for m in mk)
+        cur.append({"idx": i, "pre": tidy(to_text(ph, True, corr)), "post": tidy(to_text(ph, False)), "marks": mk,
                     "struck": bool(re.search(r"<s\b", ph, re.I)) or any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk)})
 
     art_marks = [m for c in cur[:1] for m in c["marks"] if ART_MARK.match(m)]
@@ -499,9 +522,13 @@ def article_history(u: dict, jv_extra=None) -> dict:
             art_events.add(e["law"])
             if e["struck"]:
                 struck_als[e["law"]] = None
+    art_added = set()
     for m in art_marks:
         a = AL_RE.search(m)
-        art_events.add(al_from_note(*a.groups(), m))
+        k = al_from_note(*a.groups(), m)
+        art_events.add(k)
+        if re.search(r"adicionad|nuevo", m, re.I):
+            art_added.add(k)
     for blk in full_blocks:
         kind, law = blk["state"]
         lines = block_text(blk["paras"], True)
@@ -528,11 +555,25 @@ def article_history(u: dict, jv_extra=None) -> dict:
             note(f"{u['name']}: {al} marked INEXEQUIBLE but no dated ruling found")
             del struck_als[al]
 
+    # Earlier texts of parts (fragments): matched to a current paragraph by its label ("8.", "b)",
+    # "PARÁGRAFO 2o.") when it has one, otherwise to the paragraphs just before the box that holds them.
+    frag_target = {}
+    for n, (i, blk) in enumerate(la):
+        if blk["full"]:
+            continue
+        lines = block_text(blk["paras"], False)
+        lab = para_label(lines[0]) if lines else None
+        hit = [c["idx"] for c in cur if lab and para_label(c["pre"]) == lab and c["idx"] < i]
+        if hit:
+            frag_target[n] = hit[-1]
+    starts = set(frag_target.values())
+
     # Slots: the current paragraphs, grouped where a marker names a change to part of the article.
     slots = []
     for c in cur:
         pm = [m for m in c["marks"] if PARA_MARK.match(m) and not ART_MARK.match(m)]
-        if pm or not slots or slots[-1].get("closed"):
+        if pm or not slots or slots[-1].get("closed") or c["idx"] in starts or (
+                para_label(c["pre"]) and starts and slots[-1]["paras"][0]["idx"] in starts):
             slots.append({"paras": [c], "marks": pm, "frags": []})
         else:
             slots[-1]["paras"].append(c)
@@ -540,9 +581,12 @@ def article_history(u: dict, jv_extra=None) -> dict:
         nxt = c["idx"] + 1
         if nxt < len(items) and items[nxt][0] == "box":
             slots[-1]["closed"] = True
-    # Earlier texts of parts: a fragment block belongs to the slot just before its box.
-    for i, blk in la:
+    for n, (i, blk) in enumerate(la):
         if blk["full"]:
+            continue
+        if n in frag_target:
+            s = next(s for s in slots if s["paras"][0]["idx"] == frag_target[n])
+            s["frags"].append(blk)
             continue
         before = [s for s in slots if s["paras"][-1]["idx"] < i]
         if before:
@@ -554,7 +598,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
         any(re.search(r"INEXEQUIBLE", m, re.I) for m in s["marks"]) for s in slots)
     part_ruling = None
     if has_strike:
-        r = ruling_for([r for r in jv if r["al"] is None or r["al"] not in struck_als], None)
+        r = ruling_for(jv, None)
         if r:
             part_ruling = add_court(r["id"], r["date"], r["href"])
         else:
@@ -657,6 +701,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
         evs = [(d, l) for d, l in art_list]
         ch = chain(evs, whole, orig_full if orig_full is not None else UNKNOWN, last_art, struck_als,
                    {l for l in art_events if any(e["law"] == l and e["verb"] == "adicionad" and e["article"] for e in nv)}
+                   | art_added
                    | ({next(iter(art_events))} if u["name"].startswith("TRANSITORIO ACL") and len(art_events) == 1 else set()))
         if ch[0][1] is UNKNOWN and orig_full is None and not any(e["verb"] == "adicionad" for e in nv if e["article"]):
             pass
