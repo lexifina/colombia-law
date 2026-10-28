@@ -378,6 +378,21 @@ def finish_part(path: str) -> None:
     part["ai_use"] = ["None at data-build time: batch4/fetch_batch4.py and batch4/parse_batch4.py (with batch3/ and "
                       "phase2/, which they import) are deterministic code, written with Claude Code (claude-opus-5-5); no "
                       "model reads, writes or summarises legal text."]
+    part["sources"][0]["notes"] += (" Terms checked 2026-10-28: robots.txt disallows only the Joomla system folders, not "
+                                    "/senado/basedoc/; each page's footer reserves Avance Jurídico's notes, concordances "
+                                    "and arrangement (no use in similar publications for commercial ends), so only the "
+                                    "official text and the facts the notes state are used; requests at most one per 2 s.")
+    part["sources"] += [
+        {"name": "Colpensiones, Normativa (Avance Jurídico compilation): Ley 62 de 1988, which the basedoc lacks",
+         "url": E.COLPENSIONES + "ley_0062_1988.htm", "retrieved": E.RETRIEVED, "requests": 0,
+         "licence": "Official legal text (Ley 23 de 1982, art. 41); only the heading and the vigencia clause are read.",
+         "notes": "Requests are counted in the country's shared log."},
+        {"name": "Secretaría Jurídica Distrital de Bogotá, Régimen Legal (Sisjur): Decreto 207 de 2022",
+         "url": "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=120878", "retrieved": E.RETRIEVED,
+         "requests": 0,
+         "licence": "Official legal text (Ley 23 de 1982, art. 41); only the decree's vigencia article (art. 29) is read.",
+         "notes": "The basedoc does not hold Decreto 207 de 2022 (404). Requests are counted in the country's shared log."},
+    ]
     tmp = path + ".tmp"
     with open(tmp, "w", encoding="utf-8", newline="\n") as f:
         json.dump(part, f, ensure_ascii=False, separators=(",", ":"))
