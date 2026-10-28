@@ -377,7 +377,7 @@ def la_blocks(b: str) -> list[dict]:
     return blocks
 
 
-ART_HEAD = re.compile(r"^\s*ART[IÍ]CULO\s+(TRANSITORIO\s*)?([0-9]+[A-Z]?|NUEVO|[IVXL]+)?\s*(?:o\.|º|°)?\s*[.\-:]*\s*", re.I)
+ART_HEAD = re.compile(r"^\s*ART[IÍ]CULO\s+(TRANSITORIO\s*)?([0-9]+[A-Z]?(?:-[0-9]+\b|-[A-Z]\b)?|NUEVO|[IVXL]+)?\s*(?:o\.|º|°)?\s*[.\-:]*\s*", re.I)
 
 
 def block_text(paras: list[str], full: bool) -> list[str]:
@@ -1085,7 +1085,12 @@ def compute_in_force(key: str) -> None:
     enacted = pub = None
     if key in LAW_PAGE:
         enacted, pub = page_header(LAW_PAGE[key], y)
-    pub = PUB.get(key) or pub
+    # cst: the act's own heading wins over a day read from the code's notes (a note's Diario Oficial may belong to a
+    # regulating decree whose quoted title names the act: 'Decreto 692 de 1994, 'Por el cual se reglamenta ... la Ley
+    # 100 de 1993.', publicado en el Diario Oficial No 41.289 del 30 de marzo de 1994').
+    if pub and PUB.get(key) and PUB[key] != pub:
+        note(f"law {key}: Diario Oficial day {PUB[key]} in the notes, {pub} on the act's own page; page used")
+    pub = pub or PUB.get(key)
     law["enacted"], law["published"] = enacted, pub
     rule = why = None
     if key in HAND_RULES:
@@ -1152,6 +1157,15 @@ def split_libro(u: dict) -> tuple[dict, list[str]]:
     return u, []
 
 
+def label_num(label: str) -> str | None:
+    """The article number in a heading: '38', '38A', '38-H' -> '38H', and (cst) '391-1' -> '391-1'."""
+    m = re.match(r"ART[IÍ]CULO\s+(\d+)-(\d+)\.", label)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}"
+    lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", label)
+    return lm.group(1) + (lm.group(2) or "") if lm else None
+
+
 def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: str | None = None) -> dict:
     """Rebuild every provision of one basedoc act and assemble its dated versions."""
     units = doc_units(name)
@@ -1169,8 +1183,8 @@ def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: 
             line = tidy(f"{u['label']} {title}".replace("<", "").replace(">", ""))
             order.append(("head", (lvl or 3, line)))
             continue
-        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", u["label"])
-        uk = unit_key(lm.group(1) + (lm.group(2) or "") if lm else u["name"])
+        num = label_num(u["label"])
+        uk = unit_key(num if num else u["name"])
         if not uk:
             note(f"{name}: skipped anchor {u['name']!r} {u['label']!r}")
             continue

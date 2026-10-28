@@ -23,10 +23,10 @@ def today(name: str) -> dict[str, list[str]]:
     out = {}
     for u in P.doc_units(name)[1:]:
         u, _ = E.split_libro(u)
-        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", u["label"])
-        if not lm:
+        num = E.label_num(u["label"])
+        if not num:
             continue
-        uk = E.unit_key(lm.group(1) + (lm.group(2) or ""))
+        uk = E.unit_key(num)
         if not uk or uk[0] in out:
             continue
         lines, first = [], True
