@@ -64,7 +64,7 @@ HEADING_FIXES = [
 # law keeps the decision day as `enacted` and says so in its note. (page, text in the note, read as, law key,
 # decision day, effect day, why)
 DEFERRED = [
-    ("ley_1801_2016", "C-223-17 de abril de 2017de 20 de abril de 2017", "C-223-17 de 20 de junio de 2019", "c-223-17",
+    ("ley_1801_2016", "C-223-17</A> de abril de 2017de 20 de abril de 2017", "C-223-17</A> de 20 de junio de 2019", "c-223-17",
      "2017-04-20", "2019-06-20",
      "Sentencia C-223 de 2017 (20 April 2017) declared Título VI of the Código Nacional de Seguridad y Convivencia "
      "Ciudadana (arts. 47 to 75, the right of assembly) INEXEQUIBLE, deferring the effect 'hasta antes del 20 de junio de "

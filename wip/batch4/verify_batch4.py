@@ -20,7 +20,7 @@ V.ACTS = (("codigo-nacional-de-seguridad-y-convivencia-ciudadana", "ley_1801_201
 V.P.OUT = os.path.join(os.path.dirname(HERE), "corpus.d", "90-batch4.json")
 E = V.E
 _units = V.P.doc_units
-DEFER = re.compile(r"&lt;Art[íi]culo INEXEQUIBLE\. Efectos diferidos[^&]*?hasta antes del (\d{1,2} de [a-z]+ de \d{4})&gt;")
+DEFER = re.compile(r"&lt;Art(?:í|&iacute;|i)culo INEXEQUIBLE\. Efectos diferidos.*?hasta antes del (\d{1,2} de [a-z]+ de \d{4})&gt;")
 
 
 def doc_units(name):
