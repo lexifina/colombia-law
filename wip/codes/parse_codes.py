@@ -1336,8 +1336,30 @@ def build_ley_1581() -> dict:
             "url": BASE + DP + ".html", "first_law": key, "earlier_laws": [], "versions": vs}
 
 
+def as_changes(versions: list[dict]) -> list[dict]:
+    """Every version after the first gives only `changes` ({unit key: unit, or null to remove}) against the version
+    before it (SCHEMA.md, "Large acts"); the builder rebuilds the full text."""
+    out, prev = [], None
+    for v in versions:
+        if prev is None or "units" not in v:
+            out.append(v)
+            prev = v.get("units", prev)
+            continue
+        cur = v["units"]
+        ch = {k: cur.get(k) for k in sorted(set(prev) | set(cur)) if prev.get(k) != cur.get(k)}
+        w = {k: x for k, x in v.items() if k != "units"}
+        w["changes"] = ch
+        out.append(w)
+        prev = cur
+    return out
+
+
 def main(argv: list[str]) -> None:
     acts = [build_codigo_civil(), build_ley_1581()]
+    full = "--full-units" in argv  # the earlier layout, for comparing builds
+    if not full:
+        for a in acts:
+            a["versions"] = as_changes(a["versions"])
     used = {l for a in acts for v in a["versions"] for ls in v["credits"].values() for l in ls} | {a["first_law"] for a in acts}
     laws = {k: dict(v) for k, v in sorted(LAWS.items()) if k in used}
     rules = [f"In force {IN_FORCE[k]}: {laws[k]['label']} ({IN_FORCE_WHY[k]})." for k in sorted(laws, key=lambda k: (IN_FORCE.get(k, ""), k))
@@ -1370,7 +1392,8 @@ def main(argv: list[str]) -> None:
     nv = sum(len(a["versions"]) for a in acts)
     print(f"wrote {out}: {len(acts)} acts, {nv} versions, {len(laws)} laws, {os.path.getsize(out) // 1024} KB")
     for a in acts:
-        print(f"  {a['slug']}: {len(a['versions'])} versions, {sum(1 for v in a['versions'] if 'units' not in v)} note-only")
+        print(f"  {a['slug']}: {len(a['versions'])} versions, "
+              f"{sum(1 for v in a['versions'] if 'units' not in v and 'changes' not in v)} note-only")
     if "--report" in argv:
         for r in REPORT:
             print("  ", r)

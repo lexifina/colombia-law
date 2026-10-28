@@ -12,6 +12,13 @@ for act, name, stop in (("codigo-civil", P.CC, None), ("ley-1581-2012", P.DP, "S
     for v in a["versions"]:
         if "units" in v:
             last = v["units"]
+        elif "changes" in v:
+            last = dict(last)
+            for k, x in v["changes"].items():
+                if x is None:
+                    last.pop(k, None)
+                else:
+                    last[k] = x
     bad, n = [], 0
     for u in P.doc_units(name)[1:]:
         if stop and u["name"].upper().startswith(stop):

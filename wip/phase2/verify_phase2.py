@@ -41,7 +41,8 @@ def today(name: str) -> dict[str, list[str]]:
                     lines = []
                     break
                 epi = E.tidy(E.ART_HEAD.sub("", u["label"], count=1)) if E.ART_HEAD.match(u["label"]) else ""
-                if epi:
+                epi = E.tidy(re.sub(r"<[^>]*>?", "", epi))  # epigraphs in angle brackets are the publisher's
+                if epi and re.search(r"\w", epi):
                     ph = E.html.escape(epi, quote=False) + " " + ph
             tacit = any(E.TACIT.search(m) for m in E.markers(it[1]))
             t = E.tidy(E.to_text(ph, keep_struck=tacit))
@@ -59,10 +60,7 @@ def main(argv):
         a = next((x for x in c["acts"] if x["slug"] == slug), None)
         if a is None:
             continue
-        last = {}
-        for v in a["versions"]:
-            if "units" in v:
-                last = v["units"]
+        last = P.full_versions(a["versions"])[-1]["units"]
         bad = []
         t = today(name)
         for k, lines in t.items():

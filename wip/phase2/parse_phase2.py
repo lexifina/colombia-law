@@ -205,6 +205,43 @@ BUILDERS = {"codigo-penal": build_penal, "codigo-general-del-proceso": build_cgp
             "codigo-sustantivo-del-trabajo": build_cst}
 
 
+def to_deltas(versions: list[dict]) -> list[dict]:
+    """After the first version, each version gives `changes` ({unit key: unit, or None to remove}) instead of the full
+    `units` (SCHEMA.md, "Large acts"); versions that changed no words keep no units at all."""
+    out, prev = [], None
+    for v in versions:
+        if "units" not in v or prev is None:
+            out.append(v)
+            if "units" in v:
+                prev = v["units"]
+            continue
+        cur = v["units"]
+        ch = {k: cur[k] for k in cur if prev.get(k) != cur[k]}
+        ch.update({k: None for k in prev if k not in cur})
+        w = {k: x for k, x in v.items() if k != "units"}
+        w["changes"] = dict(sorted(ch.items()))
+        out.append(w)
+        prev = cur
+    return out
+
+
+def full_versions(versions: list[dict]) -> list[dict]:
+    """The inverse of to_deltas (for checks): every version with its full units."""
+    out, cur = [], None
+    for v in versions:
+        if "units" in v:
+            cur = dict(v["units"])
+        elif "changes" in v:
+            cur = dict(cur)
+            for k, u in v["changes"].items():
+                if u is None:
+                    cur.pop(k, None)
+                else:
+                    cur[k] = u
+        out.append(dict({k: x for k, x in v.items() if k != "changes"}, units=cur))
+    return out
+
+
 def main(argv: list[str]) -> None:
     only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else list(BUILDERS)
     acts = [BUILDERS[s]() for s in BUILDERS if s in only]
@@ -223,7 +260,7 @@ def main(argv: list[str]) -> None:
                      "files), plus the base and last page of each amending act. Requests are counted in the country's "
                      "shared log (corpus.json's source)."}],
         "laws": laws,
-        "acts": acts,
+        "acts": [dict(a, versions=to_deltas(a["versions"])) for a in acts],
         "decisions": [
             "Código Penal, Código General del Proceso and Código Sustantivo del Trabajo (phase2/parse_phase2.py, with the "
             "engine phase2/engine.py): versions are rebuilt per article from the basedoc's earlier texts, inline "
