@@ -153,7 +153,7 @@ def js_boxes(js: str | None) -> dict[str, str]:
 
 TOK = re.compile(r'<p\b[^>]*>(.*?)</p>|<div><a class="caja_vja_encabezado[^"]*" href="javascript:insRow(\d+)\(\)">(.*?)</a></div>',
                  re.S | re.I)
-ANC = re.compile(r'<a class="?bookmarkaj"? name="([^"]*)">(.*?)</a>', re.I | re.S)
+ANC = re.compile(r'<a (?:class="?bookmarkaj"? )?name="([^"]*)">(.*?)</a>', re.I | re.S)
 
 
 def doc_units(name: str) -> list[dict]:
@@ -168,10 +168,17 @@ def doc_units(name: str) -> list[dict]:
             if m.group(1) is not None:
                 p = m.group(1)
                 a = ANC.search(p)
-                if a:
+                if a and html.unescape(a.group(1)).strip().lower() not in ("top", "inicio"):
                     cur = {"name": html.unescape(a.group(1)).strip(), "label": plain(a.group(2)), "items": [], "page": pg}
                     res.append(cur)
                     p = p[:a.start()] + p[a.end():]
+                else:
+                    # An article heading the publisher left without an anchor ("ARTICULO 247. ...").
+                    h2 = re.match(r"\s*(ART(?:I|&Iacute;|Í)CULO\s+(\d+[A-Z]?)o?\.)\s*", p)
+                    if h2 and not any(u["name"] == h2.group(2) for u in res):
+                        cur = {"name": h2.group(2), "label": plain(h2.group(1)), "items": [], "page": pg}
+                        res.append(cur)
+                        p = p[h2.end():]
                 cur["items"].append(("p", p))
             else:
                 cur["items"].append(("box", plain(m.group(3)), js.get(m.group(2), "")))
@@ -426,7 +433,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 dm = re.search(r"DECLARAD[OA]S?\s+(CONDICIONALMENTE\s+)?(IN)?EXEQUIBLES?", up)
                 if not dm:
                     continue
-                if dm.group(2):
+                if dm.group(2) or re.search(r"DECLARAD[OA]S?\s+INEXEQUIBLES?(?![\s,]+(EN|POR) LA (SENTENCIA )?C-)", up):
                     dec = "inexequible"
                 elif dm.group(1) or "EN EL ENTENDIDO" in up or "BAJO EL ENTENDIDO" in up:
                     dec = "conditional"
@@ -531,6 +538,11 @@ def article_history(u: dict, jv_extra=None) -> dict:
             continue
         if re.match(r"(Anterior|Siguiente)\b", t0) and "antsig" in ph:
             continue
+        if not cur:
+            # The article's own epigraph sits in the heading anchor ("ARTÍCULO TRANSITORIO 5o. JURISDICCIÓN ...").
+            epi = tidy(ART_HEAD.sub("", u["label"], count=1)) if ART_HEAD.match(u["label"]) else ""
+            if epi:
+                ph = html.escape(epi, quote=False) + " " + ph
         mk = markers(ph)
         corr = any(re.search(r"subrayad\w* corresponde a la correcci", m, re.I) for m in mk)
         cur.append({"idx": i, "pre": tidy(to_text(ph, True, corr)), "post": tidy(to_text(ph, False)), "marks": mk,
