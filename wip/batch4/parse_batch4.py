@@ -99,10 +99,9 @@ def doc_units(name: str) -> list[dict]:
             items.append(it)
         u["items"] = items
         ps = [it for it in items if it[0] == "p"]
-        if (defer and ps and DEFERRED_ART.match(E.plain(ps[0][1]))
-                and not any(it[0] == "box" and it[1] == "Legislación Anterior" for it in items)):
-            # A whole article struck with a deferred effect, never amended: the page prints the text that stood until
-            # the deferral ended. Given to the engine as that text ("Texto vigente hasta su declaratoria de
+        if defer and ps and DEFERRED_ART.match(E.plain(ps[0][1])):
+            # A whole article struck with a deferred effect: the page prints the text that stood until the deferral
+            # ended. Given to the engine as that text ("Texto vigente hasta su declaratoria de
             # INEXEQUIBILIDAD"), so the article stands from the act's first day and leaves on the ruling's (deferred) day.
             body = [E.html.escape(u["label"], quote=False) + " " + E.strip_markers(ps[0][1])] + [
                 E.strip_markers(it[1]) for it in ps[1:]]
@@ -172,8 +171,7 @@ def main(argv: list[str]) -> None:
     fix_deferred()
     arts = sorted({x.split(" ")[1] for x in SYNTH if x.startswith("ley_1801_2016 ")}, key=lambda a: (len(a), a))
     if arts:
-        DECISIONS.append("Código Nacional de Seguridad y Convivencia Ciudadana: arts. " + ", ".join(arts) + " were never "
-                         "amended; the page still prints them under '<Artículo INEXEQUIBLE. Efectos diferidos ...>'. That "
+        DECISIONS.append("Código Nacional de Seguridad y Convivencia Ciudadana: arts. " + ", ".join(arts) + ": the page still prints them under '<Artículo INEXEQUIBLE. Efectos diferidos ...>'. That "
                          "printed text is their text from the code's first day until the deferral ended (Sentencia C-223 "
                          "de 2017); from 20 June 2019 they are absent.")
     problems = B3.anachronisms(acts)
