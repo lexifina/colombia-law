@@ -917,7 +917,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
 
 CC = "codigo_civil"
 DP = "ley_1581_2012"
-DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)*\d{4})")
+DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}(?:o\.|º)?\s+(?:de\s+)?[a-z]+\s+(?:de\s+)*\d{4})")  # cst: "de 22 diciembre 1995"
 VIG_RE = re.compile(r"\b(rige|rigen|entra a regir|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
                     r"comenzar[áa] a regir)\b", re.I)
 NUMS = {"un": 1, "uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "seis": 6, "doce": 12, "dieciocho": 18, "veinticuatro": 24}
@@ -1016,6 +1016,10 @@ def rule_from_clause(clause: str) -> str | None:
     m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?meses\s+(?:después|contados|siguientes)", t)
     if m:
         return f"pub+{NUMS[m.group(1)]}m"
+    # cst: "El presente código entrará en vigencia un (1) año después de su publicación" (Ley 2452 de 2025, art. 330).
+    m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?años?\s+(?:después|contados|siguientes)", t)
+    if m:
+        return f"pub+{12 * NUMS[m.group(1)]}m"
     if re.search(r"promulgaci|publicaci", t):
         return "pub"
     if re.search(r"sanci[óo]n|expedici", t):

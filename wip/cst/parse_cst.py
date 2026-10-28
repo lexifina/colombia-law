@@ -25,6 +25,57 @@ PAGE = "codigo_sustantivo_trabajo"
 SIGN_OFF = re.compile(r"\s*(El Presidente del (honorable |H\. )?Senado|EL PRESIDENTE DEL (HONORABLE |H\. )?SENADO|"
                       r"REP[ÚU]BLICA DE COLOMBIA\s*-\s*GOBIERNO NACIONAL|PUBL[ÍI]QUESE Y (EJEC[ÚU]TESE|C[ÚU]MPLASE))")
 
+# Typing slips in the CST's notes, fixed by what the same article says: art. 357's earlier texts are headed "Texto
+# modificado por el Decreto 2351 de 1995" while its marker and Notas de Vigencia name art. 26 of Decreto 2351 de 1965.
+E.KEY_FIXES.update({"dec-2351-1995": "dec-2351-1965"})
+# Vigencia clauses read by hand from the cached Colpensiones copies (the simple patterns miss them).
+E.HAND_RULES.update({
+    "dec-59-1957": ("1957-07-01", "Decreto 59 de 1957, art. 8: 'Este Decreto rige a partir del primero (1o.) de julio del "
+                                  "año en curso, y suspende todas las disposiciones legales que le sean contrarias.'"),
+    "ley-3-1969": ("enacted", "Ley 3 de 1969, art. 7: 'Esta Ley regirá a partir de la fecha de su aprobación.' (sanctioned "
+                              "13 October 1969, its heading '(octubre 13)')"),
+})
+# Spelling slips that hide an act from the engine's patterns: "Decreo 617 de 1954" (arts. 189, 230, 486), "Decreto -
+# Ley 2737 de 1989" (art. 30).
+TEXT_FIXES = [(re.compile(r"\bDecreo\b"), "Decreto"), (re.compile(r"Decreto\s*-\s*Ley\b"), "Decreto Ley")]
+
+
+def fix_text(h: str) -> str:
+    for rx, rep in TEXT_FIXES:
+        h = rx.sub(rep, h)
+    return h
+
+
+def fix_heading(u: dict) -> None:
+    """Article headings the page breaks, made whole again (the words are the page's own):
+    * the anchor holds only the first letters ('<a name="40">A</a>RTÍCULO 40. CARNÉ.', '<a name="266">ART</a>ICULO 266.');
+    * the number stands in a marker after a numberless heading ('ARTICULO. DEDICACIÓN ...' then '<163A>', or
+      '<391-1. Artículo adicionado ...>'), or in angle brackets ('ARTICULO <185-A>. LABORES AGROPECUARIAS.')."""
+    ps = [k for k, it in enumerate(u["items"]) if it[0] == "p"]
+    lab, nm = u["label"], u["name"]
+    if ps and lab and len(lab) < 8 and ("ARTICULO".startswith(lab.upper()) or "ARTÍCULO".startswith(lab.upper())):
+        k = ps[0]
+        p = u["items"][k][1]
+        m = re.search(r'<span class="b_aj"></span>|&lt;', p)
+        head = E.plain(p[:m.start() if m else len(p)])
+        if re.match(r"ART[IÍ]CULO\s+" + re.escape(nm) + r"o?\.", lab + head):
+            u["label"] = (lab + head).strip()
+            u["items"][k] = ("p", p[m.start() if m else len(p):]) + tuple(u["items"][k][2:])
+            return
+    m = re.match(r"ART[IÍ]CULO\s*<\s*(" + re.escape(nm) + r")\s*>\s*\.?\s*(.*)", lab)
+    if m:
+        u["label"] = f"ARTICULO {nm}. {m.group(2)}".strip()
+        return
+    m = re.match(r"(ART[IÍ]CULO)\.\s*(.*)", lab)
+    if m and ps and re.fullmatch(r"\d+[A-Z]?(?:-\d+)?", nm):
+        k = ps[0]
+        p = u["items"][k][1]
+        p2 = re.sub(r"^\s*&lt;" + re.escape(nm) + r"&gt;\s*", " ", p, count=1)
+        p2 = re.sub(r"^\s*&lt;" + re.escape(nm) + r"\.\s*", " &lt;", p2, count=1)
+        u["label"] = f"{m.group(1)} {nm}. {m.group(2)}".strip()
+        u["items"][k] = ("p", p2) + tuple(u["items"][k][2:])
+
+
 _doc_units = E.doc_units
 
 
@@ -32,13 +83,10 @@ def doc_units(name: str) -> list[dict]:
     """The engine's split, with the signatures after the last article cut off (they are not part of the text)."""
     units = _doc_units(name)
     for u in units:
-        # "<Penas aumentadas por el artículo 14 de la Ley 890 de 2004 ...>" is how the Código Penal marks an article
-        # whose penalties Ley 890 raised (with its earlier text in Legislación Anterior): for the engine it is an
-        # article-level change by that law. Only the marker is rewritten; markers are never part of the text.
-        # "<Ley 1288 de 2009 declarada INEXEQUIBLE>" on an article that law added: the whole article was struck.
-        u["items"] = [(it[0], re.sub(r"&lt;Ley \d+ de \d{4} declarada INEXEQUIBLE&gt;", "&lt;Artículo INEXEQUIBLE&gt;",
-                                     re.sub(r"&lt;Penas? aumentadas? por el art", "&lt;Artículo modificado por el art", it[1])))
-                      + tuple(it[2:]) if it[0] == "p" else it for it in u["items"]]
+        fix_heading(u)
+        u["items"] =[(it[0], fix_text(it[1])) + tuple(it[2:]) if it[0] == "p"
+                      else (it[0], it[1], fix_text(it[2])) + tuple(it[3:]) if it[0] == "box" else it
+                      for it in u["items"]]
     for u in units[1:]:
         items = u["items"]
         for k, it in enumerate(items):
