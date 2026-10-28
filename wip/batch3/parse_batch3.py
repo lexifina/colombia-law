@@ -18,6 +18,11 @@ sys.path.insert(0, os.path.join(COUNTRY, "phase2"))
 import parse_phase2 as P  # noqa: E402
 
 E = P.E
+# Typing slips in these codes' notes, fixed by what the same notes show: "Texto original de la Ley 1437 de 2001" (the
+# CPACA's own original, Ley 1437 de 2011); "Texto adicionado por la Ley 1908 de 2019" (its note: "artículo 21 de la Ley
+# 1908 de 2018"); "Texto con las modificaciones introducidas por el Decreto 1959 de 2019" (the notes on the same article:
+# "modificado por el artículo 3 de la Ley 1959 de 2019").
+E.KEY_FIXES.update({"ley-1437-2001": "ley-1437-2011", "ley-1908-2019": "ley-1908-2018", "dec-1959-2019": "ley-1959-2019"})
 # The Código de Comercio ends "Comuníquese y publíquese. Dado en Bogotá, D.E., a 27 de marzo de 1971." and the signers.
 P.SIGN_OFF = re.compile(P.SIGN_OFF.pattern + r"|\s*COMUN[ÍI]QUESE Y PUBL[ÍI]QUESE|\s*Comun[íi]quese y publ[íi]quese")
 OUT_DIR = os.path.join(COUNTRY, "corpus.d")
