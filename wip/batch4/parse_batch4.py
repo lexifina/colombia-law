@@ -76,6 +76,22 @@ DEFERRED = [
      "Ciudadana (arts. 47 to 75, the right of assembly) INEXEQUIBLE, deferring the effect 'hasta antes del 20 de junio de "
      "2019' so that Congress could pass a statutory law; the articles leave the text on 20 June 2019."),
 ]
+# Notes that name an act as having "modified" an article whose words it did not change (the act only reassigned a
+# function or set rules beside it); read as a plain reference, so the article's wording runs on unbroken.
+# (page, text in the Notas de Vigencia, read as, why)
+NOTE_FIXES = [
+    ("ley_0100_1993", "- Art&iacute;culo modificado parcialmente por el Decreto 132 de 2010, seg&uacute;n lo dispuesto en su",
+     "- Ver el Decreto 132 de 2010,",
+     "Ley 100 de 1993, arts. 215 and 216: the note 'Artículo modificado parcialmente por el Decreto 132 de 2010, según lo "
+     "dispuesto en su artículo 5' names an emergency decree (struck by Sentencia C-374 de 2010) that changed none of their "
+     "words and that the source gives no text for; their wording is unbroken"),
+    ("ley_0100_1993", "- Art&iacute;culo modificado por el art&iacute;culo <A href='decreto_1280_2002.html#9' >9</A> del "
+                      "Decreto 1280 de 2002",
+     "- Ver el art&iacute;culo <A href='decreto_1280_2002.html#9' >9</A> del Decreto 1280 de 2002",
+     "Ley 100 de 1993, art. 271: Decreto 1280 de 2002, art. 9, gave the competence the article assigns to the Ministerio de "
+     "Salud to the Superintendencia Nacional de Salud without rewriting it (the note quotes it); the article's wording is "
+     "unbroken"),
+]
 DEFERRED_ART = re.compile(r"(?:\s*<[^<>]*>)*?\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
 SYNTH: list[str] = []
 _units_b3 = B3.doc_units
@@ -87,6 +103,7 @@ def doc_units(name: str) -> list[dict]:
     hits = {old: 0 for old, _ in fixes}
     defer = [(old, new) for page, old, new, *_ in DEFERRED if page == name]
     dhits = {old: 0 for old, _ in defer}
+    nhits = {o: 0 for page, o, _, _ in NOTE_FIXES if page == name}
     for u in units:
         items = []
         for it in u["items"]:
@@ -95,6 +112,13 @@ def doc_units(name: str) -> list[dict]:
                 for old, new in fixes:
                     hits[old] += h.count(old)
                     h = h.replace(old, new)
+                it = (it[0], it[1], h) + tuple(it[3:])
+            if it[0] == "box" and it[1] == "Notas de Vigencia":
+                h = it[2]
+                for page, o, n, _ in NOTE_FIXES:
+                    if page == name:
+                        nhits[o] = nhits.get(o, 0) + h.count(o)
+                        h = h.replace(o, n)
                 it = (it[0], it[1], h) + tuple(it[3:])
             if it[0] == "box" and it[1] == "Jurisprudencia Vigencia" and "se difieren" in it[2]:
                 # only notes that state the deferral (the same ruling struck other articles at once, e.g. art. 162)
@@ -116,7 +140,7 @@ def doc_units(name: str) -> list[dict]:
                    + "".join(f"<p>{b}</p>" for b in body))
             u["items"] = items + [("box", "Legislación Anterior", box)]
             SYNTH.append(f"{name} {u['name']}")
-    missing = [o for o, n in hits.items() if n == 0] + [o for o, n in dhits.items() if n == 0]
+    missing = [o for o, n in hits.items() if n == 0] + [o for o, n in dhits.items() if n == 0] + [o for o, n in nhits.items() if n == 0]
     if missing:
         raise SystemExit(f"{name}: page fixes that did not match: {missing}")
     return units
@@ -133,7 +157,7 @@ P.doc_units = doc_units
 E.doc_units = doc_units
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + why for page, _, _, why in HEADING_FIXES
                  if page == "ley_1801_2016")
-DECISIONS.extend("Ley 100 de 1993: " + why for page, _, _, why in HEADING_FIXES if page == "ley_0100_1993")
+DECISIONS.extend("Ley 100 de 1993: " + why for page, _, _, why in HEADING_FIXES + NOTE_FIXES if page == "ley_0100_1993")
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + d[-1] + " The commit is dated from the end of the "
                  "deferral; the law's enacted day is the decision's." for d in DEFERRED if d[0] == "ley_1801_2016")
 
