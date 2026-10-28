@@ -420,8 +420,11 @@ def is_full(paras: list[str]) -> bool:
 
 
 TACIT = re.compile(r"t[áa]citamente|org[áa]nicamente", re.I)
-VERB = r"(modificad|adicionad|subrogad|derogad|sustituid|corregid|reformad)"
+VERB = r"(modificad|adicionad|subrogad|derogad|sustituid|corregid|reformad|eliminad)"
 SCOPE_ART = re.compile(r"^-?\s*Art[íi]culo\s+(?:transitorio\s+)?" + VERB, re.I)
+
+
+SCOPE_ANY = re.compile(r"(Art[íi]culo|Inciso|Incisos|Numeral|Numerales|Par[áa]grafo|Literal|Literales)\s+[^.]{0,60}?" + VERB, re.I)
 
 
 def parse_notes(items) -> tuple[list[dict], list[dict]]:
@@ -434,7 +437,8 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
         if title == "Notas de Vigencia":
             for ph in box_paras(b):
                 t = norm_refs(plain(ph))
-                if not t.startswith("-") or re.search(r"t[áa]citamente|org[áa]nicamente", t):
+                # Notes start with "- "; a few start straight with the scope ("Artículo modificado por ...").
+                if not (t.startswith("-") or SCOPE_ANY.match(t)) or re.search(r"t[áa]citamente|org[áa]nicamente", t):
                     continue
                 als = AL_RE.findall(t)
                 if not als or not re.search(VERB, t, re.I):
@@ -591,6 +595,13 @@ def article_history(u: dict, jv_extra=None) -> dict:
             if blk["state"][0] in ("orig", "after", "before", "before_ruling"):
                 blk["full"] = True
 
+    # An article whose words are all gone today (repealed, or struck) keeps no lone epigraph: it is absent.
+    if cur and u["label"]:
+        epi0 = tidy(re.sub(r"<[^>]*>?", "", tidy(ART_HEAD.sub("", u["label"], count=1)))) if ART_HEAD.match(u["label"]) else ""
+        if epi0 and all(not c["post"] for c in cur[1:]) and cur[0]["post"] == epi0:
+            cur[0]["post"] = ""
+        if epi0 and all(not c["pre"] for c in cur[1:]) and cur[0]["pre"] == epi0:
+            cur[0]["pre"] = ""
     art_marks = [m for c in cur[:1] for m in c["marks"] if ART_MARK.match(m) and not TACIT.search(m)]
     whole = {}  # article-level: law -> lines (full earlier texts)
     orig_full = None
@@ -610,11 +621,13 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 whole.setdefault(e["law"], None)
     art_added = set()
     for m in art_marks:
-        a = AL_RE.search(m)
-        k = al_from_note(*a.groups(), m)
-        art_events.add(k)
-        if re.search(r"adicionad|nuevo", m, re.I):
-            art_added.add(k)
+        # One marker may name several acts ("Artículo modificado por ... Ley 733 de 2002. Penas aumentadas por ...
+        # Ley 890 de 2004"): each is an article-level change.
+        for n_, a in enumerate(AL_RE.finditer(m)):
+            k = al_from_note(*a.groups(), m)
+            art_events.add(k)
+            if n_ == 0 and re.search(r"adicionad|nuevo", m, re.I):
+                art_added.add(k)
     for blk in full_blocks:
         kind, law = blk["state"]
         lines = block_text(blk["paras"], True)

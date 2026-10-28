@@ -45,9 +45,12 @@ def today(name: str) -> dict[str, list[str]]:
                 if epi and re.search(r"\w", epi):
                     ph = E.html.escape(epi, quote=False) + " " + ph
             tacit = any(E.TACIT.search(m) for m in E.markers(it[1]))
-            t = E.tidy(E.to_text(ph, keep_struck=tacit))
+            t = P.debrace(E.tidy(E.to_text(ph, keep_struck=tacit)), False)
             if t and re.search(r"\w", t):
                 lines.append(t)
+        epi0 = E.tidy(re.sub(r"<[^>]*>?", "", E.tidy(E.ART_HEAD.sub("", u["label"], count=1)))) if E.ART_HEAD.match(u["label"]) else ""
+        if epi0 and lines == [epi0]:
+            lines = []  # only the epigraph is left: the article is not in force today
         out[uk[0]] = lines
     return out
 

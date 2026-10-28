@@ -31,6 +31,14 @@ _doc_units = E.doc_units
 def doc_units(name: str) -> list[dict]:
     """The engine's split, with the signatures after the last article cut off (they are not part of the text)."""
     units = _doc_units(name)
+    for u in units:
+        # "<Penas aumentadas por el artículo 14 de la Ley 890 de 2004 ...>" is how the Código Penal marks an article
+        # whose penalties Ley 890 raised (with its earlier text in Legislación Anterior): for the engine it is an
+        # article-level change by that law. Only the marker is rewritten; markers are never part of the text.
+        # "<Ley 1288 de 2009 declarada INEXEQUIBLE>" on an article that law added: the whole article was struck.
+        u["items"] = [(it[0], re.sub(r"&lt;Ley \d+ de \d{4} declarada INEXEQUIBLE&gt;", "&lt;Artículo INEXEQUIBLE&gt;",
+                                     re.sub(r"&lt;Penas? aumentadas? por el art", "&lt;Artículo modificado por el art", it[1])))
+                      + tuple(it[2:]) if it[0] == "p" else it for it in u["items"]]
     for u in units[1:]:
         items = u["items"]
         for k, it in enumerate(items):
