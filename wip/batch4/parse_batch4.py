@@ -45,6 +45,50 @@ def assemble(timelines, labels, notes_all, order, start):
 E.assemble = assemble
 
 
+# Typing slips in the headings of the source's earlier texts ('Legislación Anterior'), fixed per page by what the same
+# article shows: the heading names an act that cannot have written the text. (page, wrong heading, right heading, why)
+HEADING_FIXES = [
+    ("ley_1801_2016", "Texto original de la Ley 1810 de 2016", "Texto original de la Ley 1801 de 2016",
+     "Ley 1801 de 2016, art. 41: its earlier text is headed 'Texto original de la Ley 1810 de 2016'; it is the code's own "
+     "original paragraph 3 (Ley 1810 de 2016 is an unrelated act), struck by Sentencia C-281 de 2017"),
+    ("ley_1801_2016", "Texto original de la Ley 1805 de 2016", "Texto original de la Ley 1801 de 2016",
+     "Ley 1801 de 2016, art. 88: its earlier text is headed 'Texto original de la Ley 1805 de 2016'; it is the code's own "
+     "original article (Ley 1805 de 2016 is an unrelated act)"),
+    ("ley_1801_2016", "Texto original de la Ley 906 de 2004", "Texto original de la Ley 1801 de 2016",
+     "Ley 1801 de 2016, art. 206: its earlier text is headed 'Texto original de la Ley 906 de 2004'; it is the code's own "
+     "original article (the Código de Procedimiento Penal never held it; the same article's notes name only Leyes 2030 "
+     "de 2020 and 2492 de 2025 as its amenders)"),
+]
+_units_b3 = B3.doc_units
+
+
+def doc_units(name: str) -> list[dict]:
+    units = _units_b3(name)
+    fixes = [(old, new) for page, old, new, _ in HEADING_FIXES if page == name]
+    hits = {old: 0 for old, _ in fixes}
+    for u in units:
+        items = []
+        for it in u["items"]:
+            if it[0] == "box" and it[1] == "Legislación Anterior":
+                h = it[2]
+                for old, new in fixes:
+                    hits[old] += h.count(old)
+                    h = h.replace(old, new)
+                it = (it[0], it[1], h) + tuple(it[3:])
+            items.append(it)
+        u["items"] = items
+    missing = [o for o, n in hits.items() if n != 1]
+    if missing:
+        raise SystemExit(f"{name}: heading fixes that did not match exactly once: {missing}")
+    return units
+
+
+P.doc_units = doc_units
+E.doc_units = doc_units
+DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + why for page, _, _, why in HEADING_FIXES
+                 if page == "ley_1801_2016")
+
+
 def start_1801(units, enacted, pub):
     a = B3.article_text(units, "243")
     if "La presente ley regirá seis (6) meses después de su promulgación" not in a or not pub:
