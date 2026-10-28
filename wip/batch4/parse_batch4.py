@@ -58,6 +58,12 @@ HEADING_FIXES = [
      "Ley 1801 de 2016, art. 206: its earlier text is headed 'Texto original de la Ley 906 de 2004'; it is the code's own "
      "original article (the Código de Procedimiento Penal never held it; the same article's notes name only Leyes 2030 "
      "de 2020 and 2492 de 2025 as its amenders)"),
+    ("ley_0100_1993", "Texto original de la Ley 100 de 2007", "Texto original de la Ley 100 de 1993",
+     "Ley 100 de 1993, arts. 204 and 214: their earlier texts are headed 'Texto original de la Ley 100 de 2007'; they are "
+     "the act's own original wording (there is no Ley 100 de 2007 in these notes; the next text is Ley 1122 de 2007's)"),
+    ("ley_0100_1993", "Texto original del Decreto 2277 de 1979", "Texto original de la Ley 100 de 1993",
+     "Ley 100 de 1993, art. 157: the earlier text of its paragraph 4 is headed 'Texto original del Decreto 2277 de 1979' "
+     "(the teachers' statute, which never held it); it is the act's own original paragraph"),
 ]
 # Rulings whose effect the Court deferred: the engine dates a strike by the ruling's day, so the ruling's day in the
 # source's Jurisprudencia Vigencia note is read as the day the deferral ends (the text leaves the history then); the
@@ -110,7 +116,7 @@ def doc_units(name: str) -> list[dict]:
                    + "".join(f"<p>{b}</p>" for b in body))
             u["items"] = items + [("box", "Legislación Anterior", box)]
             SYNTH.append(f"{name} {u['name']}")
-    missing = [o for o, n in hits.items() if n != 1] + [o for o, n in dhits.items() if n == 0]
+    missing = [o for o, n in hits.items() if n == 0] + [o for o, n in dhits.items() if n == 0]
     if missing:
         raise SystemExit(f"{name}: page fixes that did not match: {missing}")
     return units
@@ -127,6 +133,7 @@ P.doc_units = doc_units
 E.doc_units = doc_units
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + why for page, _, _, why in HEADING_FIXES
                  if page == "ley_1801_2016")
+DECISIONS.extend("Ley 100 de 1993: " + why for page, _, _, why in HEADING_FIXES if page == "ley_0100_1993")
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + d[-1] + " The commit is dated from the end of the "
                  "deferral; the law's enacted day is the decision's." for d in DEFERRED if d[0] == "ley_1801_2016")
 
