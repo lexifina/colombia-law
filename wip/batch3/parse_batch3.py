@@ -18,6 +18,8 @@ sys.path.insert(0, os.path.join(COUNTRY, "phase2"))
 import parse_phase2 as P  # noqa: E402
 
 E = P.E
+# The Código de Comercio ends "Comuníquese y publíquese. Dado en Bogotá, D.E., a 27 de marzo de 1971." and the signers.
+P.SIGN_OFF = re.compile(P.SIGN_OFF.pattern + r"|\s*COMUN[ÍI]QUESE Y PUBL[ÍI]QUESE|\s*Comun[íi]quese y publ[íi]quese")
 OUT_DIR = os.path.join(COUNTRY, "corpus.d")
 DECISIONS = P.DECISIONS
 
@@ -54,11 +56,13 @@ def build(page: str, key: str, slug: str, short: str, title: str, law_title: str
 
 def start_comercio(units, enacted, pub):
     a = article_text(units, "2038")
-    if not re.search(r"regir[áa] desde el primero de enero de mil novecientos setenta y dos", a, re.I):
-        raise SystemExit(f"Código de Comercio art. 2038: {a!r}")
-    return ("1972-01-01", f"Decreto 410 de 1971, art. 2038: '{a}'",
-            f"The code as issued (Decreto 410 de 1971, of {enacted}, Diario Oficial of {pub}), in force from 1 January 1972 "
-            f"under its art. 2038: '{a}'")
+    if "empezará a regir el 1o. de enero de 1972, con excepción del artículo 821" not in a or not enacted:
+        raise SystemExit(f"Código de Comercio art. 2038 or heading: {a!r}")
+    return (enacted, f"Decreto 410 de 1971, art. 2038: '{a}' (the first version is dated from the day it was issued, "
+                     f"{enacted}, when the parts excepted took effect; the rest from 1 January 1972)",
+            f"The code as issued (Decreto 410 de 1971, of {enacted}, Diario Oficial of {pub}). Its art. 2038: '{a}' The "
+            f"history dates the whole code from {enacted}, the day the excepted parts (art. 821, Libro IV Título XIII "
+            f"Capítulo V and Libro VI) took effect; the rest took effect on 1 January 1972.")
 
 
 def start_cpaca(units, enacted, pub):
