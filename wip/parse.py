@@ -447,6 +447,8 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
 
 PARA_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|Numerales|Literal|Literales|Aparte|Apartes|"
                        r"Expresi[óo]n|Ordinal|Frase|Texto)\b.*?" + VERB + r".*?" + AL_RE.pattern, re.I)
+STRIKE_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|Numerales|Literal|Literales|Aparte|Apartes|"
+                         r"Expresi[óo]n|Ordinal|Frase)[^<>]*INEXEQUIBLE", re.I)
 ART_MARK = re.compile(r"^Art[íi]culo\s+(?:transitorio\s+)?" + VERB + r".*?" + AL_RE.pattern, re.I)
 
 
@@ -617,12 +619,14 @@ def article_history(u: dict, jv_extra=None) -> dict:
     # Slots: the current paragraphs, grouped where a marker names a change to part of the article.
     slots = []
     for c in cur:
-        pm = [m for m in c["marks"] if PARA_MARK.match(m) and not ART_MARK.match(m)]
+        pm = [m for m in c["marks"] if (PARA_MARK.match(m) or STRIKE_MARK.match(m)) and not ART_MARK.match(m)]
         if pm or not slots or slots[-1].get("closed") or c["idx"] in starts or (
                 para_label(c["pre"]) and starts and slots[-1]["paras"][0]["idx"] in starts):
             slots.append({"paras": [c], "marks": pm, "frags": []})
         else:
             slots[-1]["paras"].append(c)
+        if not c["pre"] and any(STRIKE_MARK.match(m) for m in pm):
+            slots[-1]["closed"] = True  # a struck part shown only by its marker is a slot of its own
         # a box after this paragraph closes the slot
         nxt = c["idx"] + 1
         if nxt < len(items) and items[nxt][0] == "box":
@@ -635,7 +639,13 @@ def article_history(u: dict, jv_extra=None) -> dict:
             s["frags"].append(blk)
             continue
         before = [s for s in slots if s["paras"][-1]["idx"] < i]
-        if before:
+        prev_box = max([j for j in range(i) if items[j][0] == "box" and j < i and
+                        not any(c["idx"] == j for c in cur) and
+                        (not before or j < before[-1]["paras"][0]["idx"])] or [-1])
+        marked = [s for s in before if s["marks"] and s["paras"][0]["idx"] > prev_box]
+        if marked:
+            marked[-1]["frags"].append(blk)
+        elif before:
             before[-1]["frags"].append(blk)
         else:
             note(f"{u['name']}: fragment with no slot: {blk['head']}")
@@ -661,6 +671,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
     def slot_states(s) -> list:
         evs, known, added, sstruck = [], {}, set(), {}
         base = UNKNOWN
+        strike_slot = any(STRIKE_MARK.match(m) and not AL_RE.search(m) for m in s["marks"])
         for m in s["marks"]:
             a = AL_RE.search(m)
             if not a:
@@ -686,12 +697,12 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 else:
                     evs.append((law_day(law), law))
                 known.setdefault(law, lines)
-                if blk["struck"] and law not in sstruck:
-                    r = ruling_for(jv, law)
+                if (blk["struck"] or strike_slot) and law not in sstruck:
+                    r = ruling_for(jv, law) or (part_ruling and {"id": None, "key": part_ruling})
                     if r:
-                        ck = add_court(r["id"], r["date"], r["href"])
+                        ck = r["key"] if r.get("key") else add_court(r["id"], r["date"], r["href"])
                         sstruck[law] = ck
-                        evs.append((r["date"], ck))
+                        evs.append((law_day(ck), ck))
             elif kind == "before":
                 known.setdefault(f"before:{law}", lines)
         post = [c["post"] for c in s["paras"] if c["post"]]
@@ -712,9 +723,20 @@ def article_history(u: dict, jv_extra=None) -> dict:
             for k, (d, stt, law) in enumerate(out):
                 if law == part_ruling and k > 0 and out[k - 1][1] is UNKNOWN:
                     out[k - 1] = (out[k - 1][0], pre_state, out[k - 1][2])
+        # Today's text is the last state. If the chain ends elsewhere, a later ruling struck it (when the
+        # provision names one); otherwise today's text is put on the last event and the case reported.
+        if out[-1][1] is not UNKNOWN and (out[-1][1] or None) != (last or None):
+            if part_ruling and law_day(part_ruling) > out[-1][0] and part_ruling not in [o[2] for o in out]:
+                out.append((law_day(part_ruling), last or None, part_ruling))
+            else:
+                note(f"{u['name']}: slot chain ends on a text other than today's; today's text used from {out[-1][0]}")
+                out[-1] = (out[-1][0], last or None, out[-1][2])
         return out
 
     shist = [slot_states(s) for s in slots]
+    if os.environ.get("CO_DEBUG") == u["name"]:
+        for s_, h_ in zip(slots, shist):
+            print("SLOT", [c["idx"] for c in s_["paras"]], s_["marks"], [b["head"] for b in s_["frags"]], [(d, l, None if v is UNKNOWN else (v and len(v))) for d, v, l in h_])
     start = art_list[-1][0] if art_list else ""
 
     # Article text at each day from `start`: join the slot states.
