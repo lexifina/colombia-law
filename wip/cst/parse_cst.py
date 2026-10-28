@@ -76,6 +76,82 @@ def fix_heading(u: dict) -> None:
         u["items"][k] = ("p", p2) + tuple(u["items"][k][2:])
 
 
+# Notes and earlier-text blocks that do not describe a change of the article's words, set aside before the engine reads
+# them (each is listed in DECISIONS_FIXED with its reason). (anchor, box title, regex on the paragraph's plain text);
+# for "Legislación Anterior" the regex matches a block heading, and the whole block (heading and texts) goes.
+NOT_WORD_CHANGES = [
+    # Ley 171 de 1961 changed the pension rules in its own articles (6, 7, 8, 12) and, by its art. 14, repealed only
+    # arts. 261, 262 and 267 of the code ("Deróganse los artículos 261, 262, 267 del Código Sustantivo del Trabajo",
+    # Colpensiones copy of Ley 171 de 1961). The notes "Artículo modificado por la Ley 171 de 1961 ... según lo
+    # dispuesto en el artículo 14" on arts. 260, 266, 275 and 279 name no change of their words, and the "Texto original
+    # de la Ley 171 de 1961" blocks on arts. 260 and 267 quote that act's own articles, not the code's.
+    ("260", "Notas de Vigencia", r"modificado (?:por )?la Ley 171 de 1961"),
+    ("266", "Notas de Vigencia", r"modificado (?:por )?la Ley 171 de 1961"),
+    ("275", "Notas de Vigencia", r"modificado (?:por )?la Ley 171 de 1961"),
+    ("279", "Notas de Vigencia", r"modificado (?:por )?la Ley 171 de 1961"),
+    ("260", "Legislación Anterior", r"Texto original de la Ley 171 de 1961"),
+    ("267", "Legislación Anterior", r"Texto original de la Ley 171 de 1961"),
+]
+DECISIONS_FIXED = [
+    "Código Sustantivo del Trabajo: Ley 171 de 1961 changed the pension rules in its own articles and, by its art. 14, "
+    "repealed only arts. 261, 262 and 267 of the code. The source's notes 'Artículo modificado por la Ley 171 de 1961 ... "
+    "según lo dispuesto en el artículo 14' on arts. 260, 266, 275 and 279 name no change of their words, and its 'Texto "
+    "original de la Ley 171 de 1961' boxes on arts. 260 and 267 quote that act's own articles 6, 7 and 8; they are not read "
+    "as texts of the code. Ley 171 de 1961 is in force from 1 February 1962 (its art. 15: 'desde el día 1o. del mes "
+    "siguiente al de su promulgación'; Diario Oficial No. 30.696 of 16 January 1962 in the source's notes).",
+    "Código Sustantivo del Trabajo: art. 260 (pensión de jubilación) was repealed by Ley 100 de 1993, art. 289; the source "
+    "still prints its original words under the marker '<Artículo derogado por el artículo 289 de la Ley 100 de 1993. El "
+    "texto derogado continua vigente para los trabajadores sometidos al régimen de transición creado por el artículo 36 de "
+    "la Ley 100 ...>'. The history removes the article on Ley 100's in-force day, like arts. 268 to 272 that the same "
+    "article repealed; its words remain in the history before that day, and they still govern workers under the "
+    "transition regime of Ley 100, art. 36 (Corte Constitucional, Sentencia C-862-06, conditioned them).",
+]
+E.HAND_RULES.update({
+    "ley-171-1961": ("1962-02-01", "Ley 171 de 1961, art. 15: 'Esta ley regirá desde el día 1o. del mes siguiente al de su "
+                                   "promulgación ...' (Diario Oficial No. 30.696 of 16 January 1962, as the source's notes "
+                                   "give it)"),
+})
+
+
+def drop_paras(box: str, rx: str, block: bool) -> tuple[str, int]:
+    parts = re.split(r"(<p\b[^>]*>.*?</p>)", box, flags=re.S | re.I)
+    out, dropping, n = [], False, 0
+    for s in parts:
+        m = re.match(r"<p\b[^>]*>(.*?)</p>", s, re.S | re.I)
+        if m:
+            t = E.plain(m.group(1))
+            if block and "b_aj" in m.group(1):
+                dropping = bool(re.search(rx, t))
+            if dropping or (not block and re.search(rx, t)):
+                n += 1
+                continue
+        out.append(s)
+    return "".join(out), n
+
+
+def set_aside(u: dict) -> None:
+    for anchor, title, rx in NOT_WORD_CHANGES:
+        if u["name"] != anchor:
+            continue
+        hit = 0
+        for k, it in enumerate(u["items"]):
+            if it[0] == "box" and it[1] == title:
+                b, n = drop_paras(it[2], rx, title == "Legislación Anterior")
+                u["items"][k] = (it[0], it[1], b) + tuple(it[3:])
+                hit += n
+        if not hit:
+            raise SystemExit(f"CST: nothing set aside for {anchor} {title} {rx!r}: the source changed; check the rule")
+    if u["name"] == "260":
+        # Repealed by Ley 100 de 1993, art. 289 (DECISIONS_FIXED): today the article has no words in force.
+        ps = [k for k, it in enumerate(u["items"]) if it[0] == "p"]
+        mk = u["items"][ps[0]][1] if ps else ""
+        if not re.search(r"&lt;Art&iacute;culo derogado por el art&iacute;culo .{0,80}289.{0,20} de la Ley 100 de 1993\. El "
+                         r"texto derogado continua vigente", mk):
+            raise SystemExit("CST: art. 260's marker changed; check the Ley 100 rule")
+        u["items"] = [it for k, it in enumerate(u["items"]) if it[0] != "p" or k == ps[0]]
+        u["items"][ps[0]] = ("p", " &lt;Art&iacute;culo derogado por el art&iacute;culo 289 de la Ley 100 de 1993.&gt;")
+
+
 _doc_units = E.doc_units
 
 
@@ -84,6 +160,7 @@ def doc_units(name: str) -> list[dict]:
     units = _doc_units(name)
     for u in units:
         fix_heading(u)
+        set_aside(u)
         u["items"] =[(it[0], fix_text(it[1])) + tuple(it[2:]) if it[0] == "p"
                       else (it[0], it[1], fix_text(it[2])) + tuple(it[3:]) if it[0] == "box" else it
                       for it in u["items"]]
@@ -254,7 +331,7 @@ def write_part(act: dict, out: str) -> None:
             "The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text "
             "differs from today's only by that or by a change no note names, today's text is used from the latest "
             "named act's day. Articles where that happened: " + (", ".join(approx) or "none") + ".",
-        ] + DECISIONS + rules,
+        ] + DECISIONS + DECISIONS_FIXED + rules,
         "ai_use": ["None at data-build time: cst/fetch_cst.py, cst/parse_cst.py and cst/engine.py are deterministic code, "
                    "written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text."],
     }

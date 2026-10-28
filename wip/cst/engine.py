@@ -1053,6 +1053,11 @@ def scan_law_dates(units: list[dict]) -> None:
                 for i, m in enumerate(ms):
                     key = al_key(*m.groups())
                     seg = t[m.end():ms[i + 1].start() if i + 1 < len(ms) else len(t)]
+                    if t[:m.start()].count("'") % 2 == 1:
+                        # cst: the act is named inside another act's quoted title ("Decreto 692 de 1994, 'Por el
+                        # cual se reglamenta parcialmente la Ley 100 de 1993.', publicado en el Diario Oficial No
+                        # 41.289 del 30 de marzo de 1994"): the Diario Oficial that follows is the other act's.
+                        continue
                     dm = DO_RE.search(seg)
                     if not dm and seg.lstrip(" ,").startswith("'"):
                         # The act's quoted title names other acts ("'por el cual se corrigen unos yerros en la Ley
@@ -1085,12 +1090,9 @@ def compute_in_force(key: str) -> None:
     enacted = pub = None
     if key in LAW_PAGE:
         enacted, pub = page_header(LAW_PAGE[key], y)
-    # cst: the act's own heading wins over a day read from the code's notes (a note's Diario Oficial may belong to a
-    # regulating decree whose quoted title names the act: 'Decreto 692 de 1994, 'Por el cual se reglamenta ... la Ley
-    # 100 de 1993.', publicado en el Diario Oficial No 41.289 del 30 de marzo de 1994').
     if pub and PUB.get(key) and PUB[key] != pub:
-        note(f"law {key}: Diario Oficial day {PUB[key]} in the notes, {pub} on the act's own page; page used")
-    pub = pub or PUB.get(key)
+        note(f"law {key}: Diario Oficial day {PUB[key]} in the notes, {pub} on the act's own page; notes used")
+    pub = PUB.get(key) or pub
     law["enacted"], law["published"] = enacted, pub
     rule = why = None
     if key in HAND_RULES:
