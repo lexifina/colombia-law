@@ -120,7 +120,7 @@ def plain(h: str) -> str:
 
 
 def date_es(s: str) -> str | None:
-    m = re.search(r"(\d{1,2})(?:o\.|º|°)?\s+(?:de\s+)?([a-zA-Z]+)\s+(?:(?:de|del)\s+)?(\d{4})", s)
+    m = re.search(r"(\d{1,2})(?:o\.|º|°)?\s+(?:de\s+)?([a-zA-Z]+)\s+(?:(?:de|del)\s+)*(\d{4})", s)
     if not m or m.group(2).lower() not in MONTHS:
         return None
     return f"{int(m.group(3)):04d}-{MONTHS[m.group(2).lower()]:02d}-{int(m.group(1)):02d}"
@@ -207,7 +207,7 @@ LAWS: dict[str, dict] = {}
 
 # How the notes write an amending act: "Ley 57 de 1887", "Ley 1a. de 1976", "Decreto 2820 de 1974",
 # "Decreto Ley 1400 de 1970", "Ley 2442 de 27 de diciembre de 2024".
-AL_RE = re.compile(r"\b(Ley|Decreto(?:[- ][Ll]ey| Legislativo| Extraordinario)?)\s+(?:No\.\s*|número\s*)?(\d[\d.]*)"
+AL_RE = re.compile(r"\b([Ll]ey|[Dd]ecreto(?:[- ][Ll]ey| Legislativo| Extraordinario)?)\s+(?:No\.\s*|número\s*)?(\d[\d.]*)"
                    r"(?:a\.|o\.|ª|º)?\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
 # Typing slips in the notes, fixed by what the same note says (its Diario Oficial date or the act's kind).
 KEY_FIXES = {"ley-25-1892": "ley-25-1992", "ley-2820-1974": "dec-2820-1974"}
@@ -216,7 +216,12 @@ CODE_NAMES = [
     (re.compile(r"C[óo]digo de Procedimiento Civil(?:\s*-\s*Decreto 1400 de 1970)?|C\.\s?P\.\s?C\.(?=[\s,.])"), "Decreto 1400 de 1970"),
     (re.compile(r"C\.\s?S\.\s?del\s?T\."), "Decreto 2663 de 1950"),
 ]
-LAW_PAGE = {}  # law key -> basedoc page name (when the source has the act)
+LAW_PAGE = {}  # law key -> basedoc page name, or the URL of the Colpensiones copy (when a source has the act)
+# Acts the basedoc keeps under a code's name.
+CODE_PAGES = {"dec-1400-1970": "codigo_procedimiento_civil"}
+# The same Avance Jurídico compilation as published by Colpensiones (a state company); used only for the heading
+# (sanction and Diario Oficial days) and the vigencia clause of acts the basedoc does not hold.
+COLPENSIONES = "https://normativa.colpensiones.gov.co/colpens/docs/"
 
 
 def norm_refs(t: str) -> str:
@@ -226,7 +231,7 @@ def norm_refs(t: str) -> str:
 
 
 def al_key(kind: str, n: str, y: str) -> str:
-    k = f"{'dec' if kind.startswith('Decreto') else 'ley'}-{int(n.replace('.', ''))}-{y}"
+    k = f"{'dec' if kind.lower().startswith('decreto') else 'ley'}-{int(n.replace('.', ''))}-{y}"
     return KEY_FIXES.get(k, k)
 
 
@@ -238,14 +243,18 @@ def law_label(key: str) -> str:
 def register(key: str) -> str:
     if key not in LAWS:
         kind, n, y = key.split("-")
-        page = f"{'decreto' if kind == 'dec' else 'ley'}_{int(n):04d}_{y}"
-        have = os.path.exists(cache_path(BASE + page + ".html"))
+        page = CODE_PAGES.get(key) or f"{'decreto' if kind == 'dec' else 'ley'}_{int(n):04d}_{y}"
+        url = None
+        if os.path.exists(cache_path(BASE + page + ".html")):
+            url = BASE + page + ".html"
+            LAW_PAGE[key] = page
+        elif os.path.exists(cache_path(COLPENSIONES + page + ".htm")):
+            url = COLPENSIONES + page + ".htm"
+            LAW_PAGE[key] = url
         LAWS[key] = {"label": law_label(key), "title": TITLES.get(key) or law_label(key),
                      "kind": "decree" if kind == "dec" else "law", "enacted": None,
-                     "published": PUB.get(key), "url": BASE + page + ".html" if have else None,
+                     "published": PUB.get(key), "url": url,
                      "temporary_until": None, "restores": None, "note": None}
-        if have:
-            LAW_PAGE[key] = page
         compute_in_force(key)
     return key
 
@@ -403,6 +412,7 @@ def is_full(paras: list[str]) -> bool:
     return bool(paras) and bool(re.match(r"\s*ART[IÍ]CULO\b", to_text(paras[0]), re.I))
 
 
+TACIT = re.compile(r"t[áa]citamente|org[áa]nicamente", re.I)
 VERB = r"(modificad|adicionad|subrogad|derogad|sustituid|corregid|reformad)"
 SCOPE_ART = re.compile(r"^-?\s*Art[íi]culo\s+(?:transitorio\s+)?" + VERB, re.I)
 
@@ -441,7 +451,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 dm = re.search(r"DECLARAD[OA]S?\s+(CONDICIONALMENTE\s+)?(IN)?EXEQUIBLES?", up)
                 if not dm:
                     continue
-                if dm.group(2) or re.search(r"(?:DECLARAD|DELCRAD)[OA]S?\s+INEXEQUIBLES?(?![\s,]+(EN|POR) LA (SENTENCIA )?C-)", up):
+                if dm.group(2) or re.search(r"\bSE DECLARA\w*\s+INEXEQUIBLE|TACHAD\w*[^.]{0,40}INEXEQUIBLE", up) or re.search(r"(?:DECLARAD|DELCRAD)[OA]S?\s+INEXEQUIBLES?(?![\s,]+(EN|POR) LA (SENTENCIA )?C-)", up):
                     dec = "inexequible"
                 elif dm.group(1) or "EN EL ENTENDIDO" in up or "BAJO EL ENTENDIDO" in up:
                     dec = "conditional"
@@ -556,10 +566,21 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 ph = html.escape(epi, quote=False) + " " + ph
         mk = markers(ph)
         corr = any(re.search(r"subrayad\w* corresponde a la correcci", m, re.I) for m in mk)
-        cur.append({"idx": i, "pre": tidy(to_text(ph, True, corr)), "post": tidy(to_text(ph, False)), "marks": mk,
-                    "struck": bool(re.search(r"<s\b", ph, re.I)) or any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk)})
+        c = {"idx": i, "pre": tidy(to_text(ph, True, corr)), "post": tidy(to_text(ph, False)),
+             "marks": [m for m in mk if not TACIT.search(m)],
+             "struck": bool(re.search(r"<s\b", ph, re.I)) or any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk)}
+        if any(TACIT.search(m) for m in mk) and not any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk):
+            # Words the source shows struck as derogated tacitly ('derogado tácitamente'): no act removed them.
+            c["post"], c["struck"] = c["pre"], False
+        cur.append(c)
+    if cur and not any(c["post"] for c in cur):
+        # Nothing of the article is in force today: an earlier text the source gives without its "ARTÍCULO N."
+        # heading is still the whole article.
+        for _, blk in la:
+            if blk["state"][0] in ("orig", "after", "before"):
+                blk["full"] = True
 
-    art_marks = [m for c in cur[:1] for m in c["marks"] if ART_MARK.match(m)]
+    art_marks = [m for c in cur[:1] for m in c["marks"] if ART_MARK.match(m) and not TACIT.search(m)]
     whole = {}  # article-level: law -> lines (full earlier texts)
     orig_full = None
     full_blocks = [blk for _, blk in la if blk["full"]]
@@ -671,7 +692,11 @@ def article_history(u: dict, jv_extra=None) -> dict:
     has_strike = any(c["struck"] and c["pre"] != c["post"] for c in cur) or any(
         any(re.search(r"INEXEQUIBLE", m, re.I) for m in s["marks"]) for s in slots)
     part_ruling = None
-    if has_strike:
+    by_law = [AL_RE.search(m) for c in cur for m in c["marks"] if re.search(r"tachad\w*\s+derogad", m, re.I) and AL_RE.search(m)]
+    if any(c["pre"] != c["post"] for c in cur) and by_law:
+        # Words shown struck because an act repealed them ('Aparte tachado derogado por el artículo 626 de la Ley 1564').
+        part_ruling = al_from_note(*by_law[0].groups(), "")
+    elif has_strike:
         r = ruling_for(jv, None)
         if r:
             part_ruling = add_court(r["id"], r["date"], r["href"])
@@ -815,7 +840,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
 
 CC = "codigo_civil"
 DP = "ley_1581_2012"
-DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}\s+de\s+[a-z]+\s+(?:de\s+)?\d{4})")
+DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}\s+de\s+[a-z]+\s+(?:de\s+)*\d{4})")
 VIG_RE = re.compile(r"\b(rige|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
                     r"comenzar[áa] a regir)\b", re.I)
 NUMS = {"un": 1, "uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "seis": 6, "doce": 12, "dieciocho": 18, "veinticuatro": 24}
@@ -836,11 +861,15 @@ def add_days(day: str, n: int) -> str:
 
 def page_paras(page: str) -> list[str]:
     """Plain paragraphs of a cached basedoc act: its base page and its last continuation page."""
-    base = read(BASE + page + ".html") or ""
-    nums = sorted(set(re.findall(r'value="_pr(\d{3})', base)) | set(re.findall(re.escape(page) + r"_pr(\d{3})\.html", base)))
+    if page.startswith("http"):
+        urls = [page]
+    else:
+        base = read(BASE + page + ".html") or ""
+        nums = sorted(set(re.findall(r'value="_pr(\d{3})', base)) | set(re.findall(re.escape(page) + r"_pr(\d{3})\.html", base)))
+        urls = [BASE + pg + ".html" for pg in [page] + ([f"{page}_pr{nums[-1]}"] if nums else [])]
     out = []
-    for pg in [page] + ([f"{page}_pr{nums[-1]}"] if nums else []):
-        h = read(BASE + pg + ".html") or ""
+    for u in urls:
+        h = read(u) or ""
         i, j = h.find("<!--Inicio documento-->"), h.find("<!--Fin documento-->")
         out += [tidy(plain(strip_markers(p))) for p in
                 re.findall(r"<p\b[^>]*>(.*?)</p>", h[max(i, 0):j if j > 0 else len(h)], re.S | re.I)]
@@ -857,6 +886,11 @@ def page_header(page: str, year: str) -> tuple[str | None, str | None]:
         m = DO_RE.search(p)
         if m and not pub:
             pub = date_es(m.group(1))
+            if pub and pub[:4] < year:
+                # A typing slip in the year ('Diario Oficial No. 18.199bis, del 23 de febrero de 1913' for Ley 8 de
+                # 1922): an act cannot be published before the year it is dated.
+                note(f"{page}: Diario Oficial day {pub} before the act's year; year {year} used")
+                pub = year + pub[4:]
     return enacted, pub
 
 
@@ -864,7 +898,7 @@ def page_clause(page: str) -> str | None:
     """The act's own vigencia clause: the last article that says when the act 'rige'."""
     hits = [p for p in page_paras(page) if VIG_RE.search(p)
             and re.search(r"promulgaci|publicaci|sanci[óo]n|expedici|meses|enero", p)
-            and len(p) < 900 and re.match(r"(ART[IÍ]CULO|Esta|La presente|Este|\d\. Los)", p)]
+            and len(p) < 900 and re.match(r"(ART[IÍ]CULO|Esta|Está|La presente|Este|El presente|\d\. Los)", p)]
     return hits[-1] if hits else None
 
 
@@ -880,6 +914,8 @@ HAND_RULES = {
                              "the provision's own note gives, 1 January 2014, under art. 627 num. 6)"),
     "ley-1934-2018": ("2019-01-01", "Ley 1934 de 2018, art. 22: 'Esta ley entrará a regir a partir del 1 de enero del año "
                                     "siguiente de su expedición ...'"),
+    "dec-1400-1970": ("1971-07-01", "Decreto 1400 de 1970 (Código de Procedimiento Civil), art. 699: 'El presente código "
+                                    "entrará en vigencia el primero de julio de mil novecientos setenta y uno.'"),
     "dec-2150-1995": ("pub", "Decreto 2150 de 1995, art. 152: 'Las normas contenidas en el presente decreto entrarán a regir a "
                              "partir de su publicación, con excepción de las contenidas en el Capítulo II del Título I y en el "
                              "Capítulo XV del Título II, las cuales entrarán a regir 3 meses después ...'"),
@@ -888,6 +924,9 @@ HAND_RULES = {
 
 def rule_from_clause(clause: str) -> str | None:
     t = clause.lower()
+    m = re.search(r"(?:regir[áa]?|rige|vigencia)\s+(?:a partir\s+)?(?:el|del|desde el)\s+(?:d[íi]a\s+)?(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+de\s+\d{4})", t)
+    if m and date_es(m.group(1)):
+        return date_es(m.group(1))
     m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?meses\s+(?:después|contados|siguientes)", t)
     if m:
         return f"pub+{NUMS[m.group(1)]}m"
@@ -1026,7 +1065,8 @@ def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: 
             line = tidy(f"{u['label']} {title}".replace("<", "").replace(">", ""))
             order.append(("head", (lvl or 3, line)))
             continue
-        uk = unit_key(u["name"])
+        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*([A-Z](?![a-zÁÉÍÓÚ]))?", u["label"])
+        uk = unit_key(lm.group(1) + (lm.group(2) or "") if lm else u["name"])
         if not uk:
             note(f"{name}: skipped anchor {u['name']!r} {u['label']!r}")
             continue
