@@ -1,6 +1,7 @@
-"""Phase 2 engine: a frozen copy (2026-10-28 18:20Z) of codes/parse_codes.py, the helper's generalisation of ../parse.py.
+"""Phase 2 engine: cst/engine.py as of 2026-10-28 ~20:00Z (the CST helper's copy of the earlier phase2/engine.py, with its
+fixes marked `cst:`), ported back for the Código Penal and the Código General del Proceso.
 
-Imported by parse_phase2.py only; never run directly (its main() would write the helper's part, so it is disabled).
+Imported by phase2/parse_phase2.py only; never run directly (its main() would write the helper's part, so it is disabled).
 Original docstring follows.
 
 Build corpus.d/50-codes.json for Colombia: the Código Civil and Ley 1581 de 2012 (data protection).
@@ -302,7 +303,21 @@ RULING_RE = re.compile(r"(?:Sentencia|Auto)\s+(?:No\.\s*)?(C-\d+A?-\d{2,4})\s*,?
                        r"(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)?\d{4}|[a-z]+\s+\d{1,2}(?:o\.|º)?\s+de\s+\d{4})", re.I)
 
 
+CSJ_RE = re.compile(r"Corte Suprema de Justicia,?\s+mediante\s+(Sentencia\s+)?(?:de|del)\s+(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+de\s+\d{4})", re.I)
+
+
+class CSJMatch:
+    """cst: a match-like holder for a Corte Suprema ruling known only by its day (id 'CSJ-YYYY-MM-DD')."""
+    def __init__(self, cid: str, day: str):
+        self._g = (None, cid, day)
+
+    def group(self, i: int):
+        return self._g[i]
+
+
 def court_key(c: str) -> str:
+    if c.startswith("CSJ-"):
+        return "csj-" + c[4:]
     m = re.match(r"([A-Z]+)-(\d+)([A-Z]?)-(\d{2,4})", c.upper())
     pre, num, suf, yy = m.groups()
     y = int(yy)
@@ -311,6 +326,10 @@ def court_key(c: str) -> str:
 
 
 def court_label(c: str) -> str:
+    if c.startswith("CSJ-"):
+        y, mo, d = c[4:].split("-")
+        mname = [k for k, v in MONTHS.items() if v == int(mo)][0]
+        return f"Sentencia de la Corte Suprema de Justicia de {int(d)} de {mname} de {y}"
     m = re.match(r"([A-Z]+)-(\d+)([A-Z]?)-(\d{2,4})", c.upper())
     pre, num, suf, yy = m.groups()
     y = int(yy)
@@ -322,7 +341,8 @@ def add_court(cid: str, date: str, href: str | None, note_text: str | None = Non
     k = court_key(cid)
     law = LAWS.get(k)
     if law is None:
-        LAWS[k] = {"label": court_label(cid), "title": f"Corte Constitucional, {court_label(cid)}", "kind": "court",
+        title = court_label(cid) if cid.startswith("CSJ-") else f"Corte Constitucional, {court_label(cid)}"
+        LAWS[k] = {"label": court_label(cid), "title": title, "kind": "court",
                    "enacted": date, "published": None,
                    "url": BASE + href if href else None, "temporary_until": None, "restores": None, "note": note_text}
     elif note_text and not law.get("note"):
@@ -362,7 +382,10 @@ def la_blocks(b: str) -> list[dict]:
     blocks = []
     cur = None
     for ph in box_paras(b):
-        sp = re.match(r"(?:\s|&#160;|&nbsp;)*<span class='b_aj'>(.*?)</span>(?:\s|&#160;|&nbsp;)*$", ph, re.S)
+        # cst: the colon may stand after the span ("<span class='b_aj'>Texto original del Código ...</span>: ").
+        # cst: and an empty link may stand before it ("<A href='R'  ><span class='b_aj'></span></A>", art. 242).
+        ph0 = re.sub(r"^(?:\s|<A [^>]*>\s*<span class='b_aj'>\s*</span>\s*</A>)+", "", ph, flags=re.I)
+        sp = re.match(r"(?:\s|&#160;|&nbsp;)*<span class='b_aj'>(.*?)</span>(?:\s|&#160;|&nbsp;)*:?(?:\s|&#160;|&nbsp;)*$", ph0, re.S)
         head = plain(sp.group(1)) if sp else None
         st = parse_header(head) if head else None
         if head and st is None and head.lower().startswith("texto"):
@@ -376,7 +399,7 @@ def la_blocks(b: str) -> list[dict]:
     return blocks
 
 
-ART_HEAD = re.compile(r"^\s*ART[IÍ]CULO\s+(TRANSITORIO\s*)?([0-9]+[A-Z]?|NUEVO|[IVXL]+)?\s*(?:o\.|º|°)?\s*[.\-:]*\s*", re.I)
+ART_HEAD = re.compile(r"^\s*ART[IÍ]CULO\s+(TRANSITORIO\s*)?([0-9]+[A-Z]?(?:-[0-9]+\b|-[A-Z]\b)?|NUEVO|[IVXL]+)?\s*(?:o\.|º|°)?\s*[.\-:]*\s*", re.I)
 
 
 def block_text(paras: list[str], full: bool) -> list[str]:
@@ -456,7 +479,12 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                     continue
                 m = RULING_RE.search(t)
                 if not m:
-                    continue
+                    # cst: a Corte Suprema de Justicia ruling (before 1991) named by its day only: 'declarado
+                    # INEXEQUIBLE por la Corte Suprema de Justicia mediante del 18 de julio de 1973' (art. 44).
+                    m = CSJ_RE.search(t)
+                    if not m or not date_es(m.group(2)):
+                        continue
+                    m = CSJMatch("CSJ-" + date_es(m.group(2)), m.group(2))
                 d = date_any(m.group(2))
                 href = re.search(r"href='([^'#]+\.html)", ph)
                 up = t.upper()
@@ -623,11 +651,11 @@ def article_history(u: dict, jv_extra=None) -> dict:
             art_events.add(e["law"])
             if e["struck"]:
                 struck_als[e["law"]] = None
-    if cur and not any(c["post"] for c in cur):
-        # An article gone today that several acts derogated: it was gone after each of them.
-        for e in nv:
-            if e["article"] and e["verb"] == "derogad":
-                whole.setdefault(e["law"], None)
+    # An article an act derogated whole was gone after it (cst: also when a later act wrote it again, as Ley 50 de 1990
+    # did for art. 267 after Ley 171 de 1961 repealed it); the engine's copy only did this for articles gone today.
+    for e in nv:
+        if e["article"] and e["verb"] == "derogad":
+            whole.setdefault(e["law"], None)
     art_added = set()
     for m in art_marks:
         # One marker may name several acts ("Artículo modificado por ... Ley 733 de 2002. Penas aumentadas por ...
@@ -916,7 +944,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
 
 CC = "codigo_civil"
 DP = "ley_1581_2012"
-DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)*\d{4})")
+DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}(?:o\.|º)?\s+(?:de\s+)?[a-z]+\s+(?:de\s+)*\d{4})")  # cst: "de 22 diciembre 1995"
 VIG_RE = re.compile(r"\b(rige|rigen|entra a regir|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
                     r"comenzar[áa] a regir)\b", re.I)
 NUMS = {"un": 1, "uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "seis": 6, "doce": 12, "dieciocho": 18, "veinticuatro": 24}
@@ -1015,6 +1043,10 @@ def rule_from_clause(clause: str) -> str | None:
     m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?meses\s+(?:después|contados|siguientes)", t)
     if m:
         return f"pub+{NUMS[m.group(1)]}m"
+    # cst: "El presente código entrará en vigencia un (1) año después de su publicación" (Ley 2452 de 2025, art. 330).
+    m = re.search(r"\b(" + "|".join(NUMS) + r")\s*(?:\(\d+\)\s*)?años?\s+(?:después|contados|siguientes)", t)
+    if m:
+        return f"pub+{12 * NUMS[m.group(1)]}m"
     if re.search(r"promulgaci|publicaci", t):
         return "pub"
     if re.search(r"sanci[óo]n|expedici", t):
@@ -1048,6 +1080,11 @@ def scan_law_dates(units: list[dict]) -> None:
                 for i, m in enumerate(ms):
                     key = al_key(*m.groups())
                     seg = t[m.end():ms[i + 1].start() if i + 1 < len(ms) else len(t)]
+                    if t[:m.start()].count("'") % 2 == 1:
+                        # cst: the act is named inside another act's quoted title ("Decreto 692 de 1994, 'Por el
+                        # cual se reglamenta parcialmente la Ley 100 de 1993.', publicado en el Diario Oficial No
+                        # 41.289 del 30 de marzo de 1994"): the Diario Oficial that follows is the other act's.
+                        continue
                     dm = DO_RE.search(seg)
                     if not dm and seg.lstrip(" ,").startswith("'"):
                         # The act's quoted title names other acts ("'por el cual se corrigen unos yerros en la Ley
@@ -1080,7 +1117,11 @@ def compute_in_force(key: str) -> None:
     enacted = pub = None
     if key in LAW_PAGE:
         enacted, pub = page_header(LAW_PAGE[key], y)
-    pub = PUB.get(key) or pub
+    # The act's own page (its heading: "Diario Oficial No. 44.097 de 24 de julio de 2000") wins over a day the code's
+    # notes give, which may belong to another act named nearby (coordinator rule: only take a date from the act itself).
+    if pub and PUB.get(key) and PUB[key] != pub:
+        note(f"law {key}: Diario Oficial day {PUB[key]} in the notes, {pub} on the act's own page; the act's page used")
+    pub = pub or PUB.get(key)
     law["enacted"], law["published"] = enacted, pub
     rule = why = None
     if key in HAND_RULES:
@@ -1147,6 +1188,15 @@ def split_libro(u: dict) -> tuple[dict, list[str]]:
     return u, []
 
 
+def label_num(label: str) -> str | None:
+    """The article number in a heading: '38', '38A', '38-H' -> '38H', and (cst) '391-1' -> '391-1'."""
+    m = re.match(r"ART[IÍ]CULO\s+(\d+)-(\d+)\.", label)
+    if m:
+        return f"{m.group(1)}-{m.group(2)}"
+    lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", label)
+    return lm.group(1) + (lm.group(2) or "") if lm else None
+
+
 def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: str | None = None) -> dict:
     """Rebuild every provision of one basedoc act and assemble its dated versions."""
     units = doc_units(name)
@@ -1164,8 +1214,8 @@ def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: 
             line = tidy(f"{u['label']} {title}".replace("<", "").replace(">", ""))
             order.append(("head", (lvl or 3, line)))
             continue
-        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", u["label"])
-        uk = unit_key(lm.group(1) + (lm.group(2) or "") if lm else u["name"])
+        num = label_num(u["label"])
+        uk = unit_key(num if num else u["name"])
         if not uk:
             note(f"{name}: skipped anchor {u['name']!r} {u['label']!r}")
             continue

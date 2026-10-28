@@ -110,6 +110,30 @@ DECISIONS_FIXED = [
     "articles' original text, and the articles are removed on Ley 100's in-force day, like arts. 268 to 272 that the same "
     "act repealed. Court rulings on the repealed words (art. 260: Sentencia C-862-06, on the text kept for the transition "
     "regime of Ley 100, art. 36) are not recorded.",
+    "Código Sustantivo del Trabajo: articles the source shows with no words today but whose original words it gives in "
+    "a 'Texto original' box keep those words until the act the source names for their end: arts. 210 and 211 until "
+    "Decreto 1295 de 1994 (its art. 98 repealed them tacitly, as the Corte Constitucional's Sentencia C-184-10, quoted "
+    "in the source's Notas del Editor, says); art. 346 until Ley 75 de 1986 ('derogado tácitamente por el artículo 35'); "
+    "arts. 454 to 461 (labour arbitration) until 12 October 2012, when Ley 1563 de 2012, art. 118, repealed arts. 183 to "
+    "190 of Decreto 1818 de 1998, the compilation that had incorporated them; the source's marker gives that day. The "
+    "source's own Notas del Editor add that the Corte Suprema de Justicia (AL2314-2014) holds the code's arbitration "
+    "rules still in force; the history follows the source's current text, which has no words for them.",
+    "Código Sustantivo del Trabajo: struck words or whole articles the source marks INEXEQUIBLE without naming a dated "
+    "ruling (arts. 323 and 409, whole; the words of art. 247 that the Corte Constitucional, Sentencia C-823-06, found "
+    "already repealed) are left out of every version. Art. 162, num. 1, lit. d) (repealed by Decreto 1393 de 1970, art. "
+    "56) reads as repealed in every version: the source gives that decree's Diario Oficial number (33.131) but no day, "
+    "and no other source in reach gives its in-force day.",
+    "Código Sustantivo del Trabajo: the Corte Suprema de Justicia's ruling of 18 July 1973 that struck the second "
+    "sentence of art. 44 is a court law keyed csj-1973-07-18 (the source names it by its day only).",
+    "Código Sustantivo del Trabajo: art. 200 (enfermedad profesional) was repealed by Decreto 1295 de 1994, art. 98, and "
+    "revived by the Corte Constitucional's Sentencia C-1155-08 of 26 November 2008 ('la presente declaración de "
+    "inexequibilidad revive el artículo 200 del Código Sustantivo del Trabajo', quoted in its Notas de Vigencia): absent "
+    "from 24 June 1994, back with its original words from the ruling's day.",
+    "Código Sustantivo del Trabajo, source slips fixed: headings whose anchor holds only 'A' or 'ART' (arts. 40, 266) or "
+    "whose number stands in a marker (163A, 167A, 185-A, 235-A, 391-1, 481-1) are made whole; 'Decreo' and 'Decreto - "
+    "Ley' read as 'Decreto' and 'Decreto Ley'; art. 357's 'Texto modificado por el Decreto 2351 de 1995' is Decreto 2351 "
+    "de 1965 (its marker); '<Apartes tachados suprimidos por el artículo 53 de la Ley 962 de 2005>' (art. 73) is read as "
+    "words that act removed; the publisher's cross-reference stubs ('l0146_94+[...]', art. 236) are dropped.",
 ]
 E.HAND_RULES.update({
     "ley-171-1961": ("1962-02-01", "Ley 171 de 1961, art. 15: 'Esta ley regirá desde el día 1o. del mes siguiente al de su "
@@ -206,8 +230,38 @@ def keep_original(u: dict, h: dict) -> None:
                     lines = E.block_text(b["paras"], True)
                     if lines:
                         h["states"] = [("", lines, "")]
-                        KEPT_ORIGINAL.append(u["name"])
+                        gone = gone_by(u, mks)
+                        if gone:
+                            h["states"].append(gone)
+                        else:
+                            KEPT_ORIGINAL.append(u["name"])
                         return
+
+
+def gone_by(u: dict, mks: list[str]) -> tuple | None:
+    """The act the source itself names for an article it shows with no words (state: absent from that act's day).
+    * arts. 209-211: the source's Notas del Editor quote the Corte Constitucional (Sentencia C-184-10): 'El artículo 98
+      del Decreto ley 1295 de 1994 dispone la derogación tácita de ... los artículos 209, 210 y 211 del Código';
+    * '<Artículo derogado tácitamente por el artículo 35 de la Ley 75 de 1986.>' (art. 346);
+    * '<El artículo 183 del Estatuto ... - Decreto Extraordinario 1818 de 1998 fue derogado por el artículo 118 de la
+      Ley 1563 de 2012. Entra a regir a partir del 12 de octubre de 2012>' (arts. 454-461, which that decree had
+      incorporated)."""
+    ed = " ".join(E.plain(p) for it in u["items"] if it[0] == "box" and it[1] == "Notas del Editor" for p in E.box_paras(it[2]))
+    m = re.search(r"art[íi]culo 98 del Decreto ley 1295 de 1994 dispone la derogaci[óo]n t[áa]cita de .{0,80}"
+                  r"art[íi]culos 209, 210 y 211 del C[óo]digo", ed)
+    if m and u["name"] in ("209", "210", "211"):
+        k = E.register("dec-1295-1994")
+        return (E.law_day(k), None, k)
+    for mk in mks:
+        a = re.match(r"Art[íi]culo derogado t[áa]citamente por el art[íi]culo \d+ de la (Ley \d+ de \d{4})", mk)
+        if a:
+            k = E.register(E.al_key(*E.AL_RE.search(a.group(1)).groups()))
+            return (E.law_day(k), None, k) if E.law_day(k) else None
+        a = re.search(r"Decreto Extraordinario 1818 de 1998 fue derogado por el art[íi]culo 118 de la Ley 1563 de 2012\. "
+                      r"Entra a regir a partir del (\d+ de \w+ de \d{4})", mk)
+        if a:
+            return (E.date_es(a.group(1)), None, E.register("ley-1563-2012"))
+    return None
 
 
 def article_history(u: dict, jv_extra=None) -> dict:

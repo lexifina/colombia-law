@@ -30,6 +30,36 @@ SIGN_OFF = re.compile(r"\s*(El Presidente del (honorable |H\. )?Senado|EL PRESID
 # 2012 is the code; Ley 1565 de 2012 is an unrelated act on returning nationals).
 E.KEY_FIXES.update({"ley-599-0000": "ley-599-2000", "ley-1565-2012": "ley-1564-2012"})
 
+# Vigencia clauses read by hand from the acts' own cached basedoc pages, where a clause has a general rule and a
+# one-year exception that the pattern rules would take for the whole act.
+E.HAND_RULES.update({
+    "ley-2080-2021": ("pub", "Ley 2080 de 2021, art. 86: 'La presente ley rige a partir de su publicación, con excepción de "
+                             "las normas que modifican las competencias de los juzgados y tribunales administrativos y del "
+                             "Consejo de Estado, las cuales solo se aplicarán respecto de las demandas que se presenten un año "
+                             "después de publicada esta ley.' (the exception is about which suits the new competences apply "
+                             "to, not when the words took effect)"),
+    "ley-2502-2025": ("pub+12m", "Ley 2502 de 2025, art. 6: 'La presente Ley rige a partir de su sanción, promulgación y "
+                                 "publicación en el Diario Oficial ... La modificación del artículo 296 de la Ley 599 de 2000, "
+                                 "establecida en esta ley, comenzará a regir un (1) año después de su sanción y promulgación.' "
+                                 "(its only change to these codes is art. 296 of the Código Penal)"),
+})
+
+_unit_day = E.unit_day
+
+
+def unit_day(key: str, text: str) -> None:
+    """Ley 890 de 2004, art. 15 (its own page): 'La presente ley rige a partir del 1o. de enero de 2005, con excepción de
+    los artículos 7o. a 13, los que entrarán en vigencia en forma inmediata.' A Código Penal note naming one of its
+    articles 7 to 13 ("Artículo adicionado por el artículo 7 de la Ley 890 de 2004, publicada en el Diario Oficial No.
+    45.602, de 7 de julio de 2004") dates that change from the act's publication."""
+    _unit_day(key, text)
+    m = re.search(r"art[íi]culo (\d+)o?\.? de la Ley 890 de 2004", text)
+    if key == "ley-890-2004" and m and 7 <= int(m.group(1)) <= 13 and E.LAWS[key].get("published"):
+        E.UNIT_DAYS[key] = E.LAWS[key]["published"]
+
+
+E.unit_day = unit_day
+
 _doc_units = E.doc_units
 
 
