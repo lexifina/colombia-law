@@ -216,6 +216,10 @@ def anachronisms(acts: list[dict]) -> list[str]:
                         law.get("enacted") or law.get("published")) else None
                     if first and v["from"] < first:
                         out.append(f"{a['slug']} {k}: {l} credited on {v['from']}, before the act's own date {first}")
+                    act0 = E.LAWS.get(a["first_law"] or "", {})
+                    born = act0.get("enacted") or act0.get("published")
+                    if law.get("kind") == "court" and born and law.get("enacted") and law["enacted"] < born:
+                        out.append(f"{a['slug']} {k}: ruling {l} ({law['enacted']}) is older than the code ({born})")
     return out
 
 

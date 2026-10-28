@@ -1276,6 +1276,9 @@ def assemble(timelines, labels, notes_all, order, start) -> dict:
     for g in gaps:
         note("gap " + g)
 
+    # A ruling dated before the act took effect (the Court reviewed the CPACA between its promulgation in 2011 and its
+    # start in 2012) is shown on the act's first day, never before the text it rules on exists in the history.
+    notes_all = {k: [(max(d, start), l) for d, l in ns] for k, ns in notes_all.items()}
     days = sorted({d for r in resolved.values() for d, _, _ in r} | {d for ns in notes_all.values() for d, _ in ns})
     versions = []
     prev_units = None
