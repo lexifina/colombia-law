@@ -36,7 +36,7 @@ def doc_units(name):
         # A paragraph marked both tacitly derogated and with words struck as INEXEQUIBLE (Ley 100 de 1993, art. 204):
         # the struck words are gone (the engine's reading); verify_phase2 keeps struck words whenever a tacit marker is
         # present, so they are dropped here first.
-        u["items"] = [(it[0], re.sub(r"<s[^>]*>.*?</s>", " ", it[1], flags=re.S | re.I)) + tuple(it[2:])
+        u["items"] = [(it[0], re.sub(r"<s\b[^>]*>.*?</s>", " ", it[1], flags=re.S | re.I)) + tuple(it[2:])
                       if it[0] == "p" and any(E.TACIT.search(x) for x in E.markers(it[1]))
                       and any("INEXEQUIBLE" in x.upper() for x in E.markers(it[1])) else it for it in u["items"]]
     return units
