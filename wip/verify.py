@@ -27,6 +27,8 @@ def today_constitution() -> dict:
             if t0 in ("Nota Aclaratoria",) or P.re.match(r"(Art[íi]culo|Inciso|Numeral)s? corregid", t0) or (
                     "antsig" in ph):
                 continue
+            if first and P.re.search(r"&lt;Art\S+\s+(transitorio\s+)?INEXEQUIBLE&gt;", ph, P.re.I):
+                break  # the whole article was struck: it is not in force today
             if first:
                 epi = P.tidy(P.ART_HEAD.sub("", u["label"], count=1)) if P.ART_HEAD.match(u["label"]) else ""
                 if epi:

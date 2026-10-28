@@ -448,7 +448,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
 PARA_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|Numerales|Literal|Literales|Aparte|Apartes|"
                        r"Expresi[óo]n|Ordinal|Frase|Texto)\b.*?" + VERB + r".*?" + AL_RE.pattern, re.I)
 STRIKE_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|Numerales|Literal|Literales|Aparte|Apartes|"
-                         r"Expresi[óo]n|Ordinal|Frase)[^<>]*INEXEQUIBLE", re.I)
+                         r"Expresi[óo]n|Ordinal|Frase)\b[^<>]*INEXEQUIBLE", re.I)
 ART_MARK = re.compile(r"^Art[íi]culo\s+(?:transitorio\s+)?" + VERB + r".*?" + AL_RE.pattern, re.I)
 
 
@@ -593,6 +593,15 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 orig_full = patch_paras(whole[GACETA125], [l for f in frs for l in f])
                 if orig_full is None:
                     note(f"{u['name']}: Gaceta 116 fragment did not match")
+
+    # "<Artículo INEXEQUIBLE>": the whole article was struck; today it is gone, and the act that last wrote it
+    # (if not already known to be struck) is the one the ruling undid.
+    if cur and any(re.match(r"Art[íi]culo(\s+transitorio)?\s+INEXEQUIBLE", m, re.I) for m in cur[0]["marks"]):
+        for c in cur:
+            c["pre"] = c["post"] = ""
+        if art_events and not struck_als:
+            latest = max(art_events, key=lambda l: (law_day(l) or "", l))
+            struck_als[latest] = None
 
     # Rulings that undid whole Actos Legislativos.
     for al in list(struck_als):
