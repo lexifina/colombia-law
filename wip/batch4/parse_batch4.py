@@ -141,13 +141,116 @@ def start_1801(units, enacted, pub):
             f"force from {start} under its art. 243: '{a}'")
 
 
+def start_ley100(units, enacted, pub):
+    a = B3.article_text(units, "289")
+    b = B3.article_text(units, "151")
+    if not a.startswith("La presente Ley rige a partir de la fecha de su publicación") or "1o. de Abril de 1.994" not in b \
+            or not pub:
+        raise SystemExit(f"Ley 100 arts. 289/151: {a[:200]!r}")
+    a = a[:a.index("El presidente del Honorable Senado")].strip() if "El presidente del Honorable Senado" in a else a
+    return (pub, f"Ley 100 de 1993, art. 289: '{a}'",
+            f"The act as promulgated (Ley 100 de 1993, Diario Oficial No. 41.148 of {pub}), in force from publication under "
+            f"its art. 289: '{a}' Its Sistema General de Pensiones applied from 1 April 1994 (art. 151: '{b}'). The history "
+            f"dates the whole act from publication.")
+
+
+CGD_265 = ("Las disposiciones previstas en la presente ley, y las contenidas en la Ley 1952 de 2019, que no son objeto de "
+           "reforma, entrarán a regir nueve (9) meses después de su promulgación.")
+# Ley 2094 de 2021 reformed the Código General Disciplinario before it took effect; its art. 73 (now art. 265 of the code,
+# read from the code's page) fixes the days. The engine's patterns would read "nueve (9) meses" as "from promulgation".
+E.HAND_RULES["ley-2094-2021"] = ("pub+9m", "Ley 2094 de 2021, art. 73 (art. 265 of the Código General Disciplinario as it "
+                                           "reformed it): '" + CGD_265 + " ... PARÁGRAFO 1o. El artículo 1 de la presente "
+                                           "Ley, relativo a las funciones jurisdiccionales entrará a regir a partir de su "
+                                           "promulgación. PARÁGRAFO 2o. El artículo 7o de la presente ley entrará a regir "
+                                           "treinta meses (30) después de su promulgación.'")
+_unit_day = E.unit_day
+
+
+def unit_day(key: str, text: str) -> None:
+    """Ley 2094 de 2021, art. 73 (above): its art. 1 (art. 2 of the code) took effect on promulgation, its art. 7 (art. 33
+    of the code) thirty months after it, the rest nine months after it."""
+    _unit_day(key, text)
+    m = re.search(r"art[íi]culo (\d+)o?\.? de la Ley 2094 de 2021", text)
+    pub = E.LAWS.get(key, {}).get("published")
+    if key == "ley-2094-2021" and m and pub:
+        if m.group(1) == "1":
+            E.UNIT_DAYS[key] = pub
+        elif m.group(1) == "7":
+            E.UNIT_DAYS[key] = E.add_months(pub, 30)
+
+
+E.unit_day = unit_day
+
+
+def start_cgd(units, enacted, pub):
+    a = B3.article_text(units, "265")
+    if not a.startswith(CGD_265) or "PARÁGRAFO 2o. El artículo 7o de la presente ley entrará a regir treinta meses" not in a \
+            or not pub:
+        raise SystemExit(f"CGD art. 265: {a[:300]!r}")
+    return (pub, "Ley 1952 de 2019, art. 265 as enacted: 'La presente ley entrará a regir cuatro (4) meses después de su "
+                 "sanción y publicación ...' (arts. 33, 101, 102, 208 to 235 and 254 eighteen months after promulgation); "
+                 "postponed to 1 July 2021 by Ley 1955 de 2019, art. 140, and replaced by Ley 2094 de 2021, art. 73: '"
+                 f"{a[:600]}'. The first version is dated from promulgation ({pub}).",
+            f"The code as promulgated (Ley 1952 de 2019, sanctioned {enacted}, Diario Oficial No. 50.850 of {pub}). It was "
+            "not yet in force: its art. 265 set four months after sanction and publication (eighteen months for the "
+            "procedural articles), Ley 1955 de 2019, art. 140, postponed that to 1 July 2021, and Ley 2094 de 2021, which "
+            "reformed the code, put it in force nine months after its own promulgation (29 June 2021), on 29 March 2022. "
+            "The history dates the code from its promulgation so that each reform shows as its own change.")
+
+
+def build_cgd() -> dict:
+    act = B3.build("ley_1952_2019", "ley-1952-2019", "codigo-general-disciplinario", "CGD",
+                   "Código General Disciplinario (Ley 1952 de 2019)",
+                   "Por medio de la cual se expide el Código General Disciplinario, se derogan la Ley 734 de 2002 y algunas "
+                   "disposiciones de la Ley 1474 de 2011, relacionadas con el derecho disciplinario", start_cgd)
+    # Ley 1955 de 2019, art. 140, postponed the code's start and changed no words. The code's note on art. 265 ("El plazo
+    # de entrada en vigencia de esta ley se prorrogó hasta el 1 de julio de 2021 por el artículo 140 de la Ley 1955 de 2019
+    # ... publicada en el Diario Oficial No. 50.964 de 25 de mayo 2019") is shown as a change of no words on that day.
+    key = E.register("ley-1955-2019")
+    day = E.LAWS[key]["published"]
+    if day != "2019-05-25":
+        raise SystemExit(f"Ley 1955 de 2019: published {day}")
+    E.LAWS[key]["note"] = ("Ley 1955 de 2019 (Plan Nacional de Desarrollo 2018-2022), art. 140, postponed the entry into "
+                           "force of the Código General Disciplinario to 1 July 2021; it changed no words of the code.")
+    vs = act["versions"]
+    if any(v["from"] == day for v in vs):
+        raise SystemExit("CGD: a version already on " + day)
+    vs.append({"from": day, "credits": {"art-0265": [key]}, "source_url": vs[0]["source_url"], "sha256": vs[0]["sha256"]})
+    vs.sort(key=lambda v: v["from"])
+    DECISIONS.append("Código General Disciplinario: Ley 1955 de 2019, art. 140 (postponing the code's start to 1 July "
+                     "2021), is shown on its publication day (25 May 2019) as a change of no words to art. 265, from the "
+                     "code's own note on that article.")
+    return act
+
+
+def start_ce(units, enacted, pub):
+    a = B3.article_text(units, "218")
+    if not a.startswith("El presente Decreto rige desde la fecha de su publicación") or not pub:
+        raise SystemExit(f"Código Electoral art. 218: {a[:200]!r}")
+    a = a[:a.index("Dado en")].strip() if "Dado en" in a else a
+    return (pub, f"Decreto 2241 de 1986, art. 218: '{a}'",
+            f"The code as issued (Decreto 2241 de 1986, of {enacted}, Diario Oficial No. 37.571 of {pub}), in force from "
+            f"publication under its art. 218: '{a}'")
+
+
 BUILDERS = {
     "codigo-nacional-de-seguridad-y-convivencia-ciudadana": lambda: B3.build(
         "ley_1801_2016", "ley-1801-2016", "codigo-nacional-de-seguridad-y-convivencia-ciudadana", "CNSCC",
         "Código Nacional de Seguridad y Convivencia Ciudadana (Ley 1801 de 2016)",
         "Por la cual se expide el Código Nacional de Seguridad y Convivencia Ciudadana", start_1801),
+    "sistema-de-seguridad-social-integral": lambda: B3.build(
+        "ley_0100_1993", "ley-100-1993", "sistema-de-seguridad-social-integral", "L100",
+        "Ley 100 de 1993 (Sistema de Seguridad Social Integral)",
+        "Por la cual se crea el sistema de seguridad social integral y se dictan otras disposiciones", start_ley100),
+    "codigo-general-disciplinario": build_cgd,
+    "codigo-electoral": lambda: B3.build(
+        "decreto_2241_1986", "dec-2241-1986", "codigo-electoral", "CE", "Código Electoral (Decreto 2241 de 1986)",
+        "Por el cual se adopta el Código Electoral", start_ce),
 }
-P.PREFIX.update({"codigo-nacional-de-seguridad-y-convivencia-ciudadana": ("ley_1801_2016", "CNSCC")})
+P.PREFIX.update({"codigo-nacional-de-seguridad-y-convivencia-ciudadana": ("ley_1801_2016", "CNSCC"),
+                 "sistema-de-seguridad-social-integral": ("ley_0100_1993", "L100"),
+                 "codigo-general-disciplinario": ("ley_1952_2019", "CGD"),
+                 "codigo-electoral": ("decreto_2241_1986", "CE")})
 NAMES = ("Código Nacional de Seguridad y Convivencia Ciudadana", "Ley 100 de 1993", "Código General Disciplinario",
          "Código Electoral")
 
