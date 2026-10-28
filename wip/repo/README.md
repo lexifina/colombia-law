@@ -13,6 +13,13 @@ It follows the shared design of [lexifina/global-law](https://github.com/lexifin
 | `codigo-penal/` | Código Penal (Ley 599 de 2000) | From its entry into force (24 July 2001, one year after promulgation, art. 476) to today |
 | `codigo-general-del-proceso/` | Código General del Proceso (Ley 1564 de 2012) | From promulgation (12 July 2012; art. 627 staggers the start of most articles, see the first commit) to today |
 
+| `codigo-de-comercio/` | Código de Comercio (Decreto 410 de 1971) | From its issue (27 March 1971; most of it from 1 January 1972, art. 2038) to today |
+| `cpaca/` | Código de Procedimiento Administrativo y de lo Contencioso Administrativo (Ley 1437 de 2011) | From its entry into force (2 July 2012, art. 308) to today |
+| `codigo-de-procedimiento-penal/` | Código de Procedimiento Penal (Ley 906 de 2004) | From publication (1 September 2004; by judicial district from 2005, art. 530) to today; one change on `futuro` |
+| `codigo-de-la-infancia-y-la-adolescencia/` | Código de la Infancia y la Adolescencia (Ley 1098 de 2006) | From promulgation (8 November 2006; most of it six months later, art. 216) to today |
+
+Where a code's own vigencia article starts different parts on different days, its first commit is dated from the earliest of them and its note quotes the article. One change has no day in any source: Ley 44 de 1981 (Código de Comercio art. 159) is shown on 31 December 1981, the latest day it can have been sanctioned.
+
 The Código Civil and Ley 1581 de 2012 come from a separate part of the same build. The Código Sustantivo del Trabajo is being checked and is not on `main` yet.
 
 **The Código Penal's penalties after 2005.** Ley 890 de 2004, art. 14, raised every penalty of the Parte Especial by a third in the minimum and a half in the maximum, from 1 January 2005, without rewriting the articles. The source prints each article with the raised figures ("con las penas aumentadas") and keeps the earlier wording; this history follows it, so those changes are commits of Ley 890 de 2004 on 1 January 2005. The figures are the publisher's computation of art. 14, as its own warning says. The per-act `README.md` in each folder lists every provision, how often it changed and when.
