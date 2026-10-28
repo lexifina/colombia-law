@@ -439,9 +439,13 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 nv.append({"text": t, "law": keys[0], "article": bool(SCOPE_ART.match(t)),
                            "verb": (re.search(VERB, t, re.I).group(1).lower()),
                            "struck": "INEXEQUIBLE" in t.upper()})
-        elif title == "Jurisprudencia Vigencia":
+        if title in ("Jurisprudencia Vigencia", "Notas de Vigencia"):
+            # Rulings: in the Jurisprudencia box, and sometimes in the Notas de Vigencia ('Artículo declarado
+            # INEXEQUIBLE por la Corte Constitucional, mediante Sentencia C-379-98 ...').
             for ph in box_paras(b):
                 t = plain(ph)
+                if title == "Notas de Vigencia" and "Corte Constitucional" not in t:
+                    continue
                 if not t.startswith("-") or "estarse a lo resuelto" in t or re.match(r"- La Corte Constitucional se declar\S+ INHIBID", t, re.I):
                     continue
                 m = RULING_RE.search(t)
@@ -687,6 +691,13 @@ def article_history(u: dict, jv_extra=None) -> dict:
         if art_events and not struck_als:
             latest = max(art_events, key=lambda l: (law_day(l) or "", l))
             struck_als[latest] = None
+        elif not art_events:
+            # The article as enacted, struck whole by the ruling.
+            r = ruling_for(jv, None)
+            if r:
+                ck = add_court(r["id"], r["date"], r["href"])
+                whole[ck] = None
+                art_events.add(ck)
 
     # Rulings that undid whole Actos Legislativos.
     for al in list(struck_als):
@@ -1376,7 +1387,9 @@ DECISIONS = [
     "In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it, or as the Código Civil page quotes it; a day that a provision's own note gives ('La derogatoria rige a partir del 1o. de enero de 2014') applies to that provision. Acts the basedoc does not hold (most acts before 1992) are dated by the default rule: before 1913, from publication in the Diario Oficial (Código Civil arts. 11 and 12); from 1913, two months after it (Ley 4 de 1913, art. 52). The list below gives the day and the rule for each act.",
     "Typing slips in the source, corrected: 'Ley 25 de 1892' (its note gives the Diario Oficial of 18 December 1992) is Ley 25 de 1992; 'Ley 2820 de 1974' is Decreto 2820 de 1974; 'Ley 95 de 1980' in art. 217's earlier text is Ley 95 de 1890 (the reform of arts. 214-217 that Ley 1060 de 2006 later repealed as 'los artículos 5o y 6o de la Ley 95 de 1890'); the Colpensiones heading of Ley 8 de 1922 dates its Diario Oficial No. 18.199bis to 23 February 1913, read as 1922.",
     "Old acts the basedoc does not hold are read, for their heading and vigencia clause only, from the same Avance Jurídico compilation as published by Colpensiones (normativa.colpensiones.gov.co).",
-    "Where the source shows words struck as INEXEQUIBLE but names no dated ruling for them (arts. 537, 669, 1119, 1527), the struck words are left out of every version; art. 312's struck text is likewise left out.",
+    "Where the source shows words struck as INEXEQUIBLE but names no dated ruling for them (arts. 669, 1119, 1527), the struck words are left out of every version; art. 312's struck text is likewise left out.",
+    "Today's text on the source page is taken as the text in force now; where an earlier-text box gives the same act's wording slightly differently (art. 200), the page's current text wins. Articles the source calls derogated only tacitly or 'orgánicamente' by Court opinion (arts. 50, 196, 208, 636) keep their words in every version, since no act or ruling removed them; the page itself shows no current text for them.",
+    "Codes/verify_today.py checks the last version of every article of both acts against the source page's current text (struck words removed, publisher markers and bracketed epigraphs dropped): all match except the four tacitly derogated articles above.",
     "Constitutional Court rulings that struck text (INEXEQUIBLE) are laws of kind 'court', dated by the day of the ruling as the source gives it. Rulings that upheld text on a condition of interpretation change no words: they are court laws with a note, credited to the article on the ruling's day. Plain EXEQUIBLE rulings and inhibitions are not recorded.",
     "Where the source names an act that changed an article but does not give the text in force after it, the article's text for that period is the line '[La fuente no da el texto vigente en esta fecha.]'; parse_codes.py --report lists every such gap.",
     "Avance Jurídico's editorial notes, markers (<...>) and article epigraphs in angle brackets are not part of the text. The headings of books, titles and chapters are kept in titulos.md, a heading shown while an article under it exists.",

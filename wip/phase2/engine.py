@@ -1076,9 +1076,10 @@ def unit_day(key: str, text: str) -> None:
 # ---------------------------------------------------------------- the codes
 
 def unit_key(name: str) -> tuple[str, str] | None:
-    m = re.fullmatch(r"(\d+)([A-Z]?)(?:-(\d+))?", name)
+    m = re.fullmatch(r"(\d+)([A-ZÑ]?)(?:-(\d+))?", name)
     if m:
-        k = f"art-{int(m.group(1)):04d}{m.group(2).lower()}" + (f"-{int(m.group(3)):02d}" if m.group(3) else "")
+        # Ñ (art. 38-Ñ of the Código Penal) becomes "nn": ASCII, and it sorts after "n" and before "o".
+        k = f"art-{int(m.group(1)):04d}{m.group(2).lower().replace('ñ', 'nn')}" + (f"-{int(m.group(3)):02d}" if m.group(3) else "")
         return k, f"Art. {int(m.group(1))}{m.group(2)}" + (f"-{m.group(3)}" if m.group(3) else "")
     return None
 
@@ -1122,7 +1123,7 @@ def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: 
             line = tidy(f"{u['label']} {title}".replace("<", "").replace(">", ""))
             order.append(("head", (lvl or 3, line)))
             continue
-        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*([A-Z](?![a-zÁÉÍÓÚ]))?", u["label"])
+        lm = re.match(r"ART[IÍ]CULO\s+(\d+)\s*(?:-\s*)?([A-ZÑ](?![a-zñÁÉÍÓÚ]))?", u["label"])
         uk = unit_key(lm.group(1) + (lm.group(2) or "") if lm else u["name"])
         if not uk:
             note(f"{name}: skipped anchor {u['name']!r} {u['label']!r}")
