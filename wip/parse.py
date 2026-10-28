@@ -18,6 +18,7 @@ Usage:  python -X utf8 parse.py            (writes corpus.json atomically)
 """
 from __future__ import annotations
 
+import difflib
 import hashlib
 import html
 import json
@@ -359,6 +360,31 @@ def block_text(paras: list[str], full: bool) -> list[str]:
     return out
 
 
+def patch_paras(lines: list[str], frag: list[str]) -> list[str] | None:
+    """Replace, for each fragment line, the most similar line of `lines` (ratio >= 0.6), or None."""
+    out = list(lines)
+    for f in frag:
+        best = max(range(len(out)), key=lambda i: (difflib.SequenceMatcher(None, out[i], f).ratio(), -i))
+        if difflib.SequenceMatcher(None, out[best], f).ratio() < 0.6:
+            return None
+        out[best] = f
+    return out
+
+
+def para_label(t: str) -> str | None:
+    """The enumeration label a paragraph starts with: '8.', 'b)', 'PARÁGRAFO 2o.' (normalised)."""
+    m = re.match(r"\s*(\d{1,2}[A-Za-z]?)\s*[.)]\s", t)
+    if m:
+        return m.group(1).lower() + "."
+    m = re.match(r"\s*([a-zñ])\)\s", t)
+    if m:
+        return m.group(1) + ")"
+    m = re.match(r"\s*PAR[ÁA]GRAFO(\s+TRANSITORIO)?(\s+\d+|\s+[A-ZÚ][a-zú]+)?", t, re.I)
+    if m:
+        return "par" + (" t" if m.group(1) else "") + (" " + m.group(2).strip().lower() if m.group(2) else "")
+    return None
+
+
 def is_full(paras: list[str]) -> bool:
     return bool(paras) and bool(re.match(r"\s*ART[IÍ]CULO\b", to_text(paras[0]), re.I))
 
@@ -545,6 +571,14 @@ def article_history(u: dict, jv_extra=None) -> dict:
             whole.setdefault(f"before:{law}", lines)
     if any(blk["state"] == ("after", GACETA125) for blk in full_blocks):
         art_events.add(GACETA125)
+        # The 1991 text of a corrected article: the corrected text with the paragraph the source gives in its
+        # Gaceta No. 116 wording put back (matched by similarity).
+        if orig_full is None:
+            frs = [block_text(blk["paras"], False) for _, blk in la if not blk["full"] and blk["state"] == ("orig", None)]
+            if frs:
+                orig_full = patch_paras(whole[GACETA125], [l for f in frs for l in f])
+                if orig_full is None:
+                    note(f"{u['name']}: Gaceta 116 fragment did not match")
 
     # Rulings that undid whole Actos Legislativos.
     for al in list(struck_als):
@@ -833,35 +867,33 @@ def heading_line(label: str) -> str:
     return label
 
 
+MISSING_LINE = "[La fuente no da el texto vigente en esta fecha.]"
+MISSING_UNITS: list[str] = []
+
+
 def assemble(timelines, labels, notes_all, order, start) -> dict:
     """Turn per-unit state lists into dated act versions with credits."""
-    # Resolve each unit's dated states, folding UNKNOWN gaps into the next known state.
+    # Resolve each unit's dated states. A state the source does not give is a placeholder line, credited to the
+    # act that made it (the source names the act but not the wording it left).
     resolved: dict[str, list[tuple[str, object, list[str]]]] = {}
     gaps = []
     for key, sts in timelines.items():
         out = []
         base = sts[0][1]
-        pending: list[str] = []
         first_unknown = base is UNKNOWN
-        cur = None if base is UNKNOWN else base
+        cur = [MISSING_LINE] if base is UNKNOWN else base
         out.append((start, cur, []))
         for d, stt, law in sts[1:]:
             laws = [l for l in law.split("+") if l]
-            if stt is UNKNOWN:
-                pending += laws
-                continue
             day = max(d, start)
-            out.append((day, stt, pending + laws))
-            if pending:
-                gaps.append(f"{key}: text between {', '.join(pending)} and {law} not in the source; change credited together on {day}")
-            pending = []
-        if pending:
-            gaps.append(f"{key}: unresolved after {pending}")
+            if stt is UNKNOWN:
+                gaps.append(f"{key}: text after {law} ({day}) not in the source")
+                MISSING_UNITS.append(f"{key} from {day}")
+                stt = [MISSING_LINE]
+            out.append((day, stt, laws))
         if first_unknown:
-            # The 1991 text is not given: the oldest text the source holds is shown from 1991 and the first
-            # change on record is credited to every act named up to it.
-            firsts = [o for o in out[1:] if o[1] is not UNKNOWN]
             gaps.append(f"{key}: 1991 text not in the source")
+            MISSING_UNITS.append(f"{key} from {start}")
         resolved[key] = out
     for g in gaps:
         note("gap " + g)
