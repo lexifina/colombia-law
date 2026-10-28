@@ -20,7 +20,7 @@ V.ACTS = (("codigo-nacional-de-seguridad-y-convivencia-ciudadana", "ley_1801_201
 V.P.OUT = os.path.join(os.path.dirname(HERE), "corpus.d", "90-batch4.json")
 E = V.E
 _units = V.P.doc_units
-DEFER = re.compile(r"&lt;Art(?:í|&iacute;|i)culo INEXEQUIBLE\. Efectos diferidos.*?hasta antes del (\d{1,2} de [a-z]+ de \d{4})&gt;")
+DEFER = re.compile(r"\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos[^>]*?hasta antes del (\d{1,2} de [a-z]+ de \d{4})>")
 
 
 def doc_units(name):
@@ -29,7 +29,7 @@ def doc_units(name):
     units = _units(name)
     for u in units:
         ps = [it for it in u["items"] if it[0] == "p"]
-        m = DEFER.search(ps[0][1]) if ps else None
+        m = DEFER.match(E.plain(ps[0][1])) if ps else None
         if m and E.date_es(m.group(1)) <= E.RETRIEVED:
             u["items"] = [("p", "&lt;Artículo INEXEQUIBLE&gt;")]
     return units

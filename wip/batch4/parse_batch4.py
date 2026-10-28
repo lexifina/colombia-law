@@ -70,6 +70,8 @@ DEFERRED = [
      "Ciudadana (arts. 47 to 75, the right of assembly) INEXEQUIBLE, deferring the effect 'hasta antes del 20 de junio de "
      "2019' so that Congress could pass a statutory law; the articles leave the text on 20 June 2019."),
 ]
+DEFERRED_ART = re.compile(r"\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
+SYNTH: list[str] = []
 _units_b3 = B3.doc_units
 
 
@@ -96,6 +98,18 @@ def doc_units(name: str) -> list[dict]:
                 it = (it[0], it[1], h) + tuple(it[3:])
             items.append(it)
         u["items"] = items
+        ps = [it for it in items if it[0] == "p"]
+        if (defer and ps and DEFERRED_ART.match(E.plain(ps[0][1]))
+                and not any(it[0] == "box" and it[1] == "Legislación Anterior" for it in items)):
+            # A whole article struck with a deferred effect, never amended: the page prints the text that stood until
+            # the deferral ended. Given to the engine as that text ("Texto vigente hasta su declaratoria de
+            # INEXEQUIBILIDAD"), so the article stands from the act's first day and leaves on the ruling's (deferred) day.
+            body = [E.html.escape(u["label"], quote=False) + " " + E.strip_markers(ps[0][1])] + [
+                E.strip_markers(it[1]) for it in ps[1:]]
+            box = ("<p><span class='b_aj'>Texto vigente hasta su declaratoria de INEXEQUIBILIDAD</span>:</p>"
+                   + "".join(f"<p>{b}</p>" for b in body))
+            u["items"] = items + [("box", "Legislación Anterior", box)]
+            SYNTH.append(f"{name} {u['name']}")
     missing = [o for o, n in hits.items() if n != 1] + [o for o, n in dhits.items() if n == 0]
     if missing:
         raise SystemExit(f"{name}: page fixes that did not match: {missing}")
