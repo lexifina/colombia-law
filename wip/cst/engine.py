@@ -303,7 +303,21 @@ RULING_RE = re.compile(r"(?:Sentencia|Auto)\s+(?:No\.\s*)?(C-\d+A?-\d{2,4})\s*,?
                        r"(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)?\d{4}|[a-z]+\s+\d{1,2}(?:o\.|º)?\s+de\s+\d{4})", re.I)
 
 
+CSJ_RE = re.compile(r"Corte Suprema de Justicia,?\s+mediante\s+(Sentencia\s+)?(?:de|del)\s+(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+de\s+\d{4})", re.I)
+
+
+class CSJMatch:
+    """cst: a match-like holder for a Corte Suprema ruling known only by its day (id 'CSJ-YYYY-MM-DD')."""
+    def __init__(self, cid: str, day: str):
+        self._g = (None, cid, day)
+
+    def group(self, i: int):
+        return self._g[i]
+
+
 def court_key(c: str) -> str:
+    if c.startswith("CSJ-"):
+        return "csj-" + c[4:]
     m = re.match(r"([A-Z]+)-(\d+)([A-Z]?)-(\d{2,4})", c.upper())
     pre, num, suf, yy = m.groups()
     y = int(yy)
@@ -312,6 +326,10 @@ def court_key(c: str) -> str:
 
 
 def court_label(c: str) -> str:
+    if c.startswith("CSJ-"):
+        y, mo, d = c[4:].split("-")
+        mname = [k for k, v in MONTHS.items() if v == int(mo)][0]
+        return f"Sentencia de la Corte Suprema de Justicia de {int(d)} de {mname} de {y}"
     m = re.match(r"([A-Z]+)-(\d+)([A-Z]?)-(\d{2,4})", c.upper())
     pre, num, suf, yy = m.groups()
     y = int(yy)
@@ -323,7 +341,8 @@ def add_court(cid: str, date: str, href: str | None, note_text: str | None = Non
     k = court_key(cid)
     law = LAWS.get(k)
     if law is None:
-        LAWS[k] = {"label": court_label(cid), "title": f"Corte Constitucional, {court_label(cid)}", "kind": "court",
+        title = court_label(cid) if cid.startswith("CSJ-") else f"Corte Constitucional, {court_label(cid)}"
+        LAWS[k] = {"label": court_label(cid), "title": title, "kind": "court",
                    "enacted": date, "published": None,
                    "url": BASE + href if href else None, "temporary_until": None, "restores": None, "note": note_text}
     elif note_text and not law.get("note"):
@@ -363,7 +382,10 @@ def la_blocks(b: str) -> list[dict]:
     blocks = []
     cur = None
     for ph in box_paras(b):
-        sp = re.match(r"(?:\s|&#160;|&nbsp;)*<span class='b_aj'>(.*?)</span>(?:\s|&#160;|&nbsp;)*$", ph, re.S)
+        # cst: the colon may stand after the span ("<span class='b_aj'>Texto original del Código ...</span>: ").
+        # cst: and an empty link may stand before it ("<A href='R'  ><span class='b_aj'></span></A>", art. 242).
+        ph0 = re.sub(r"^(?:\s|<A [^>]*>\s*<span class='b_aj'>\s*</span>\s*</A>)+", "", ph, flags=re.I)
+        sp = re.match(r"(?:\s|&#160;|&nbsp;)*<span class='b_aj'>(.*?)</span>(?:\s|&#160;|&nbsp;)*:?(?:\s|&#160;|&nbsp;)*$", ph0, re.S)
         head = plain(sp.group(1)) if sp else None
         st = parse_header(head) if head else None
         if head and st is None and head.lower().startswith("texto"):
@@ -457,7 +479,12 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                     continue
                 m = RULING_RE.search(t)
                 if not m:
-                    continue
+                    # cst: a Corte Suprema de Justicia ruling (before 1991) named by its day only: 'declarado
+                    # INEXEQUIBLE por la Corte Suprema de Justicia mediante del 18 de julio de 1973' (art. 44).
+                    m = CSJ_RE.search(t)
+                    if not m or not date_es(m.group(2)):
+                        continue
+                    m = CSJMatch("CSJ-" + date_es(m.group(2)), m.group(2))
                 d = date_any(m.group(2))
                 href = re.search(r"href='([^'#]+\.html)", ph)
                 up = t.upper()

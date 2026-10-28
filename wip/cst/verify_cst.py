@@ -78,8 +78,17 @@ def main(argv):
                         if not d.startswith(("@@", "---", "+++")):
                             print("   ", d[:300])
         extra = [k for k in last if k not in t and k != "titulos"]
+        # Articles the page shows with no words today but that no act or ruling removed (tacit derogation, or the
+        # Decreto 1818 de 1998 compilation): parse_cst.keep_original keeps their original words, by decision. They
+        # are expected differences, listed apart.
+        P.E.LAWS.clear()
+        P.build_cst()
+        kept = {E.unit_key(n)[0] for n in P.KEPT_ORIGINAL if E.unit_key(n)}
+        exp = [k for k in bad if k in kept and not t.get(k)]
+        bad = [k for k in bad if k not in exp]
         total_bad += len(bad)
         print(f"{slug}: {len(t)} articles, {len(bad)} differ{': ' + ' '.join(bad[:30]) if bad else ''}; extra in corpus: {extra[:10]}")
+        print(f"  expected (words kept by decision, no current text on the page): {len(exp)}: {' '.join(exp)}")
     print("TOTAL differ:", total_bad)
 
 

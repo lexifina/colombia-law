@@ -37,7 +37,10 @@ E.HAND_RULES.update({
 })
 # Spelling slips that hide an act from the engine's patterns: "Decreo 617 de 1954" (arts. 189, 230, 486), "Decreto -
 # Ley 2737 de 1989" (art. 30).
-TEXT_FIXES = [(re.compile(r"\bDecreo\b"), "Decreto"), (re.compile(r"Decreto\s*-\s*Ley\b"), "Decreto Ley")]
+TEXT_FIXES = [(re.compile(r"\bDecreo\b"), "Decreto"), (re.compile(r"Decreto\s*-\s*Ley\b"), "Decreto Ley"),
+              # "<Apartes tachados suprimidos por el artículo 53 de la Ley 962 de 2005 ...>" (art. 73): words an act
+              # removed, shown struck; the engine knows the form "tachados derogados por". Markers only, never text.
+              (re.compile(r"(Apartes? tachados?) suprimidos? por"), r"\1 derogados por")]
 
 
 def fix_text(h: str) -> str:
@@ -182,6 +185,29 @@ def repealed_text_shown(u: dict) -> None:
 
 
 _article_history = E.article_history
+KEPT_ORIGINAL: list[str] = []  # articles with no text on the page today whose words no act or ruling removed
+
+
+def keep_original(u: dict, h: dict) -> None:
+    """An article the page shows with no words today, whose notes name no act and no ruling that removed it (only a
+    tacit derogation, 'Derógado tácitamente', or its incorporation in the Decreto 1818 de 1998 compilation, whose art.
+    183 Ley 1563 de 2012 later repealed): its original words, from the source's 'Texto original' box, stay in every
+    version, as for the Código Civil's tacitly derogated articles. Articles marked '<Artículo INEXEQUIBLE>' or
+    expressly derogated are not kept."""
+    ps = [it[1] for it in u["items"] if it[0] == "p" and "antsig" not in it[1]]
+    mks = E.markers(ps[0]) if ps else []
+    if any(re.search(r"INEXEQUIBLE", m) or (re.match(r"(Art[íi]culo\s+)?derogad", m, re.I) and not E.TACIT.search(m))
+           for m in mks):
+        return
+    for it in u["items"]:
+        if it[0] == "box" and it[1] == "Legislación Anterior":
+            for b in E.la_blocks(it[2]):
+                if b["state"] == ("orig", None) and E.is_full(b["paras"]):
+                    lines = E.block_text(b["paras"], True)
+                    if lines:
+                        h["states"] = [("", lines, "")]
+                        KEPT_ORIGINAL.append(u["name"])
+                        return
 
 
 def article_history(u: dict, jv_extra=None) -> dict:
@@ -190,6 +216,8 @@ def article_history(u: dict, jv_extra=None) -> dict:
     declaración de inexequibilidad revive el artículo 200 del Código Sustantivo del Trabajo' (the ruling as the same note
     quotes it). The page's text, with no amendment marker, is the code's original text, in force again."""
     h = _article_history(u, jv_extra)
+    if [s[1] for s in h["states"]] == [None]:
+        keep_original(u, h)
     if u["name"] != "200":
         return h
     nv = " ".join(E.plain(p) for it in u["items"] if it[0] == "box" and it[1] == "Notas de Vigencia" for p in E.box_paras(it[2]))
@@ -225,6 +253,9 @@ def doc_units(name: str) -> list[dict]:
         u["items"] =[(it[0], fix_text(it[1])) + tuple(it[2:]) if it[0] == "p"
                       else (it[0], it[1], fix_text(it[2])) + tuple(it[3:]) if it[0] == "box" else it
                       for it in u["items"]]
+        # The publisher's cross-reference stubs left as paragraphs ("\tl0146_94+[Artículo 7 de la Convención]", art.
+        # 236): not part of the text.
+        u["items"] = [it for it in u["items"] if not (it[0] == "p" and re.match(r"\s*l\d{4}_\d{2}\+\[", E.plain(it[1])))]
     for u in units[1:]:
         items = u["items"]
         for k, it in enumerate(items):
