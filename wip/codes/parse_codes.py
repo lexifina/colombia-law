@@ -339,6 +339,8 @@ def parse_header(h: str) -> tuple[str, str | None] | None:
     t = norm_refs(h).rstrip(" :.")
     if not t.lower().startswith("texto"):
         return None
+    if re.match(r"Texto vigente hasta su declaratoria de INEXEQUIBILIDAD", t, re.I):
+        return ("before_ruling", None)
     als = [al_from_note(*g, "") for g in AL_RE.findall(t)]
     if re.search(r"(antes de|hasta) la (modificaci|derogatori)", t) and als:
         return ("before", als[-1])
@@ -354,7 +356,7 @@ def la_blocks(b: str) -> list[dict]:
     blocks = []
     cur = None
     for ph in box_paras(b):
-        sp = re.match(r"\s*<span class='b_aj'>(.*?)</span>\s*$", ph, re.S)
+        sp = re.match(r"(?:\s|&#160;|&nbsp;)*<span class='b_aj'>(.*?)</span>(?:\s|&#160;|&nbsp;)*$", ph, re.S)
         head = plain(sp.group(1)) if sp else None
         st = parse_header(head) if head else None
         if head and st is None and head.lower().startswith("texto"):
@@ -562,6 +564,10 @@ def article_history(u: dict, jv_extra=None) -> dict:
         if not cur:
             # The article's own epigraph sits in the heading anchor ("ARTÍCULO TRANSITORIO 5o. JURISDICCIÓN ...").
             epi = tidy(ART_HEAD.sub("", u["label"], count=1)) if ART_HEAD.match(u["label"]) else ""
+            # Epigraphs in angle brackets ('<DISPOSICIONES COMPRENDIDAS>.') are the publisher's, not the law's.
+            epi = tidy(re.sub(r"<[^>]*>?", "", epi))
+            if not re.search(r"\w", epi):
+                epi = ""
             if epi:
                 ph = html.escape(epi, quote=False) + " " + ph
         mk = markers(ph)
@@ -577,7 +583,7 @@ def article_history(u: dict, jv_extra=None) -> dict:
         # Nothing of the article is in force today: an earlier text the source gives without its "ARTÍCULO N."
         # heading is still the whole article.
         for _, blk in la:
-            if blk["state"][0] in ("orig", "after", "before"):
+            if blk["state"][0] in ("orig", "after", "before", "before_ruling"):
                 blk["full"] = True
 
     art_marks = [m for c in cur[:1] for m in c["marks"] if ART_MARK.match(m) and not TACIT.search(m)]
@@ -624,9 +630,47 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 if orig_full is None:
                     note(f"{u['name']}: Gaceta 116 fragment did not match")
 
+    # "Texto vigente hasta su declaratoria de INEXEQUIBILIDAD": the whole article as it stood when the Court struck it,
+    # with words an act had repealed shown struck ('Aparte tachado derogado por el artículo 70 del Decreto 2820 de
+    # 1974'). Before that act the article had those words; after it, not; after the ruling, nothing.
+    before_ruling = [blk for blk in full_blocks if blk["state"][0] == "before_ruling"]
+    r_whole = ruling_for(jv, None) if before_ruling else None
+    if r_whole:
+        ck = add_court(r_whole["id"], r_whole["date"], r_whole["href"])
+        paras_b = before_ruling[0]["paras"]
+        pre_l, post_l, by = [], [], None
+        for k, ph in enumerate(paras_b):
+            mk = markers(ph)
+            tacit = any(TACIT.search(m) for m in mk)
+            a = next((AL_RE.search(m) for m in mk if re.search(r"tachad\w*\s+derogad", m, re.I) and not TACIT.search(m)
+                      and AL_RE.search(m)), None)
+            if a and by is None:
+                by = al_from_note(*a.groups(), "")
+            t_pre = tidy(to_text(ph))
+            t_post = t_pre if tacit else tidy(to_text(ph, False))
+            if k == 0:
+                t_pre, t_post = tidy(ART_HEAD.sub("", t_pre, count=1)), tidy(ART_HEAD.sub("", t_post, count=1))
+            if t_pre:
+                pre_l.append(t_pre)
+            if t_post:
+                post_l.append(t_post)
+        if by and pre_l != post_l:
+            if orig_full is None:
+                orig_full = pre_l
+            whole[by] = post_l
+            art_events.add(by)
+        elif orig_full is None and not art_events - {ck}:
+            orig_full = post_l
+        whole[f"before:{ck}"] = post_l
+        whole[ck] = None
+        art_events.add(ck)
+        for c in cur:
+            c["pre"] = c["post"] = ""
     # "<Artículo INEXEQUIBLE>": the whole article was struck; today it is gone, and the act that last wrote it
     # (if not already known to be struck) is the one the ruling undid.
-    if cur and any(re.match(r"Art[íi]culo(\s+transitorio)?\s+INEXEQUIBLE", m, re.I) for m in cur[0]["marks"]):
+    if r_whole:
+        pass
+    elif cur and any(re.match(r"Art[íi]culo(\s+transitorio)?\s+INEXEQUIBLE", m, re.I) for m in cur[0]["marks"]):
         for c in cur:
             c["pre"] = c["post"] = ""
         if art_events and not struck_als:
@@ -1159,7 +1203,7 @@ def assemble(timelines, labels, notes_all, order, start) -> dict:
             pt = prev_units.get("titulos", {}).get("text")
             if pt != units["titulos"]["text"]:
                 cs = sorted({l for k, ls in credits.items() for l in ls if LAWS.get(l, {}).get("kind") != "court"
-                             and k in units and k not in prev_units})
+                             and (k in units) != (k in prev_units)})
                 if cs:
                     credits["titulos"] = cs
         for k in list(credits):

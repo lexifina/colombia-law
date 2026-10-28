@@ -193,13 +193,52 @@ def box_paras(b: str) -> list[str]:
 
 LAWS: dict[str, dict] = {}
 
-# Vigencia clauses that tie an Acto Legislativo to an election day, as the source quotes them. The election
-# days are public facts (Registraduría Nacional del Estado Civil) and are written here by hand.
-ELECTION_DAYS = {
-    ("2", "2005"): ("2006-03-12", "Rige a partir de las elecciones del 2006 (congressional elections of 12 March 2006)"),
-    ("3", "2005"): ("2010-03-14", "regirá a partir de las elecciones que se celebren en el año 2010 (congressional elections of 14 March 2010)"),
-    ("3", "2007"): ("2007-10-28", "Rige a partir de las elecciones que se celebren en el año 2007 (local elections of 28 October 2007)"),
+# Vigencia clauses that tie an Acto Legislativo to an election day, as the basedoc notes quote them. The election
+# day is read from a cached Registraduría Nacional del Estado Civil page (fetch.py ELECTION_SOURCES): the regex must
+# find the day there, or parse.py stops. `year` is used when the page gives day and month only (the year of the
+# pinned Wayback capture).
+ELECTION_SOURCES = {
+    ("2", "2005"): {
+        "clause": "Rige a partir de las elecciones del 2006",
+        "url": "https://www.registraduria.gov.co/Calendario-Electoral-2006-2010.html",
+        "regex": r"elecci\S+n de congresistas que se llevar\S+ a cabo el d\S+a (\d+ de \w+ de \d{4})",
+        "year": None,
+        "what": "Registraduría, 'Calendario Electoral 2006 - 2010' (Resolución 0497 de 2005): congressional election "
+                "'el día 12 de marzo de 2006'"},
+    ("3", "2005"): {
+        "clause": "regirá a partir de las elecciones que se celebren en el año 2010",
+        "url": "https://web.archive.org/web/20110726040247id_/http://www.registraduria.gov.co/ESTA-LISTO-EL-PRE-CALENDARIO.html",
+        "regex": r"el (\d+ de \w+ de \d{4}) se realizar\S+ las elecciones legislativas",
+        "year": None,
+        "what": "Registraduría, Comunicado de Prensa No. 050 de 2009 (Wayback capture 2011-07-26): 'el 14 de marzo "
+                "de 2010 se realizarán las elecciones legislativas'"},
+    ("3", "2007"): {
+        "clause": "Rige a partir de las elecciones que se celebren en el año 2007",
+        "url": "https://web.archive.org/web/20070930160642id_/http://www.registraduria.gov.co/",
+        "regex": r"proceso electoral del (\d+ de \w+)",
+        "year": "2007",
+        "what": "Registraduría home page, Wayback capture of 30 September 2007: 'el proceso electoral del 28 de "
+                "octubre' (the local elections of 2007)"},
 }
+
+
+def election_day(key: tuple[str, str]) -> str:
+    src = ELECTION_SOURCES[key]
+    p = cache_path(src["url"])
+    if not os.path.exists(p):
+        raise SystemExit(f"not cached: {src['url']}; run fetch.py all")
+    with open(p, "rb") as f:
+        t = plain(re.sub(r"<(script|style).*?</\1>", "", f.read().decode("utf-8", "replace"), flags=re.S | re.I))
+    m = re.search(src["regex"], t)
+    if not m:
+        raise SystemExit(f"election day not found in {src['url']}")
+    d = date_es(m.group(1) + (f" de {src['year']}" if src["year"] else ""))
+    if not d:
+        raise SystemExit(f"election day unreadable in {src['url']}: {m.group(1)}")
+    return d
+
+
+ELECTION_DAYS: dict[tuple[str, str], str] = {}
 
 
 def al_key(n: str, y: str) -> str:
@@ -260,7 +299,7 @@ def load_al_table(units: list[dict]) -> None:
                      "url": BASE + (href.group(1) if href else f"acto_legislativo_{int(n):02d}_{y}.html"),
                      "temporary_until": None, "restores": None, "note": None}
         force = pub
-        rige = re.search(r"(?:Entra a regir|Rige) a partir del? ([^.]*\d{4})", t)
+        rige = re.search(r"(?:Empieza a regir|Entra a regir|Rige) a partir del? (\d{1,2}(?:o\.|º)? de [a-z]+ de \d{4})", t)
         if rige and date_es(rige.group(1)):
             force = date_es(rige.group(1))
         AL_DATES[key] = (force, pub)
@@ -281,11 +320,14 @@ def al_from_note(n: str, y: str, text: str) -> str:
         if dm and date_es(dm.group(1)):
             law["published"] = date_es(dm.group(1))
     force = AL_DATES.get(key, (None, None))[0] or law["published"]
-    rige = re.search(r"(?:Empieza a regir|Entra a regir|Rige) a partir del? (\d[^.]*?\d{4})", text)
+    rige = re.search(r"(?:Empieza a regir|Entra a regir|Rige) a partir del? (\d{1,2}(?:o\.|º)? de [a-z]+ de \d{4})", text)
     if rige and date_es(rige.group(1)):
         force = date_es(rige.group(1))
-    if (n.lstrip("0"), y) in ELECTION_DAYS:
-        force = ELECTION_DAYS[(n.lstrip("0"), y)][0]
+    ek = (str(int(n)), y)
+    if ek in ELECTION_SOURCES:
+        if ek not in ELECTION_DAYS:
+            ELECTION_DAYS[ek] = election_day(ek)
+        force = ELECTION_DAYS[ek]
     if force:
         AL_DATES[key] = (force, law["published"])
     return key
@@ -298,7 +340,7 @@ def law_day(key: str) -> str | None:
     return law and (law.get("enacted") or law.get("published"))
 
 
-AL_RE = re.compile(r"Acto [Ll]egislativo\s+(?:No\.\s*|número\s*)?(\d+)\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
+AL_RE = re.compile(r"Acto [Ll]egislativ[oi]\s+(?:No\.\s*|número\s*)?(\d+)\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
 RULING_RE = re.compile(r"(?:Sentencia|Auto)\s+(?:No\.\s*)?(C-\d+A?-\d{2,4})\s*,?\s+(?:de|del)\s+(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)?\d{4})", re.I)
 
 
@@ -1023,6 +1065,12 @@ def main(argv: list[str]) -> None:
         v["sha256"] = sha
     const["versions"][0]["note"] = ("Text of the second corrected edition, Gaceta Constitucional No. 116 of 20 July 1991, as the "
                                     "source gives it; the source does not reproduce the first printing in Gaceta No. 114.")
+    for (n, y), day in sorted(ELECTION_DAYS.items()):
+        src = ELECTION_SOURCES[(n, y)]
+        for v in const["versions"]:
+            if v["from"] == day:
+                v["note"] = (f"Acto Legislativo {n} de {y}: '{src['clause']}'. The election day, {day}, is from "
+                             f"{src['what']}: {src['url']}")
     acts = [{"slug": "constitucion", "short": "CP", "title": "Constitución Política de Colombia 1991",
              "url": BASE + CONST + ".html", "first_law": CONST_FIRST, "earlier_laws": [],
              "versions": const["versions"]}]
@@ -1051,7 +1099,12 @@ def main(argv: list[str]) -> None:
                        "(Avance Jurídico) are not reproduced; only the official text and the facts the notes state "
                        "(which act changed what, Diario Oficial dates, ruling numbers and dates) are used.",
             "notes": "HTML pages in ISO-8859-1 (<name>.html, <name>_prNNN.html) with the note boxes in js/<page>.js. "
-                     "Source last updated 15 October 2026 (Diario Oficial No. 53.651) per its footer."}],
+                     "Source last updated 15 October 2026 (Diario Oficial No. 53.651) per its footer."},
+            {"name": "Registraduría Nacional del Estado Civil (election days only)",
+             "url": "https://www.registraduria.gov.co", "retrieved": RETRIEVED, "requests": len(ELECTION_SOURCES),
+             "licence": "Official public information; only the dates of three elections are taken from it.",
+             "notes": "Pages: " + "; ".join(s["url"] for s in ELECTION_SOURCES.values())
+                      + ". Two are Internet Archive captures pinned by timestamp."}],
         "laws": laws,
         "acts": acts,
         "applies": [],
@@ -1085,6 +1138,7 @@ DECISIONS = [
     "Source: the Secretaría General del Senado's basedoc, the only free official-site source that keeps each provision's earlier texts ('Legislación Anterior'). SUIN-Juriscol (Ministerio de Justicia) is an Angular app that serves no text to a plain request, and it does not give earlier texts.",
     "Versions are rebuilt per provision from the source's earlier texts ('Texto original de la Constitución Política:', 'Texto modificado por el Acto Legislativo N de AAAA:'), its inline amendment markers ('<Inciso adicionado por el artículo 1 del Acto Legislativo 1 de 2005 ...>') and its Notas de Vigencia. A part marked 'adicionado' did not exist before the act that added it.",
     "In-force days: an Acto Legislativo takes effect on the day of its publication in the Diario Oficial, as the source's notes state ('Rige a partir de su publicación'), unless the note quotes another vigencia clause: Acto Legislativo 1 de 2001 from 1 January 2002, Actos Legislativos 1 and 4 de 2007 from 1 January 2008, and the election-day clauses of Actos Legislativos 2 de 2005 (12 March 2006), 3 de 2005 (14 March 2010) and 3 de 2007 (28 October 2007).",
+    "Election days are read by parse.py from cached Registraduría Nacional del Estado Civil pages, not written by hand: 12 March 2006 from 'Calendario Electoral 2006 - 2010' (Resolución 0497 de 2005), https://www.registraduria.gov.co/Calendario-Electoral-2006-2010.html; 14 March 2010 from Comunicado de Prensa No. 050 de 2009, https://web.archive.org/web/20110726040247id_/http://www.registraduria.gov.co/ESTA-LISTO-EL-PRE-CALENDARIO.html; 28 October 2007 from the Registraduría home page as captured on 30 September 2007 ('el proceso electoral del 28 de octubre'; the year is the capture's), https://web.archive.org/web/20070930160642id_/http://www.registraduria.gov.co/. All three agree with the days used before.",
     "Acto Legislativo 3 de 2002 says it 'rige a partir de su aprobación' and applies gradually from 2005; its text changes are dated from its publication (20 December 2002).",
     "Constitutional Court rulings that struck text (INEXEQUIBLE) are laws of kind 'court', dated by the day of the ruling as the source gives it (rulings take effect from their date unless the Court says otherwise, Ley 270 de 1996 art. 45). When a whole Acto Legislativo was struck, the provision returns to its text before that act. Struck words shown in the current text are in force until the ruling and removed from it.",
     "Rulings that upheld text on a condition of interpretation (exequibilidad condicionada) change no words: they are court laws with a note, credited to the provision on the ruling's day. Plain EXEQUIBLE rulings, inhibitions and 'estarse a lo resuelto' rulings are not recorded.",
