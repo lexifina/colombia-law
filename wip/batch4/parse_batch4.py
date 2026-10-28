@@ -92,6 +92,29 @@ NOTE_FIXES = [
      "Salud to the Superintendencia Nacional de Salud without rewriting it (the note quotes it); the article's wording is "
      "unbroken"),
 ]
+REPLACED = re.compile(r"&lt;Apartes? tachados? (reemplazad|eliminad)(os?|as?) por ")
+NEW_WORDS = re.compile(r"(</S>\s*)&lt;((?:(?!&gt;).)*)&gt;", re.S | re.I)
+
+
+def replaced_words(h: str) -> str:
+    """Words an act replaced or removed, as the Código General Disciplinario shows them: '<Aparte tachado reemplazado por
+    el artículo 72 de la Ley 2094 de 2021> ... del <S>auto de citación a audiencia y formulación de cargos</S> <pliego de
+    cargos> y ...'. The struck words are the earlier text; the words in angle brackets right after them are the new text
+    (not an editor's note), and 'eliminado' means struck with nothing in their place. Given to the engine in the forms it
+    reads: words struck by an act ('Aparte tachado derogado por ...') and new words underlined with the correction marker,
+    so the earlier version reads the struck words and the later one the new words, credited to the act."""
+    m = REPLACED.search(h)
+    if not m:
+        return h
+    h = REPLACED.sub(lambda m: "&lt;Aparte tachado derogado por ", h)
+    if m.group(1) == "reemplazad":
+        h2 = NEW_WORDS.sub(lambda x: x.group(1) + "<u>" + x.group(2) + "</u>", h)
+        if h2 == h:
+            raise SystemExit("replaced words without the new words after them: " + E.plain(h)[:200])
+        h = "&lt;Texto subrayado corresponde a la corrección&gt; " + h2
+    return h
+
+
 DEFERRED_ART = re.compile(r"(?:\s*<[^<>]*>)*?\s*<Art[íi]culo INEXEQUIBLE\. Efectos diferidos")
 SYNTH: list[str] = []
 _units_b3 = B3.doc_units
@@ -128,6 +151,7 @@ def doc_units(name: str) -> list[dict]:
                     h = h.replace(old, new)
                 it = (it[0], it[1], h) + tuple(it[3:])
             items.append(it)
+        items = [("p", replaced_words(it[1])) + tuple(it[2:]) if it[0] == "p" else it for it in items]
         u["items"] = items
         ps = [it for it in items if it[0] == "p"]
         if defer and ps and DEFERRED_ART.match(E.plain(ps[0][1])):
