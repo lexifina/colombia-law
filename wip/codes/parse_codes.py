@@ -91,7 +91,7 @@ def strip_markers(h: str) -> str:
 
 
 def markers(h: str) -> list[str]:
-    return [norm(html.unescape(re.sub(r"<[^>]+>", "", m))).replace('"', "").replace("'", "")
+    return [norm_refs(norm(html.unescape(re.sub(r"<[^>]+>", "", m))).replace('"', "").replace("'", ""))
             for m in re.findall(r"&lt;(.*?)&gt;", h, flags=re.S)]
 
 
@@ -204,17 +204,85 @@ def box_paras(b: str) -> list[str]:
 
 LAWS: dict[str, dict] = {}
 
-# Vigencia clauses that tie an Acto Legislativo to an election day, as the source quotes them. The election
-# days are public facts (Registraduría Nacional del Estado Civil) and are written here by hand.
-ELECTION_DAYS = {
-    ("2", "2005"): ("2006-03-12", "Rige a partir de las elecciones del 2006 (congressional elections of 12 March 2006)"),
-    ("3", "2005"): ("2010-03-14", "regirá a partir de las elecciones que se celebren en el año 2010 (congressional elections of 14 March 2010)"),
-    ("3", "2007"): ("2007-10-28", "Rige a partir de las elecciones que se celebren en el año 2007 (local elections of 28 October 2007)"),
-}
+# How the notes write an amending act: "Ley 57 de 1887", "Ley 1a. de 1976", "Decreto 2820 de 1974",
+# "Decreto Ley 1400 de 1970", "Ley 2442 de 27 de diciembre de 2024".
+AL_RE = re.compile(r"\b(Ley|Decreto(?:[- ][Ll]ey| Legislativo| Extraordinario)?)\s+(?:No\.\s*|número\s*)?(\d[\d.]*)"
+                   r"(?:a\.|o\.|ª|º)?\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
+# Typing slips in the notes, fixed by what the same note says (its Diario Oficial date or the act's kind).
+KEY_FIXES = {"ley-25-1892": "ley-25-1992", "ley-2820-1974": "dec-2820-1974"}
+# Codes the notes cite by name only.
+CODE_NAMES = [
+    (re.compile(r"C[óo]digo de Procedimiento Civil(?:\s*-\s*Decreto 1400 de 1970)?|C\.\s?P\.\s?C\.(?=[\s,.])"), "Decreto 1400 de 1970"),
+    (re.compile(r"C\.\s?S\.\s?del\s?T\."), "Decreto 2663 de 1950"),
+]
+LAW_PAGE = {}  # law key -> basedoc page name (when the source has the act)
 
 
-def al_key(n: str, y: str) -> str:
-    return f"al-{int(n)}-{y}"
+def norm_refs(t: str) -> str:
+    for rx, rep in CODE_NAMES:
+        t = rx.sub(rep, t)
+    return t
+
+
+def al_key(kind: str, n: str, y: str) -> str:
+    k = f"{'dec' if kind.startswith('Decreto') else 'ley'}-{int(n.replace('.', ''))}-{y}"
+    return KEY_FIXES.get(k, k)
+
+
+def law_label(key: str) -> str:
+    kind, n, y = key.split("-")
+    return f"{'Decreto' if kind == 'dec' else 'Ley'} {n} de {y}"
+
+
+def register(key: str) -> str:
+    if key not in LAWS:
+        kind, n, y = key.split("-")
+        page = f"{'decreto' if kind == 'dec' else 'ley'}_{int(n):04d}_{y}"
+        have = os.path.exists(cache_path(BASE + page + ".html"))
+        LAWS[key] = {"label": law_label(key), "title": TITLES.get(key) or law_label(key),
+                     "kind": "decree" if kind == "dec" else "law", "enacted": None,
+                     "published": PUB.get(key), "url": BASE + page + ".html" if have else None,
+                     "temporary_until": None, "restores": None, "note": None}
+        if have:
+            LAW_PAGE[key] = page
+    return key
+
+
+def al_from_note(kind: str, n: str, y: str, text: str) -> str:
+    return register(al_key(kind, n, y))
+
+
+# Per-provision vigencia, as the provision's own note states it ("La derogatoria rige a partir del 1o. de enero
+# de 2014"): set while one provision is parsed.
+UNIT_DAYS: dict[str, str] = {}
+IN_FORCE: dict[str, str] = {}   # law key -> in-force day
+IN_FORCE_WHY: dict[str, str] = {}
+PUB: dict[str, str] = {}        # law key -> Diario Oficial day
+TITLES: dict[str, str] = {}
+
+
+def law_day(key: str) -> str | None:
+    if key in UNIT_DAYS:
+        return UNIT_DAYS[key]
+    if key in IN_FORCE:
+        return IN_FORCE[key]
+    law = LAWS.get(key)
+    return law and (law.get("enacted") or law.get("published"))
+
+
+MONTH_FIRST = re.compile(r"\b([a-z]+)\s+(\d{1,2})(?:o\.|º)?\s+(?:de|del)\s+(\d{4})")
+
+
+def date_any(s: str) -> str | None:
+    d = date_es(s)
+    m = MONTH_FIRST.match(s.strip())
+    if m and m.group(1).lower() in MONTHS and (not d or s.strip().index(m.group(0)) == 0):
+        return f"{int(m.group(3)):04d}-{MONTHS[m.group(1).lower()]:02d}-{int(m.group(2)):02d}"
+    return d
+
+
+RULING_RE = re.compile(r"(?:Sentencia|Auto)\s+(?:No\.\s*)?(C-\d+A?-\d{2,4})\s*,?\s+(?:de la Sala Plena\s+)?(?:de|del)\s+"
+                       r"(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)?\d{4}|[a-z]+\s+\d{1,2}(?:o\.|º)?\s+de\s+\d{4})", re.I)
 
 
 def court_key(c: str) -> str:
@@ -245,74 +313,6 @@ def add_court(cid: str, date: str, href: str | None, note_text: str | None = Non
     return k
 
 
-AL_DATES: dict[str, tuple[str, str]] = {}  # al key -> (in force, published)
-
-
-def load_al_table(units: list[dict]) -> None:
-    """The base page's 'Resumen de Notas de Vigencia' lists every Acto Legislativo with its Diario Oficial date."""
-    head = units[0]
-    box = next(b for kind, *rest in head["items"] if kind == "box" for t, b in [rest] if t.startswith("Resumen"))
-    for ph in box_paras(box):
-        t = plain(ph)
-        m = re.match(r"(\d+)\.\s+Modificad[oa] por el Acto Legislativo (?:No\.\s*)?(\d+) de (?:\d+ de \w+ de )?(\d{4})", t)
-        if not m:
-            continue
-        n, y = m.group(2), m.group(3)
-        key = al_key(n, y)
-        title = re.search(r"'([^']*)'", t)
-        pub = None
-        dm = re.search(r"Diario Oficial No\.\s*[\d.]+,?\s*(.{0,40})", t)
-        if dm:
-            pub = date_es(dm.group(1))
-        href = re.search(r"href='(acto_legislativo_[^'#]+\.html)", ph)
-        LAWS[key] = {"label": f"Acto Legislativo {int(n)} de {y}",
-                     "title": norm(title.group(1)).rstrip(" .,'") if title else f"Acto Legislativo {int(n)} de {y}",
-                     "kind": "law", "enacted": None, "published": pub,
-                     "url": BASE + (href.group(1) if href else f"acto_legislativo_{int(n):02d}_{y}.html"),
-                     "temporary_until": None, "restores": None, "note": None}
-        force = pub
-        rige = re.search(r"(?:Entra a regir|Rige) a partir del? ([^.]*\d{4})", t)
-        if rige and date_es(rige.group(1)):
-            force = date_es(rige.group(1))
-        AL_DATES[key] = (force, pub)
-
-
-def al_from_note(n: str, y: str, text: str) -> str:
-    """Register (or complete) an Acto Legislativo from an article note; return its in-force day."""
-    key = al_key(n, y)
-    if key not in LAWS:
-        LAWS[key] = {"label": f"Acto Legislativo {int(n)} de {y}", "title": f"Acto Legislativo {int(n)} de {y}",
-                     "kind": "law", "enacted": None, "published": None,
-                     "url": BASE + f"acto_legislativo_{int(n):02d}_{y}.html",
-                     "temporary_until": None, "restores": None, "note": None}
-        note(f"law {key} not in the summary table; taken from an article note")
-    law = LAWS[key]
-    if not law["published"]:
-        dm = re.search(r"Diario Oficial No\.\s*[\d.]+,?\s*(.{0,40})", text)
-        if dm and date_es(dm.group(1)):
-            law["published"] = date_es(dm.group(1))
-    force = AL_DATES.get(key, (None, None))[0] or law["published"]
-    rige = re.search(r"(?:Empieza a regir|Entra a regir|Rige) a partir del? (\d[^.]*?\d{4})", text)
-    if rige and date_es(rige.group(1)):
-        force = date_es(rige.group(1))
-    if (n.lstrip("0"), y) in ELECTION_DAYS:
-        force = ELECTION_DAYS[(n.lstrip("0"), y)][0]
-    if force:
-        AL_DATES[key] = (force, law["published"])
-    return key
-
-
-def law_day(key: str) -> str | None:
-    if key in AL_DATES:
-        return AL_DATES[key][0]
-    law = LAWS.get(key)
-    return law and (law.get("enacted") or law.get("published"))
-
-
-AL_RE = re.compile(r"Acto [Ll]egislativo\s+(?:No\.\s*|número\s*)?(\d+)\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
-RULING_RE = re.compile(r"(?:Sentencia|Auto)\s+(?:No\.\s*)?(C-\d+A?-\d{2,4})\s*,?\s+(?:de|del)\s+(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)?\d{4})", re.I)
-
-
 # ---------------------------------------------------------------- one article
 
 class Unknown:
@@ -325,17 +325,11 @@ GACETA125 = "aclaracion-gaceta-125"
 
 def parse_header(h: str) -> tuple[str, str | None] | None:
     """Map a 'Legislación Anterior' heading to a state: ('orig', None) | ('after', law) | ('before', law)."""
-    t = h.rstrip(" :")
+    t = norm_refs(h).rstrip(" :.")
     if not t.lower().startswith("texto"):
         return None
-    als = [al_key(n, y) for n, y in AL_RE.findall(t)]
-    for n, y in AL_RE.findall(t):
-        al_from_note(n, y, "")
-    if re.search(r"Gaceta No\. 125", t):
-        return ("after", GACETA125)
-    if re.search(r"Gaceta No\. 116", t):
-        return ("orig", None)
-    if re.search(r"(antes de|hasta) la modificaci", t) and als:
+    als = [al_from_note(*g, "") for g in AL_RE.findall(t)]
+    if re.search(r"(antes de|hasta) la (modificaci|derogatori)", t) and als:
         return ("before", als[-1])
     if als:
         return ("after", max(als, key=lambda k: (law_day(k) or "", k)))
@@ -420,13 +414,14 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
         title, b = rest
         if title == "Notas de Vigencia":
             for ph in box_paras(b):
-                t = plain(ph)
-                if not t.startswith("-"):
+                t = norm_refs(plain(ph))
+                if not t.startswith("-") or re.search(r"t[áa]citamente|org[áa]nicamente", t):
                     continue
                 als = AL_RE.findall(t)
                 if not als or not re.search(VERB, t, re.I):
                     continue
-                keys = [al_from_note(n, y, t) for n, y in als[:1]]
+                keys = [al_from_note(*g, t) for g in als[:1]]
+                unit_day(keys[0], t)
                 nv.append({"text": t, "law": keys[0], "article": bool(SCOPE_ART.match(t)),
                            "verb": (re.search(VERB, t, re.I).group(1).lower()),
                            "struck": "INEXEQUIBLE" in t.upper()})
@@ -438,7 +433,7 @@ def parse_notes(items) -> tuple[list[dict], list[dict]]:
                 m = RULING_RE.search(t)
                 if not m:
                     continue
-                d = date_es(m.group(2))
+                d = date_any(m.group(2))
                 href = re.search(r"href='([^'#]+\.html)", ph)
                 up = t.upper()
                 dm = re.search(r"DECLARAD[OA]S?\s+(CONDICIONALMENTE\s+)?(IN)?EXEQUIBLES?", up)
@@ -470,11 +465,12 @@ def ruling_for(jv: list[dict], al: str | None) -> dict | None:
         hit = [r for r in inex if r["al"] == al]
         if hit:
             return min(hit, key=lambda r: r["date"])
-        n, y = al.split("-")[1:]
-        hit = [r for r in inex if re.search(rf"Acto Legislativo\s+(?:No\.\s*)?0?{int(n)}\s+de\s+{y}", r["text"])]
+        kind, n, y = al.split("-")
+        word = "Decreto" if kind == "dec" else "Ley"
+        hit = [r for r in inex if re.search(rf"{word}\s+(?:No\.\s*)?0?{int(n)}(?:a\.|o\.)?\s+de\s+{y}", r["text"])]
         if hit:
             return min(hit, key=lambda r: r["date"])
-        whole = [r for r in inex if re.match(r"- Art\S+ (?:\d+\S* del Acto Legislativo [^,]* )?declarad", r["text"])]
+        whole = [r for r in inex if re.match(r"- Art\S+ (?:\d+\S* de(?:l| la) (?:Ley|Decreto) [^,]* )?declarad", r["text"])]
         if whole:
             return min(whole, key=lambda r: r["date"])
         after = [r for r in inex if r["date"] >= (law_day(al) or "")]

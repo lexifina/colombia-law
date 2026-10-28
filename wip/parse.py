@@ -745,9 +745,6 @@ def article_history(u: dict, jv_extra=None) -> dict:
         return out
 
     shist = [slot_states(s) for s in slots]
-    if os.environ.get("CO_DEBUG") == u["name"]:
-        for s_, h_ in zip(slots, shist):
-            print("SLOT", [c["idx"] for c in s_["paras"]], s_["marks"], [b["head"] for b in s_["frags"]], [(d, l, None if v is UNKNOWN else (v and len(v))) for d, v, l in h_])
     start = art_list[-1][0] if art_list else ""
 
     # Article text at each day from `start`: join the slot states.
@@ -777,8 +774,6 @@ def article_history(u: dict, jv_extra=None) -> dict:
     # Before `start`: the article-level history.
     if art_list:
         last_art = compose(start)
-        if os.environ.get("CO_DEBUG") == u["name"]:
-            print("START", start, "LAST_ART", last_art if last_art is UNKNOWN else len(last_art or []), art_list, [ (h[0][1] is UNKNOWN) for h in shist])
         evs = [(d, l) for d, l in art_list]
         ch = chain(evs, whole, orig_full if orig_full is not None else UNKNOWN, last_art, struck_als,
                    {l for l in art_events if any(e["law"] == l and e["verb"] == "adicionad" and e["article"] for e in nv)}

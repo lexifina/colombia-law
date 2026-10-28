@@ -1,0 +1,10 @@
+{
+  "path": "co",
+  "code": "CO",
+  "name": "Colombia",
+  "level": "country",
+  "repo": "https://github.com/lexifina/colombia-law",
+  "build": "built: Constitución Política 1991-2025 (81 versions, 63 Actos Legislativos, 18 Constitutional Court rulings); Código Civil and Ley 1581 de 2012 in progress",
+  "register": "https://claude.ai/artifact/DdS9F6yqpPZtV2i7FGQhYZ",
+  "register_date": "2026-10-28"
+}
