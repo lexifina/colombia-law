@@ -4,6 +4,7 @@ batch 3's page repairs, which parse_batch4 imports).
 Usage: python -X utf8 batch4/verify_batch4.py [part.json] [-v]
 """
 import os
+import re
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -17,6 +18,24 @@ V.ACTS = (("codigo-nacional-de-seguridad-y-convivencia-ciudadana", "ley_1801_201
           ("codigo-general-disciplinario", "ley_1952_2019"),
           ("codigo-electoral", "decreto_2241_1986"))
 V.P.OUT = os.path.join(os.path.dirname(HERE), "corpus.d", "90-batch4.json")
+E = V.E
+_units = V.P.doc_units
+DEFER = re.compile(r"&lt;Art[íi]culo INEXEQUIBLE\. Efectos diferidos[^&]*?hasta antes del (\d{1,2} de [a-z]+ de \d{4})&gt;")
+
+
+def doc_units(name):
+    """An article struck with a deferred effect that has ended before the retrieval day is not in force today, though
+    the page still prints it under the marker '<Artículo INEXEQUIBLE. Efectos diferidos ... hasta antes del D>'."""
+    units = _units(name)
+    for u in units:
+        ps = [it for it in u["items"] if it[0] == "p"]
+        m = DEFER.search(ps[0][1]) if ps else None
+        if m and E.date_es(m.group(1)) <= E.RETRIEVED:
+            u["items"] = [("p", "&lt;Artículo INEXEQUIBLE&gt;")]
+    return units
+
+
+V.P.doc_units = doc_units
 
 if __name__ == "__main__":
     V.main(sys.argv[1:])
