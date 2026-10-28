@@ -246,6 +246,7 @@ def register(key: str) -> str:
                      "temporary_until": None, "restores": None, "note": None}
         if have:
             LAW_PAGE[key] = page
+        compute_in_force(key)
     return key
 
 
@@ -1079,7 +1080,7 @@ def assemble(timelines, labels, notes_all, order, start) -> dict:
                 stt = [MISSING_LINE]
             out.append((day, stt, laws))
         if first_unknown:
-            gaps.append(f"{key}: 1991 text not in the source")
+            gaps.append(f"{key}: text at {start} not in the source")
             MISSING_UNITS.append(f"{key} from {start}")
         resolved[key] = out
     for g in gaps:
@@ -1104,7 +1105,7 @@ def assemble(timelines, labels, notes_all, order, start) -> dict:
                 if d == day:
                     cr = laws
             if val:
-                units[x] = {"label": labels[x], "kind": "transitional" if "transitorio" in x else ("preamble" if x == "preambulo" else "art"),
+                units[x] = {"label": labels[x], "kind": "art",
                             "text": f"# {labels[x]}\n" + "".join(l + "\n" for l in val)}
             if cr:
                 credits[x] = cr
@@ -1124,6 +1125,11 @@ def assemble(timelines, labels, notes_all, order, start) -> dict:
         for k in list(credits):
             credits[k] = sorted(set(credits[k]), key=lambda l: (law_day(l) or "", l))
         if prev_units is not None and units == prev_units and not credits:
+            continue
+        if prev_units is not None and units == prev_units:
+            # An event that changed no words (a ruling that only interprets): the builder reads it as the version
+            # before it, so the corpus need not repeat the text.
+            versions.append({"from": day, "credits": credits})
             continue
         versions.append({"from": day, "units": units, "credits": credits if versions else {}})
         prev_units = units
@@ -1160,59 +1166,95 @@ def titulos_lines(order, resolved, day) -> list[str]:
 
 # ---------------------------------------------------------------- corpus
 
-def main(argv: list[str]) -> None:
-    const = build_constitution()
-    sha = doc_sha(CONST)
-    for v in const["versions"]:
-        v["source_url"] = BASE + CONST + ".html"
+
+def build_codigo_civil() -> dict:
+    units = doc_units(CC)
+    scan_law_dates(units)
+    LAWS["ley-84-1873"] = {"label": "Ley 84 de 1873", "title": "Código Civil de los Estados Unidos de Colombia",
+                           "kind": "law", "enacted": "1873-05-26", "published": None, "url": BASE + CC + ".html",
+                           "temporary_until": None, "restores": None, "note": None}
+    res = build_act(CC, "1873-05-26", tail_stop=r"\s*FIN DEL C[ÓO]DIGO")
+    sha = doc_sha(CC)
+    for v in res["versions"]:
+        v["source_url"] = BASE + CC + ".html"
         v["sha256"] = sha
-    const["versions"][0]["note"] = ("Text of the second corrected edition, Gaceta Constitucional No. 116 of 20 July 1991, as the "
-                                    "source gives it; the source does not reproduce the first printing in Gaceta No. 114.")
-    acts = [{"slug": "constitucion", "short": "CP", "title": "Constitución Política de Colombia 1991",
-             "url": BASE + CONST + ".html", "first_law": CONST_FIRST, "earlier_laws": [],
-             "versions": const["versions"]}]
-    used = {l for a in acts for v in a["versions"] for ls in v["credits"].values() for l in ls} | {CONST_FIRST}
+    res["versions"][0]["note"] = (
+        "Text of Ley 84 de 1873 as the source gives it: the source says the 1873 law was never printed in the Diario "
+        "Oficial and reproduces it from the 1873 Imprenta de Gaitán edition, adapted to present-day spelling. It is "
+        "dated from its sanction (26 May 1873); the source gives no other day. The source gives today's headings of "
+        "books, titles and chapters only, so titulos.md is today's wording throughout.")
+    return {"slug": "codigo-civil", "short": "CC", "title": "Código Civil", "url": BASE + CC + ".html",
+            "first_law": "ley-84-1873", "earlier_laws": [], "versions": res["versions"]}
+
+
+def build_ley_1581() -> dict:
+    key = "ley-1581-2012"
+    LAWS[key] = {"label": "Ley 1581 de 2012", "title": "Ley Estatutaria 1581 de 2012, por la cual se dictan disposiciones "
+                                                        "generales para la protección de datos personales",
+                 "kind": "law", "enacted": "2012-10-17", "published": "2012-10-18", "url": BASE + DP + ".html",
+                 "temporary_until": None, "restores": None, "note": None}
+    IN_FORCE[key] = "2012-10-18"
+    IN_FORCE_WHY[key] = "Ley 1581 de 2012, art. 30: 'La presente ley rige a partir de su promulgación.'"
+    start = "2012-10-18"
+    res = build_act(DP, start, stop_anchor="SENTENCIA")
+    vs = res["versions"]
+    # Decreto Legislativo 538 de 2020, art. 8 (COVID-19 health emergency): limits literal g) of art. 4 while the
+    # emergency lasts; it changed no words. The source states it in the article's Notas de Vigencia.
+    dk = "dec-538-2020"
+    LAWS[dk] = {"label": "Decreto 538 de 2020", "title": "Decreto Legislativo 538 de 2020, por el cual se adoptan medidas en el "
+                "sector salud, para contener y mitigar la pandemia de COVID-19 ...", "kind": "decree",
+                "enacted": None, "published": "2020-04-12", "url": BASE + "decreto_0538_2020.html",
+                "temporary_until": None, "restores": None,
+                "note": "Decreto Legislativo 538 de 2020, art. 8, limited literal g) of art. 4 (security of data) to the "
+                        "technical, human and administrative security measures of health providers while the COVID-19 "
+                        "health emergency lasted. It changed no words."}
+    IN_FORCE[dk] = "2020-04-12"
+    IN_FORCE_WHY[dk] = "Decreto 538 de 2020, art. 29: 'El presente derecho rige a partir de la fecha de su publicación.'"
+    ev = {"from": "2020-04-12", "credits": {"art-0004": [dk]}}
+    vs = sorted(vs + [ev], key=lambda v: v["from"])
+    sha = doc_sha(DP)
+    for v in vs:
+        v["source_url"] = BASE + DP + ".html"
+        v["sha256"] = sha
+    vs[0]["note"] = ("The law as promulgated. The Constitutional Court reviewed the bill before it was signed (Sentencia "
+                     "C-748 de 2011, 6 October 2011, prior review of a statutory bill): it struck words of arts. 6, 10, "
+                     "26 and others and whole articles of the bill, and upheld others on conditions of interpretation. "
+                     "The promulgated text already reflects that review.")
+    return {"slug": "ley-1581-2012", "short": "LPDP", "title": "Ley 1581 de 2012, protección de datos personales",
+            "url": BASE + DP + ".html", "first_law": key, "earlier_laws": [], "versions": vs}
+
+
+def main(argv: list[str]) -> None:
+    acts = [build_codigo_civil(), build_ley_1581()]
+    used = {l for a in acts for v in a["versions"] for ls in v["credits"].values() for l in ls} | {a["first_law"] for a in acts}
     laws = {k: dict(v) for k, v in sorted(LAWS.items()) if k in used}
-    for k, v in laws.items():
-        if v["kind"] == "law" and k.startswith("al-"):
-            force, pub = AL_DATES.get(k, (None, v["published"]))
-    corpus = {
-        "country": {
-            "code": "CO", "name": "Colombia", "slug": "colombia", "lang": "es", "tz": "America/Bogota",
-            "future_branch": "futuro",
-            "publisher": {"name": "Secretaría General del Senado (basedoc)", "email": "basedoc@secretariasenado.invalid"},
-            "default_in_force_rule": {
-                "text": "Ley 4 de 1913 (Código de Régimen Político y Municipal), arts. 52 and 53: a law binds two months "
-                        "after its promulgation unless it fixes its own day. Actos Legislativos (amendments to the "
-                        "Constitution) state their own vigencia, almost always 'rige a partir de su publicación'.",
-                "source": BASE + "ley_0004_1913.html"},
-            "licence_note": "Texto oficial de la Constitución y las leyes de la República de Colombia (de libre reproducción, "
-                            "Ley 23 de 1982, art. 41). Fuente: Secretaría General del Senado de la República, "
-                            "www.secretariasenado.gov.co (compilación de Avance Jurídico Casa Editorial)."},
+    rules = [f"In force {IN_FORCE[k]}: {laws[k]['label']} ({IN_FORCE_WHY[k]})." for k in sorted(laws, key=lambda k: (IN_FORCE.get(k, ""), k))
+             if k in IN_FORCE]
+    part = {
         "sources": [{
-            "name": "Secretaría General del Senado, basedoc (Leyes desde 1992 - Vigencia expresa y control de constitucionalidad)",
-            "url": BASE, "retrieved": RETRIEVED, "requests": request_count(),
+            "name": "Secretaría General del Senado, basedoc: Código Civil, Ley 1581 de 2012 and the acts that amended them",
+            "url": BASE + CC + ".html", "retrieved": RETRIEVED, "requests": request_count(),
             "licence": "Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes "
-                       "(Avance Jurídico) are not reproduced; only the official text and the facts the notes state "
-                       "(which act changed what, Diario Oficial dates, ruling numbers and dates) are used.",
-            "notes": "HTML pages in ISO-8859-1 (<name>.html, <name>_prNNN.html) with the note boxes in js/<page>.js. "
-                     "Source last updated 15 October 2026 (Diario Oficial No. 53.651) per its footer."}],
+                       "(Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used.",
+            "notes": "codigo_civil.html + 83 continuation pages and their js/ note files; ley_1581_2012.html; the base page "
+                     "and last page of each amending act the basedoc has (for its own vigencia clause)."}],
         "laws": laws,
         "acts": acts,
-        "applies": [],
-        "decisions": DECISIONS,
-        "ai_use": ["None at data-build time: fetch.py and parse.py are deterministic code, written with Claude Code "
-                   "(claude-opus-5-5); no model reads, writes or summarises legal text. The README was drafted with the "
-                   "same tool."],
+        "decisions": DECISIONS + rules,
+        "ai_use": ["None at data-build time: codes/fetch_codes.py and codes/parse_codes.py are deterministic code, written "
+                   "with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text."],
     }
-    out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(HERE, "corpus.json")
+    out = argv[argv.index("--out") + 1] if "--out" in argv else os.path.join(COUNTRY, "corpus.d", "50-codes.json")
+    os.makedirs(os.path.dirname(out), exist_ok=True)
     tmp = out + ".tmp"
     with open(tmp, "w", encoding="utf-8", newline="\n") as f:
-        json.dump(corpus, f, ensure_ascii=False, indent=1, sort_keys=False)
+        json.dump(part, f, ensure_ascii=False, separators=(",", ":"))
         f.write("\n")
     os.replace(tmp, out)
     nv = sum(len(a["versions"]) for a in acts)
-    print(f"wrote corpus.json: {len(acts)} acts, {nv} versions, {len(laws)} laws")
+    print(f"wrote {out}: {len(acts)} acts, {nv} versions, {len(laws)} laws, {os.path.getsize(out) // 1024} KB")
+    for a in acts:
+        print(f"  {a['slug']}: {len(a['versions'])} versions, {sum(1 for v in a['versions'] if 'units' not in v)} note-only")
     if "--report" in argv:
         for r in REPORT:
             print("  ", r)
@@ -1221,15 +1263,16 @@ def main(argv: list[str]) -> None:
 
 
 DECISIONS = [
-    "Source: the Secretaría General del Senado's basedoc, the only free official-site source that keeps each provision's earlier texts ('Legislación Anterior'). SUIN-Juriscol (Ministerio de Justicia) is an Angular app that serves no text to a plain request, and it does not give earlier texts.",
-    "Versions are rebuilt per provision from the source's earlier texts ('Texto original de la Constitución Política:', 'Texto modificado por el Acto Legislativo N de AAAA:'), its inline amendment markers ('<Inciso adicionado por el artículo 1 del Acto Legislativo 1 de 2005 ...>') and its Notas de Vigencia. A part marked 'adicionado' did not exist before the act that added it.",
-    "In-force days: an Acto Legislativo takes effect on the day of its publication in the Diario Oficial, as the source's notes state ('Rige a partir de su publicación'), unless the note quotes another vigencia clause: Acto Legislativo 1 de 2001 from 1 January 2002, Actos Legislativos 1 and 4 de 2007 from 1 January 2008, and the election-day clauses of Actos Legislativos 2 de 2005 (12 March 2006), 3 de 2005 (14 March 2010) and 3 de 2007 (28 October 2007).",
-    "Acto Legislativo 3 de 2002 says it 'rige a partir de su aprobación' and applies gradually from 2005; its text changes are dated from its publication (20 December 2002).",
-    "Constitutional Court rulings that struck text (INEXEQUIBLE) are laws of kind 'court', dated by the day of the ruling as the source gives it (rulings take effect from their date unless the Court says otherwise, Ley 270 de 1996 art. 45). When a whole Acto Legislativo was struck, the provision returns to its text before that act. Struck words shown in the current text are in force until the ruling and removed from it.",
-    "Rulings that upheld text on a condition of interpretation (exequibilidad condicionada) change no words: they are court laws with a note, credited to the provision on the ruling's day. Plain EXEQUIBLE rulings, inhibitions and 'estarse a lo resuelto' rulings are not recorded.",
-    "The first version is the 1991 Constitution as the source gives it: the second corrected edition (Gaceta Constitucional No. 116 of 20 July 1991), dated from promulgation on 4 July 1991 (art. 380). The 1991 Aclaración published in Gaceta Constitucional No. 125 is its own commit, kind 'decree'.",
-    "Where the source names an act that changed a provision but does not give the text in force after it (a later act changed the same words again), that act and the next one with a known text are credited together on the later day; parse.py --report lists every such gap.",
-    "Avance Jurídico's editorial notes and markers (<...>) are not part of the text. The article heading is written as '# Art. N'; the heading of books, titles and chapters are kept in titulos.md, a heading shown while an article under it exists.",
+    "Código Civil and Ley 1581 de 2012 (codes/parse_codes.py): source is the Secretaría General del Senado's basedoc, the only free official source that keeps each article's earlier texts ('Legislación Anterior'). SUIN-Juriscol serves an Angular application with no text to a plain request.",
+    "Código Civil: versions are rebuilt per article from the source's earlier texts ('Texto original del Código Civil:', 'Texto modificado por la Ley 1a. de 1976:'), its inline amendment markers ('<Artículo modificado por el artículo 1o. del Decreto 2820 de 1974 ...>') and its Notas de Vigencia. A part marked 'adicionado' did not exist before the act that added it.",
+    "Código Civil: the first version is Ley 84 de 1873 (the code of the United States of Colombia), dated from its sanction on 26 May 1873 because the source gives no other day; Ley 57 de 1887 adopted it for the Republic from 90 days after its own publication (19 July 1887), with the reforms it made.",
+    "Código Civil: derogations the source calls tacit ('derogado tácitamente', 'orgánicamente') change no text and are not recorded; only express changes are.",
+    "Código Civil: the notes cite the Código de Procedimiento Civil and the Código Sustantivo del Trabajo by name; they are Decreto 1400 de 1970 and Decreto 2663 de 1950.",
+    "In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it, or as the Código Civil page quotes it; a day that a provision's own note gives ('La derogatoria rige a partir del 1o. de enero de 2014') applies to that provision. Acts the basedoc does not hold (most acts before 1992) are dated by the default rule: before 1913, from publication in the Diario Oficial (Código Civil arts. 11 and 12); from 1913, two months after it (Ley 4 de 1913, art. 52). The list below gives the day and the rule for each act.",
+    "Constitutional Court rulings that struck text (INEXEQUIBLE) are laws of kind 'court', dated by the day of the ruling as the source gives it. Rulings that upheld text on a condition of interpretation change no words: they are court laws with a note, credited to the article on the ruling's day. Plain EXEQUIBLE rulings and inhibitions are not recorded.",
+    "Where the source names an act that changed an article but does not give the text in force after it, the article's text for that period is the line '[La fuente no da el texto vigente en esta fecha.]'; parse_codes.py --report lists every such gap.",
+    "Avance Jurídico's editorial notes, markers (<...>) and article epigraphs in angle brackets are not part of the text. The headings of books, titles and chapters are kept in titulos.md, a heading shown while an article under it exists.",
+    "Ley 1581 de 2012: one text since promulgation on 18 October 2012 (no amendment to its words); the Constitutional Court's prior review of the bill (C-748 de 2011) predates it. Decreto Legislativo 538 de 2020 art. 8 is recorded as an event that changed no words.",
 ]
 
 
