@@ -78,22 +78,26 @@ def start_cpaca(units, enacted, pub):
 def start_cpp(units, enacted, pub):
     a = article_text(units, "533")
     b = article_text(units, "530")
-    if "1o. de enero de 2005" not in b and "primero (1o.) de enero de 2005" not in b and "1o de enero de 2005" not in b:
-        raise SystemExit(f"CPP art. 530: {b[:400]!r}")
-    return ("2005-01-01", f"Ley 906 de 2004, art. 530 (gradual entry by judicial district from 1 January 2005): '{b[:400]}'",
-            f"The code as promulgated (Ley 906 de 2004, Diario Oficial of {pub}). Its art. 530 brought it into force by "
-            f"judicial district, gradually, from 1 January 2005; its art. 533 keeps the earlier procedure for crimes "
-            f"before that. The history dates the whole code from 1 January 2005: '{b[:400]}'")
+    if "Los artículos 531 y 532 del presente código, entrarán en vigencia a partir de su publicación" not in a or             "1o. de enero de 2005" not in b or not pub:
+        raise SystemExit(f"CPP arts. 530/533: {a[:300]!r}")
+    return (pub, f"Ley 906 de 2004, art. 533: '{a}' and art. 530 (by judicial district from 1 January 2005 to 1 January "
+                 f"2008). The first version is dated from publication ({pub}), when arts. 531 and 532 took effect.",
+            f"The code as promulgated (Ley 906 de 2004, Diario Oficial of {pub}). Its arts. 531 and 532 took effect on "
+            f"publication; the rest applies to crimes after 1 January 2005, by judicial district as its art. 530 sets out "
+            f"(2005 to 2008). The history dates the whole code from publication. Art. 533: '{a}'")
 
 
 def start_cia(units, enacted, pub):
     a = article_text(units, "216")
-    if not re.search(r"seis \(6\) meses después de su promulgación", a) or not pub:
+    if not re.search(r"seis \(6\) meses después de su promulgación", a) or "El artículo 199" not in a or not pub:
         raise SystemExit(f"CIA art. 216: {a[:300]!r}")
-    start = E.add_months(pub, 6)
-    return (start, f"Ley 1098 de 2006, art. 216: '{a[:400]}'",
-            f"The code as promulgated (Ley 1098 de 2006, Diario Oficial of {pub}), in force six months later under its art. "
-            f"216; the system of criminal responsibility for adolescents came in gradually by district: '{a[:400]}'")
+    return (pub, f"Ley 1098 de 2006, art. 216: '{a[:600]}' The first version is dated from promulgation ({pub}), when "
+                 f"art. 199 took effect; the rest six months later ({E.add_months(pub, 6)}), the adolescent criminal "
+                 f"system gradually from 2007 to 2009.",
+            f"The code as promulgated (Ley 1098 de 2006, Diario Oficial of {pub}). Its art. 199 took effect on "
+            f"promulgation; the rest six months later ({E.add_months(pub, 6)}), and the system of criminal responsibility "
+            f"for adolescents gradually from 1 January 2007 to 31 December 2009 (art. 216). The history dates the whole "
+            f"code from promulgation.")
 
 
 BUILDERS = {
