@@ -90,7 +90,8 @@ def doc_units(name: str) -> list[dict]:
                     hits[old] += h.count(old)
                     h = h.replace(old, new)
                 it = (it[0], it[1], h) + tuple(it[3:])
-            if it[0] == "box" and it[1] == "Jurisprudencia Vigencia":
+            if it[0] == "box" and it[1] == "Jurisprudencia Vigencia" and "se difieren" in it[2]:
+                # only notes that state the deferral (the same ruling struck other articles at once, e.g. art. 162)
                 h = it[2]
                 for old, new in defer:
                     dhits[old] += h.count(old)
