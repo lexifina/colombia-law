@@ -59,6 +59,17 @@ HEADING_FIXES = [
      "original article (the Código de Procedimiento Penal never held it; the same article's notes name only Leyes 2030 "
      "de 2020 and 2492 de 2025 as its amenders)"),
 ]
+# Rulings whose effect the Court deferred: the engine dates a strike by the ruling's day, so the ruling's day in the
+# source's Jurisprudencia Vigencia note is read as the day the deferral ends (the text leaves the history then); the
+# law keeps the decision day as `enacted` and says so in its note. (page, text in the note, read as, law key,
+# decision day, effect day, why)
+DEFERRED = [
+    ("ley_1801_2016", "C-223-17 de abril de 2017de 20 de abril de 2017", "C-223-17 de 20 de junio de 2019", "c-223-17",
+     "2017-04-20", "2019-06-20",
+     "Sentencia C-223 de 2017 (20 April 2017) declared Título VI of the Código Nacional de Seguridad y Convivencia "
+     "Ciudadana (arts. 47 to 75, the right of assembly) INEXEQUIBLE, deferring the effect 'hasta antes del 20 de junio de "
+     "2019' so that Congress could pass a statutory law; the articles leave the text on 20 June 2019."),
+]
 _units_b3 = B3.doc_units
 
 
@@ -66,6 +77,8 @@ def doc_units(name: str) -> list[dict]:
     units = _units_b3(name)
     fixes = [(old, new) for page, old, new, _ in HEADING_FIXES if page == name]
     hits = {old: 0 for old, _ in fixes}
+    defer = [(old, new) for page, old, new, *_ in DEFERRED if page == name]
+    dhits = {old: 0 for old, _ in defer}
     for u in units:
         items = []
         for it in u["items"]:
@@ -75,18 +88,33 @@ def doc_units(name: str) -> list[dict]:
                     hits[old] += h.count(old)
                     h = h.replace(old, new)
                 it = (it[0], it[1], h) + tuple(it[3:])
+            if it[0] == "box" and it[1] == "Jurisprudencia Vigencia":
+                h = it[2]
+                for old, new in defer:
+                    dhits[old] += h.count(old)
+                    h = h.replace(old, new)
+                it = (it[0], it[1], h) + tuple(it[3:])
             items.append(it)
         u["items"] = items
-    missing = [o for o, n in hits.items() if n != 1]
+    missing = [o for o, n in hits.items() if n != 1] + [o for o, n in dhits.items() if n == 0]
     if missing:
-        raise SystemExit(f"{name}: heading fixes that did not match exactly once: {missing}")
+        raise SystemExit(f"{name}: page fixes that did not match: {missing}")
     return units
+
+
+def fix_deferred() -> None:
+    for page, _, _, key, decided, effect, why in DEFERRED:
+        if key in E.LAWS:
+            E.LAWS[key]["enacted"] = decided
+            E.LAWS[key]["note"] = why
 
 
 P.doc_units = doc_units
 E.doc_units = doc_units
 DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + why for page, _, _, why in HEADING_FIXES
                  if page == "ley_1801_2016")
+DECISIONS.extend("Código Nacional de Seguridad y Convivencia Ciudadana: " + d[-1] + " The commit is dated from the end of the "
+                 "deferral; the law's enacted day is the decision's." for d in DEFERRED if d[0] == "ley_1801_2016")
 
 
 def start_1801(units, enacted, pub):
@@ -127,6 +155,7 @@ def finish_part(path: str) -> None:
 def main(argv: list[str]) -> None:
     only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else list(BUILDERS)
     acts = [BUILDERS[s]() for s in BUILDERS if s in only]
+    fix_deferred()
     problems = B3.anachronisms(acts)
     for p in problems:
         E.note("anachronism " + p)
