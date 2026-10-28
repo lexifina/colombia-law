@@ -1,20 +1,20 @@
-"""Build corpus.json for Colombia from the cached Secretaría del Senado "basedoc" pages.
+"""Build corpus.d/50-codes.json for Colombia: the Código Civil and Ley 1581 de 2012 (data protection).
 
-Reads only .cache/ (written by fetch.py); no network. Deterministic: same cache, same bytes.
+Reads only ../.cache/ (written by ../fetch.py and fetch_codes.py); no network. Deterministic: same cache, same bytes.
+Owned by the Colombia "codes" helper; the Constitution is built by ../parse.py into ../corpus.json. This file began
+as a copy of ../parse.py (the same basedoc layout and the same per-provision reconstruction engine), generalised
+from Actos Legislativos to Leyes, Decretos and Constitutional Court rulings.
 
 The basedoc gives today's text of each act with, per provision:
-  * inline amendment markers ("<Inciso adicionado por el artículo 1 del Acto Legislativo 1 de 2005. El nuevo
-    texto es el siguiente:>"), struck text for parts the Constitutional Court struck (<s>, "<Aparte tachado
-    INEXEQUIBLE>");
+  * inline amendment markers ("<Artículo modificado por el artículo 1o. del Decreto 2820 de 1974. El nuevo texto
+    es el siguiente:>"), struck text for parts the Constitutional Court struck (<s>, "<Aparte tachado INEXEQUIBLE>");
   * note boxes, held in one JavaScript file per page: "Notas de Vigencia" (which act changed it, Diario Oficial
     and date), "Jurisprudencia Vigencia" (Constitutional Court rulings) and "Legislación Anterior" (the earlier
-    texts: "Texto original de la Constitución Política:", "Texto modificado por el Acto Legislativo 2 de 2003:").
+    texts: "Texto original del Código Civil:", "Texto modificado por la Ley 1a. de 1976:").
 
-parse.py rebuilds the dated versions of each provision from those earlier texts and markers, and credits each
-change only to the act or ruling the source names. See `decisions` in the output for every rule.
-
-Usage:  python -X utf8 parse.py            (writes corpus.json atomically)
-        python -X utf8 parse.py --report   (also prints the reconstruction gaps)
+Usage:  python -X utf8 parse_codes.py            (writes ../corpus.d/50-codes.json atomically)
+        python -X utf8 parse_codes.py --report   (also prints the reconstruction gaps)
+        python -X utf8 parse_codes.py --out <file>
 """
 from __future__ import annotations
 
@@ -28,7 +28,8 @@ import sys
 import unicodedata
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-CACHE = os.path.join(HERE, ".cache")
+COUNTRY = os.path.dirname(HERE)
+CACHE = os.path.join(COUNTRY, ".cache")
 BASE = "http://www.secretariasenado.gov.co/senado/basedoc/"
 RETRIEVED = "2026-10-28"
 
@@ -181,8 +182,18 @@ def doc_units(name: str) -> list[dict]:
                         p = p[h2.end():]
                 cur["items"].append(("p", p))
             else:
-                cur["items"].append(("box", plain(m.group(3)), js.get(m.group(2), "")))
+                cur["items"].append(("box", box_title(plain(m.group(3))), js.get(m.group(2), "")))
     return res
+
+
+BOX_TITLES = {t.lower(): t for t in ("Notas de Vigencia", "Jurisprudencia Vigencia", "Legislación Anterior",
+                                     "Notas del Editor", "Concordancias", "Resumen de Notas de Vigencia")}
+BOX_TITLES["notase vigencia"] = "Notas de Vigencia"
+
+
+def box_title(t: str) -> str:
+    """The publisher's box titles vary in case ("Notas de vigencia"); one form each."""
+    return BOX_TITLES.get(t.strip().lower(), t)
 
 
 def box_paras(b: str) -> list[str]:

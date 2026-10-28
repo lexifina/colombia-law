@@ -1060,7 +1060,13 @@ def main(argv: list[str]) -> None:
         "laws": laws,
         "acts": acts,
         "applies": [],
-        "decisions": DECISIONS,
+        "decisions": DECISIONS + [
+            "Placeholder line: where the source names the act that changed a provision but gives no text in force after it (or no 1991 text), "
+            "the provision reads '" + MISSING_LINE + "' for that period, credited to the act named. Cases: "
+            + ", ".join(sorted(set(MISSING_UNITS))) + ".",
+            "Approximations, from the source's own notes: "
+            + "; ".join(sorted({r.strip() for r in REPORT if "slot chain ends" in r or "no dated ruling" in r})) + ".",
+        ],
         "ai_use": ["None at data-build time: fetch.py and parse.py are deterministic code, written with Claude Code "
                    "(claude-opus-5-5); no model reads, writes or summarises legal text. The README was drafted with the "
                    "same tool."],
