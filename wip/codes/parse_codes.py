@@ -218,7 +218,7 @@ CODE_NAMES = [
 ]
 LAW_PAGE = {}  # law key -> basedoc page name, or the URL of the Colpensiones copy (when a source has the act)
 # Acts the basedoc keeps under a code's name.
-CODE_PAGES = {"dec-1400-1970": "codigo_procedimiento_civil"}
+CODE_PAGES = {"dec-1400-1970": "codigo_procedimiento_civil", "dec-2737-1989": "codigo_menor"}
 # The same Avance Jurídico compilation as published by Colpensiones (a state company); used only for the heading
 # (sanction and Diario Oficial days) and the vigencia clause of acts the basedoc does not hold.
 COLPENSIONES = "https://normativa.colpensiones.gov.co/colpens/docs/"
@@ -469,7 +469,7 @@ PARA_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|N
                        r"Expresi[óo]n|Ordinal|Frase|Texto)\b.*?" + VERB + r".*?" + AL_RE.pattern, re.I)
 STRIKE_MARK = re.compile(r"^(Inciso|Incisos|Par[áa]grafo|Par[áa]grafos|Numeral|Numerales|Literal|Literales|Aparte|Apartes|"
                          r"Expresi[óo]n|Ordinal|Frase)\b[^<>]*INEXEQUIBLE", re.I)
-ART_MARK = re.compile(r"^Art[íi]culo\s+(?:transitorio\s+)?" + VERB + r".*?" + AL_RE.pattern, re.I)
+ART_MARK = re.compile(r"^(?:Art[íi]culo\s+(?:transitorio\s+)?)?" + VERB + r".*?" + AL_RE.pattern, re.I)
 
 
 def ruling_for(jv: list[dict], al: str | None) -> dict | None:
@@ -516,7 +516,9 @@ def chain(events: list[tuple[str, str]], known: dict, base_known: list | None | 
             st[i + 1] = known[law]
         if f"before:{law}" in known and st[i] is UNKNOWN:
             st[i] = known[f"before:{law}"]
-    if st[n] is UNKNOWN:
+    if st[n] is UNKNOWN or (last is not UNKNOWN and last is not None and st[n] != last):
+        # Today's text on the page is the consolidated text in force; it wins over an earlier-text box that
+        # differs from it in small ways.
         st[n] = last
     for _ in range(4):
         for i, (d, law) in enumerate(evs):
@@ -575,10 +577,14 @@ def article_history(u: dict, jv_extra=None) -> dict:
         c = {"idx": i, "pre": tidy(to_text(ph, True, corr)), "post": tidy(to_text(ph, False)),
              "marks": [m for m in mk if not TACIT.search(m)],
              "struck": bool(re.search(r"<s\b", ph, re.I)) or any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk)}
+        if not re.search(r"\w", c["pre"]):
+            c["pre"] = c["post"] = ""  # a paragraph left with only a full stop after the publisher's marker
         if any(TACIT.search(m) for m in mk) and not any(re.search(r"INEXEQUIBLE", m, re.I) for m in mk):
             # Words the source shows struck as derogated tacitly ('derogado tácitamente'): no act removed them.
             c["post"], c["struck"] = c["pre"], False
         cur.append(c)
+    tacit_whole = bool(cur) and not any(c["post"] for c in cur) and any(
+        TACIT.search(m) for m in markers(paras[0][1])) if paras else False
     if cur and not any(c["post"] for c in cur):
         # Nothing of the article is in force today: an earlier text the source gives without its "ARTÍCULO N."
         # heading is still the whole article.
@@ -827,6 +833,9 @@ def article_history(u: dict, jv_extra=None) -> dict:
                 out[-1] = (out[-1][0], last or None, out[-1][2])
         return out
 
+    if tacit_whole and orig_full is not None and not art_events:
+        # A whole article the source calls tacitly derogated: no act removed its words, so they stay.
+        return {"states": [("", orig_full, "")], "notes": []}
     shist = [slot_states(s) for s in slots]
     if os.environ.get("CO_DEBUG") == u["name"]:
         for s_, h_ in zip(slots, shist):
@@ -965,6 +974,9 @@ HAND_RULES = {
                                     "siguiente de su expedición ...'"),
     "dec-1400-1970": ("1971-07-01", "Decreto 1400 de 1970 (Código de Procedimiento Civil), art. 699: 'El presente código "
                                     "entrará en vigencia el primero de julio de mil novecientos setenta y uno.'"),
+    "dec-2737-1989": ("1990-03-01", "Decreto 2737 de 1989 (Código del Menor), art. 354: 'El presente Código entrará a regir a "
+                                    "partir de la fecha de su publicación y su vigencia se iniciará, con excepción de las normas "
+                                    "contenidas en la Sección Quinta del Capítulo Cuarto del Título Segundo, el 1o. de marzo de 1990.'"),
     "dec-2150-1995": ("pub", "Decreto 2150 de 1995, art. 152: 'Las normas contenidas en el presente decreto entrarán a regir a "
                              "partir de su publicación, con excepción de las contenidas en el Capítulo II del Título I y en el "
                              "Capítulo XV del Título II, las cuales entrarán a regir 3 meses después ...'"),
