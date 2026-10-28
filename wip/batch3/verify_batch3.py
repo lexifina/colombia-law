@@ -7,6 +7,8 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(os.path.dirname(HERE), "phase2"))
+sys.path.insert(0, HERE)
+import parse_batch3  # noqa: E402,F401  (its page repairs and sign-off rule apply to the check too)
 import verify_phase2 as V  # noqa: E402
 
 V.ACTS = (("codigo-de-comercio", "codigo_comercio"), ("cpaca", "ley_1437_2011"),

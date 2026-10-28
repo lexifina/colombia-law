@@ -22,10 +22,83 @@ E = P.E
 # CPACA's own original, Ley 1437 de 2011); "Texto adicionado por la Ley 1908 de 2019" (its note: "artículo 21 de la Ley
 # 1908 de 2018"); "Texto con las modificaciones introducidas por el Decreto 1959 de 2019" (the notes on the same article:
 # "modificado por el artículo 3 de la Ley 1959 de 2019").
+# Ley 44 de 1981 (art. 13 rewrote art. 159 of the Código de Comercio): neither the basedoc nor Colpensiones holds it,
+# no Internet Archive copy exists, and the code's notes give no Diario Oficial. The change is shown on the last day of
+# the year in its name, the latest day it can have been sanctioned; it may have taken effect later (stated in decisions).
+E.HAND_RULES["ley-44-1981"] = ("1981-12-31", "no source gives its day (the basedoc and Colpensiones do not hold the act, "
+                                             "and the Código de Comercio's note gives no Diario Oficial): shown on the "
+                                             "last day of 1981, the latest day it can have been sanctioned; it may have "
+                                             "taken effect later")
+# Vigencia clauses read by hand from the acts' own cached pages where the pattern rules misread them.
+E.HAND_RULES.update({
+    "ley-1328-2009": ("pub", "Ley 1328 de 2009, art. 101: 'La presente ley rige a partir de su promulgación con excepción de "
+                             "las reglas especiales de vigencia en ella contempladas y de los siguientes artículos: 1o a 22 "
+                             "... 35 ... y 61 a 66 ...' (its change here, a derogation in Código de Comercio art. 1230 by "
+                             "art. 101 itself, is under the general rule)"),
+    "ley-2475-2025": ("pub+12m", "Ley 2475 de 2025, art. 8: 'La presente ley rige doce (12) meses a partir de su publicación "
+                                 "y deroga las disposiciones que le sean contrarias.'"),
+    "ley-2592-2026": ("pub+6m", "Ley 2592 de 2026, art. 12: 'La presente ley rige a partir de los seis (6) meses de su "
+                                "publicación, a partir de los cuales se derogan todas las disposiciones que le sean "
+                                "contrarias.'"),
+    "ley-1760-2015": ("pub", "Ley 1760 de 2015, art. 5: 'La presente ley rige a partir de la fecha de su promulgación, salvo "
+                             "el artículo 1o y el numeral 6 del artículo 4o, los cuales entrarán a regir en un (1) año "
+                             "contado a partir de la fecha de su promulgación ...' (its arts. 2 to 4 rewrote arts. 308, 310 "
+                             "and 317 of the Código de Procedimiento Penal; numeral 6 of art. 317 as rewritten took effect a "
+                             "year later, which one commit for the article cannot show)"),
+})
 E.KEY_FIXES.update({"ley-1437-2001": "ley-1437-2011", "ley-1908-2019": "ley-1908-2018", "dec-1959-2019": "ley-1959-2019"})
 # The Código de Comercio ends "Comuníquese y publíquese. Dado en Bogotá, D.E., a 27 de marzo de 1971." and the signers.
 P.SIGN_OFF = re.compile(P.SIGN_OFF.pattern + r"|\s*COMUN[ÍI]QUESE Y PUBL[ÍI]QUESE|\s*Comun[íi]quese y publ[íi]quese")
 OUT_DIR = os.path.join(COUNTRY, "corpus.d")
+
+HEAD_RE = re.compile(r"\s*(LIBRO|T[ÍI]TULO|CAP[ÍI]TULO|SECCI[ÓO]N|PARTE|DISPOSICIONES)\b[^a-zñáéíóú]{0,60}$")
+_units_p2 = P.doc_units
+
+
+def doc_units(name: str) -> list[dict]:
+    """The Phase 2 split, with three repairs for these pages:
+    * the Código de Comercio marks in braces the words corrected by the errata note printed at the end of its official
+      edition (the same Diario Oficial No. 33.339): the corrected words are the official text, so the braces go;
+    * an article whose anchor the publisher named "Nivel001" (art. 508 of the Código de Comercio) is an article;
+    * heading paragraphs ("SECCIÓN III.", "REPRESENTANTE LEGAL") left at the end of an article without an anchor of
+      their own become a heading of their own, so they are neither in the article nor lost."""
+    units = _units_p2(name)
+    out = []
+    for u in units:
+        if name == "codigo_comercio":
+            u["items"] = [tuple(x.replace("{", "").replace("}", "") if isinstance(x, str) and k > 0 and (it[0] == "p" or k == 2)
+                                else x for k, x in enumerate(it)) for it in u["items"]]
+        if u["name"].startswith("Nivel") and re.match(r"ART[IÍ]CULO\s+\d", u["label"] or ""):
+            u["name"] = E.label_num(u["label"]) or u["name"]
+        # A heading anchor that holds only part of "ARTÍCULO" (label "A", the rest "RTÍCULO 1913. ..." in the
+        # paragraph) or nothing (label "", the paragraph starts "ARTÍCULO 1129. ..."): rebuild the heading.
+        if u is not units[0] and (u["label"] or "") in ("", "A", "AR", "ART") and u["items"] and u["items"][0][0] == "p":
+            whole = E.html.escape(u["label"] or "", quote=False) + u["items"][0][1]
+            m = re.match(r"\s*(ART(?:Í|&Iacute;|I)CULO\s+\d+[A-Z]?\.(?:\s*&lt;(?:(?!&gt;).)*&gt;\.?)?)", whole, re.S)
+            if m:
+                u["label"] = E.plain(m.group(1))
+                u["items"] = [("p", whole[m.end():])] + u["items"][1:]
+        items = u["items"]
+        cut = None
+        if u is not units[0] and re.match(r"ART[IÍ]CULO", u["label"] or ""):
+            for k, it in enumerate(items):
+                if it[0] == "p" and HEAD_RE.match(E.plain(it[1])) and all(x[0] == "p" for x in items[k:]):
+                    cut = k
+                    break
+        if cut is not None:
+            head = [E.tidy(E.to_text(x[1])) for x in items[cut:]]
+            head = [h for h in head if h]
+            u["items"] = items[:cut]
+            out.append(u)
+            out.append({"name": f"Nivel-{u['name']}-tail", "label": head[0], "page": u["page"],
+                        "items": [("p", E.html.escape(h, quote=False)) for h in head[1:]]})
+            continue
+        out.append(u)
+    return out
+
+
+P.doc_units = doc_units
+E.doc_units = doc_units
 DECISIONS = P.DECISIONS
 
 
