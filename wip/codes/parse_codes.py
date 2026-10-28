@@ -210,7 +210,7 @@ LAWS: dict[str, dict] = {}
 AL_RE = re.compile(r"\b([Ll]ey|[Dd]ecreto(?:[- ][Ll]ey| Legislativo| Extraordinario)?)\s+(?:No\.\s*|número\s*)?(\d[\d.]*)"
                    r"(?:a\.|o\.|ª|º)?\s+(?:de\s+\d{1,2}\s+de\s+[a-z]+\s+)?de\s+(\d{4})")
 # Typing slips in the notes, fixed by what the same note says (its Diario Oficial date or the act's kind).
-KEY_FIXES = {"ley-25-1892": "ley-25-1992", "ley-2820-1974": "dec-2820-1974"}
+KEY_FIXES = {"ley-25-1892": "ley-25-1992", "ley-2820-1974": "dec-2820-1974", "ley-95-1980": "ley-95-1890"}
 # Codes the notes cite by name only.
 CODE_NAMES = [
     (re.compile(r"C[óo]digo de Procedimiento Civil(?:\s*-\s*Decreto 1400 de 1970)?|C\.\s?P\.\s?C\.(?=[\s,.])"), "Decreto 1400 de 1970"),
@@ -598,6 +598,11 @@ def article_history(u: dict, jv_extra=None) -> dict:
             art_events.add(e["law"])
             if e["struck"]:
                 struck_als[e["law"]] = None
+    if cur and not any(c["post"] for c in cur):
+        # An article gone today that several acts derogated: it was gone after each of them.
+        for e in nv:
+            if e["article"] and e["verb"] == "derogad":
+                whole.setdefault(e["law"], None)
     art_added = set()
     for m in art_marks:
         a = AL_RE.search(m)
@@ -1321,7 +1326,11 @@ def main(argv: list[str]) -> None:
             "licence": "Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes "
                        "(Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used.",
             "notes": "codigo_civil.html + 83 continuation pages and their js/ note files; ley_1581_2012.html; the base page "
-                     "and last page of each amending act the basedoc has (for its own vigencia clause)."}],
+                     "and last page of each amending act the basedoc has (for its own vigencia clause)."},
+            {"name": "Colpensiones, Normativa (Avance Jurídico compilation): acts before 1992 that the basedoc lacks",
+             "url": COLPENSIONES, "retrieved": RETRIEVED, "requests": 0,
+             "licence": "Official legal text (Ley 23 de 1982, art. 41); only headings and vigencia clauses are read.",
+             "notes": "Requests are counted in the basedoc source's figure (one shared log)."}],
         "laws": laws,
         "acts": acts,
         "decisions": DECISIONS + rules,
@@ -1353,6 +1362,9 @@ DECISIONS = [
     "Código Civil: derogations the source calls tacit ('derogado tácitamente', 'orgánicamente') change no text and are not recorded; only express changes are.",
     "Código Civil: the notes cite the Código de Procedimiento Civil and the Código Sustantivo del Trabajo by name; they are Decreto 1400 de 1970 and Decreto 2663 de 1950.",
     "In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it, or as the Código Civil page quotes it; a day that a provision's own note gives ('La derogatoria rige a partir del 1o. de enero de 2014') applies to that provision. Acts the basedoc does not hold (most acts before 1992) are dated by the default rule: before 1913, from publication in the Diario Oficial (Código Civil arts. 11 and 12); from 1913, two months after it (Ley 4 de 1913, art. 52). The list below gives the day and the rule for each act.",
+    "Typing slips in the source, corrected: 'Ley 25 de 1892' (its note gives the Diario Oficial of 18 December 1992) is Ley 25 de 1992; 'Ley 2820 de 1974' is Decreto 2820 de 1974; 'Ley 95 de 1980' in art. 217's earlier text is Ley 95 de 1890 (the reform of arts. 214-217 that Ley 1060 de 2006 later repealed as 'los artículos 5o y 6o de la Ley 95 de 1890'); the Colpensiones heading of Ley 8 de 1922 dates its Diario Oficial No. 18.199bis to 23 February 1913, read as 1922.",
+    "Old acts the basedoc does not hold are read, for their heading and vigencia clause only, from the same Avance Jurídico compilation as published by Colpensiones (normativa.colpensiones.gov.co).",
+    "Where the source shows words struck as INEXEQUIBLE but names no dated ruling for them (arts. 537, 669, 1119, 1527), the struck words are left out of every version; art. 312's struck text is likewise left out.",
     "Constitutional Court rulings that struck text (INEXEQUIBLE) are laws of kind 'court', dated by the day of the ruling as the source gives it. Rulings that upheld text on a condition of interpretation change no words: they are court laws with a note, credited to the article on the ruling's day. Plain EXEQUIBLE rulings and inhibitions are not recorded.",
     "Where the source names an act that changed an article but does not give the text in force after it, the article's text for that period is the line '[La fuente no da el texto vigente en esta fecha.]'; parse_codes.py --report lists every such gap.",
     "Avance Jurídico's editorial notes, markers (<...>) and article epigraphs in angle brackets are not part of the text. The headings of books, titles and chapters are kept in titulos.md, a heading shown while an article under it exists.",
