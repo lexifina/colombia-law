@@ -306,6 +306,19 @@ def build_cgd() -> dict:
     E.LAWS[key]["note"] = ("Ley 1955 de 2019 (Plan Nacional de Desarrollo 2018-2022), art. 140, postponed the entry into "
                            "force of the Código General Disciplinario to 1 July 2021; it changed no words of the code.")
     vs = act["versions"]
+    # Art. 225D was inserted by Ley 2094 de 2021, art. 43 ("Artículo adicionado por el artículo 43 de la Ley 2094 de
+    # 2021, corregido por el artículo 1 del Decreto 1656 de 2021"): with two acts on one day the engine leaves it as a
+    # placeholder before that day; an inserted article is absent before the act that inserted it (coordinator rule).
+    l2094 = E.law_day("ley-2094-2021")
+    for v in vs:
+        u = v.get("units", {}).get("art-0225d")
+        if v["from"] < l2094 and u is not None:
+            if u["text"] != f"# Art. 225D\n{E.MISSING_LINE}\n":
+                raise SystemExit("CGD art. 225D before Ley 2094 de 2021 is not a placeholder")
+            del v["units"]["art-0225d"]
+            v["credits"].pop("art-0225d", None)
+    DECISIONS.append("Código General Disciplinario: art. 225D, inserted by Ley 2094 de 2021 (art. 43, corrected by "
+                     "Decreto 1656 de 2021), is absent before " + l2094 + ".")
     if any(v["from"] == day for v in vs):
         raise SystemExit("CGD: a version already on " + day)
     vs.append({"from": day, "credits": {"art-0265": [key]}, "source_url": vs[0]["source_url"], "sha256": vs[0]["sha256"]})
