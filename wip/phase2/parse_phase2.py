@@ -25,6 +25,11 @@ OUT = os.path.join(COUNTRY, "corpus.d", "60-phase2.json")
 SIGN_OFF = re.compile(r"\s*(El Presidente del (honorable |H\. )?Senado|EL PRESIDENTE DEL (HONORABLE |H\. )?SENADO|"
                       r"REP[ÚU]BLICA DE COLOMBIA\s*-\s*GOBIERNO NACIONAL|PUBL[ÍI]QUESE Y (EJEC[ÚU]TESE|C[ÚU]MPLASE))")
 
+# Typing slips in the codes' notes, fixed by what the same page shows: "Texto original de la Ley 599 de 0000" (the
+# Código Penal's own original), "Texto original de la Ley 1565 de 2012" in the Código General del Proceso (Ley 1564 de
+# 2012 is the code; Ley 1565 de 2012 is an unrelated act on returning nationals).
+E.KEY_FIXES.update({"ley-599-0000": "ley-599-2000", "ley-1565-2012": "ley-1564-2012"})
+
 _doc_units = E.doc_units
 
 
@@ -250,41 +255,50 @@ def full_versions(versions: list[dict]) -> list[dict]:
     return out
 
 
-def main(argv: list[str]) -> None:
-    only = argv[argv.index("--only") + 1].split(",") if "--only" in argv else list(BUILDERS)
-    acts = [BUILDERS[s]() for s in BUILDERS if s in only]
-    used = {l for a in acts for v in a["versions"] for ls in v["credits"].values() for l in ls} | {a["first_law"] for a in acts if a["first_law"]} | {l for a in acts for l in a["earlier_laws"]}
+PARTS = [("60-phase2.json", ["codigo-penal", "codigo-general-del-proceso"], ("Código Penal", "Código General del Proceso")),
+         ("61-cst.json", ["codigo-sustantivo-del-trabajo"], ("Código Sustantivo del Trabajo",))]
+PREFIX = {"codigo-penal": ("ley_0599_2000", "CP"), "codigo-general-del-proceso": ("ley_1564_2012", "CGP"),
+          "codigo-sustantivo-del-trabajo": ("codigo_sustantivo_trabajo", "CST")}
+
+
+def write_part(acts: list[dict], out: str, names: tuple) -> None:
+    used = ({l for a in acts for v in a["versions"] for ls in v["credits"].values() for l in ls}
+            | {a["first_law"] for a in acts if a["first_law"]} | {l for a in acts for l in a["earlier_laws"]})
     laws = {k: dict(v) for k, v in sorted(E.LAWS.items()) if k in used}
     rules = [f"In force {E.IN_FORCE[k]}: {laws[k]['label']} ({E.IN_FORCE_WHY[k]})."
              for k in sorted(laws, key=lambda k: (E.IN_FORCE.get(k, ""), k)) if k in E.IN_FORCE]
+    pages = [PREFIX[a["slug"]][0] for a in acts]
+    approx = sorted({r.split(":")[0] for r in E.REPORT if "latest earlier text differs" in r
+                     and r.split(" ")[0] in pages})
+    gaps = sorted({m for m in E.MISSING_UNITS})
     part = {
         "sources": [{
-            "name": "Secretaría General del Senado, basedoc: Código Penal, Código General del Proceso, Código Sustantivo "
-                    "del Trabajo and the acts that amended them",
+            "name": "Secretaría General del Senado, basedoc: " + ", ".join(names) + " and the acts that amended them",
             "url": E.BASE, "retrieved": E.RETRIEVED, "requests": 0,
             "licence": "Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes "
                        "(Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used.",
-            "notes": "ley_0599_2000, ley_1564_2012 and codigo_sustantivo_trabajo (base, continuation pages and js/ note "
-                     "files), plus the base and last page of each amending act. Requests are counted in the country's "
-                     "shared log (corpus.json's source)."}],
+            "notes": ", ".join(pages) + " (base, continuation pages and js/ note files), plus the base and last page of each "
+                     "amending act. Requests are counted in the country's shared log (corpus.json's source)."}],
         "laws": laws,
         "acts": [dict(a, versions=to_deltas(a["versions"])) for a in acts],
         "decisions": [
-            "Código Penal, Código General del Proceso and Código Sustantivo del Trabajo (phase2/parse_phase2.py, with the "
-            "engine phase2/engine.py): versions are rebuilt per article from the basedoc's earlier texts, inline "
-            "amendment markers and Notas de Vigencia, as for the Constitution and the Código Civil. Where the source names "
-            "an act but gives no text after it, the article reads '" + E.MISSING_LINE + "' for that period.",
+            ", ".join(names) + " (phase2/parse_phase2.py, with the engine phase2/engine.py): versions are rebuilt per "
+            "article from the basedoc's earlier texts, inline amendment markers and Notas de Vigencia, as for the "
+            "Constitution and the Código Civil. Where the source names an act but gives no text after it, the article "
+            "reads '" + E.MISSING_LINE + "' for that period.",
             "Constitutional Court rulings that struck text are laws of kind 'court', dated by the ruling's day as the "
             "source gives it; rulings that upheld text on a condition are court laws with a note and change no words.",
             "In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the "
             "default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives "
             "applies to that provision. The list below gives the day and the rule for each act.",
-        ] + DECISIONS + rules,
+            "The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text "
+            "differs from today's only by that or by a change no note names, today's text is used from the latest "
+            "named act's day. Articles where that happened: " + (", ".join(approx) or "none") + ".",
+        ] + [d for d in DECISIONS if d.startswith(names)] + rules,
         "ai_use": ["None at data-build time: phase2/fetch_phase2.py, phase2/parse_phase2.py and phase2/engine.py are "
                    "deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises "
                    "legal text."],
     }
-    out = argv[argv.index("--out") + 1] if "--out" in argv else OUT
     os.makedirs(os.path.dirname(out), exist_ok=True)
     tmp = out + ".tmp"
     with open(tmp, "w", encoding="utf-8", newline="\n") as f:
@@ -295,6 +309,14 @@ def main(argv: list[str]) -> None:
           f"{os.path.getsize(out) // 1024} KB")
     for a in acts:
         print(f"  {a['slug']}: {len(a['versions'])} versions")
+
+
+def main(argv: list[str]) -> None:
+    """Writes corpus.d/60-phase2.json (Código Penal, CGP) and corpus.d/61-cst.json (CST); --out-dir DIR elsewhere."""
+    acts = {s: b() for s, b in BUILDERS.items()}
+    d = argv[argv.index("--out-dir") + 1] if "--out-dir" in argv else os.path.dirname(OUT)
+    for fname, slugs, names in PARTS:
+        write_part([acts[s] for s in slugs], os.path.join(d, fname), names)
     if "--report" in argv:
         for r in E.REPORT:
             print("  ", r)

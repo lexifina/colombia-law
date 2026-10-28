@@ -275,6 +275,7 @@ IN_FORCE: dict[str, str] = {}   # law key -> in-force day
 IN_FORCE_WHY: dict[str, str] = {}
 PUB: dict[str, str] = {}        # law key -> Diario Oficial day
 TITLES: dict[str, str] = {}
+NOTE_PUB: set[str] = set()  # acts whose note in the code says "Rige a partir de su publicación"
 
 
 def law_day(key: str) -> str | None:
@@ -504,6 +505,9 @@ def ruling_for(jv: list[dict], al: str | None) -> dict | None:
     return max(rest, key=lambda r: r["date"]) if rest else None
 
 
+CUR_UNIT = [""]
+
+
 def chain(events: list[tuple[str, str]], known: dict, base_known: list | None | Unknown, last: list | None,
           struck: dict, added: set) -> list[tuple[str, object, str]]:
     """Resolve states for a list of (day, law) events.
@@ -526,6 +530,11 @@ def chain(events: list[tuple[str, str]], known: dict, base_known: list | None | 
         if f"before:{law}" in known and st[i] is UNKNOWN:
             st[i] = known[f"before:{law}"]
     if st[n] is UNKNOWN:
+        st[n] = last
+    elif n and last is not UNKNOWN and (st[n] or None) != (last or None):
+        # The earlier text the source gives for the latest act differs from today's text: a later change the notes
+        # do not name (often only the epigraph, which the earlier texts leave out). Today's text is the latest state.
+        note(f"{CUR_UNIT[0]}: latest earlier text differs from today's after {evs[-1][1]}; today's text used from {evs[-1][0]}")
         st[n] = last
     for _ in range(4):
         for i, (d, law) in enumerate(evs):
@@ -907,8 +916,8 @@ def article_history(u: dict, jv_extra=None) -> dict:
 
 CC = "codigo_civil"
 DP = "ley_1581_2012"
-DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}\s+de\s+[a-z]+\s+(?:de\s+)*\d{4})")
-VIG_RE = re.compile(r"\b(rige|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
+DO_RE = re.compile(r"Diario Oficial (?:No\.?\s*)?[\d.]+(?:bis)?(?:\s*y\s*[\d.]+)?\s*,?\s*(?:de|del)?\s*(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+(?:de\s+)*\d{4})")
+VIG_RE = re.compile(r"\b(rige|rigen|entra a regir|regir[áa]n?|entrar[áa]n? (?:a regir|en vigencia)|entra en vigencia|empezar[áa] a regir|"
                     r"comenzar[áa] a regir)\b", re.I)
 NUMS = {"un": 1, "uno": 1, "dos": 2, "tres": 3, "cuatro": 4, "seis": 6, "doce": 12, "dieciocho": 18, "veinticuatro": 24}
 
@@ -965,7 +974,7 @@ def page_clause(page: str) -> str | None:
     """The act's own vigencia clause: the last article that says when the act 'rige'."""
     hits = [p for p in page_paras(page) if VIG_RE.search(p)
             and re.search(r"promulgaci|publicaci|sanci[óo]n|expedici|meses|enero", p)
-            and len(p) < 900 and re.match(r"(ART[IÍ]CULO|Esta|Está|La presente|Este|El presente|\d\. Los)", p)]
+            and len(p) < 4000 and re.match(r"(ART[IÍ]CULO|Esta|Está|La presente|Este|El presente|\d\. Los)", p)]
     return hits[-1] if hits else None
 
 
@@ -994,6 +1003,12 @@ HAND_RULES = {
 
 def rule_from_clause(clause: str) -> str | None:
     t = clause.lower()
+    # "El artículo 70 ... regirá a partir del 1 de julio de 2019 y los demás artículos ... rigen a partir de su
+    # promulgación": the act's general rule is the one for "los demás".
+    if re.search(r"(?:los|las) dem[áa]s .{0,160}?(?:rige|rigen|regir[áa]n).{0,60}?(?:promulgaci|publicaci)", t):
+        return "pub"
+    if re.search(r"d[íi]a siguiente (?:a|de) (?:la fecha de )?su (?:promulgaci|publicaci)", t):
+        return "pub+1d"
     m = re.search(r"(?:regir[áa]?|rige|vigencia)\s+(?:a partir\s+)?(?:el|del|desde el)\s+(?:d[íi]a\s+)?(\d{1,2}(?:o\.|º)?\s+de\s+[a-z]+\s+de\s+\d{4})", t)
     if m and date_es(m.group(1)):
         return date_es(m.group(1))
@@ -1034,9 +1049,20 @@ def scan_law_dates(units: list[dict]) -> None:
                     key = al_key(*m.groups())
                     seg = t[m.end():ms[i + 1].start() if i + 1 < len(ms) else len(t)]
                     dm = DO_RE.search(seg)
+                    if not dm and seg.lstrip(" ,").startswith("'"):
+                        # The act's quoted title names other acts ("'por el cual se corrigen unos yerros en la Ley
+                        # 2445 de 2025 ...', publicado en el Diario Oficial No. ..."): its Diario Oficial follows the title.
+                        q = seg.lstrip(" ,")
+                        end = t.find("'", m.end() + (len(seg) - len(q)) + 1)
+                        if end > 0:
+                            dm = DO_RE.match(t[end + 1:].lstrip(" ,").replace("publicado en el ", "").replace("publicada en el ", ""))
                     d = date_es(dm.group(1)) if dm else None
                     if d and 0 <= int(d[:4]) - int(key.split("-")[2]) <= 2:
                         days[key][d] += 1
+                        k0 = t.find(dm.group(0))
+                        after = t[k0 + len(dm.group(0)):][:120] if k0 >= 0 else ""
+                        if re.match(r"[.,]?\s*Rige a partir de (?:la fecha de )?su (?:publicaci[óo]n|promulgaci[óo]n)", after):
+                            NOTE_PUB.add(key)
                     if it[1].startswith("Resumen") and key not in TITLES:
                         tm = re.match(r"\s*(?:,\s*)?(?:-\s*|')([^']{8,}?)(?:'|,\s*publicad|;|$)", seg)
                         if tm:
@@ -1062,6 +1088,8 @@ def compute_in_force(key: str) -> None:
     elif key in LAW_PAGE and page_clause(LAW_PAGE[key]):
         cl = page_clause(LAW_PAGE[key])
         rule, why = rule_from_clause(cl), f"{law['label']}: '{cl[:300]}'"
+    if rule is None and key in NOTE_PUB:
+        rule, why = "pub", "the source's note on the act: 'Rige a partir de su publicación en el Diario Oficial'"
     if rule is None:
         if pub and int(y) < 1913:
             rule, why = "pub", ("rule before 1913 (Código Civil arts. 11 and 12: a law binds after its promulgation, "
@@ -1151,6 +1179,7 @@ def build_act(name: str, start: str, stop_anchor: str | None = None, tail_stop: 
             note(f"{name}: duplicate unit {key}")
             continue
         UNIT_DAYS.clear()
+        CUR_UNIT[0] = f"{name} {key}"
         h = article_history(u)
         UNIT_DAYS.clear()
         timelines[key] = h["states"]
