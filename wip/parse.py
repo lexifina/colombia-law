@@ -203,7 +203,7 @@ ELECTION_DAYS = {
 
 
 def al_key(n: str, y: str) -> str:
-    return f"al-{int(n):02d}-{y}"
+    return f"al-{int(n)}-{y}"
 
 
 def court_key(c: str) -> str:
@@ -211,7 +211,7 @@ def court_key(c: str) -> str:
     pre, num, suf, yy = m.groups()
     y = int(yy)
     y = y if y > 1000 else (1900 + y if y > 50 else 2000 + y)
-    return f"{pre.lower()}-{int(num):03d}{suf.lower()}-{y}"
+    return f"{pre.lower()}-{int(num):03d}{suf.lower()}-{y % 100:02d}"
 
 
 def court_label(c: str) -> str:
