@@ -303,8 +303,6 @@ def build_cgd() -> dict:
     day = E.LAWS[key]["published"]
     if day != "2019-05-25":
         raise SystemExit(f"Ley 1955 de 2019: published {day}")
-    E.LAWS[key]["note"] = ("Ley 1955 de 2019 (Plan Nacional de Desarrollo 2018-2022), art. 140, postponed the entry into "
-                           "force of the Código General Disciplinario to 1 July 2021; it changed no words of the code.")
     vs = act["versions"]
     # Art. 225D was inserted by Ley 2094 de 2021, art. 43 ("Artículo adicionado por el artículo 43 de la Ley 2094 de
     # 2021, corregido por el artículo 1 del Decreto 1656 de 2021"): with two acts on one day the engine leaves it as a
@@ -321,7 +319,9 @@ def build_cgd() -> dict:
                      "Decreto 1656 de 2021), is absent before " + l2094 + ".")
     if any(v["from"] == day for v in vs):
         raise SystemExit("CGD: a version already on " + day)
-    vs.append({"from": day, "credits": {"art-0265": [key]}, "source_url": vs[0]["source_url"], "sha256": vs[0]["sha256"]})
+    vs.append({"from": day, "credits": {"art-0265": [key]}, "source_url": vs[0]["source_url"], "sha256": vs[0]["sha256"],
+               "note": "Ley 1955 de 2019 (Plan Nacional de Desarrollo 2018-2022), art. 140, postponed the entry into force "
+                       "of the Código General Disciplinario to 1 July 2021; it changed no words of the code."})
     vs.sort(key=lambda v: v["from"])
     DECISIONS.append("Código General Disciplinario: Ley 1955 de 2019, art. 140 (postponing the code's start to 1 July "
                      "2021), is shown on its publication day (25 May 2019) as a change of no words to art. 265, from the "
@@ -339,11 +339,21 @@ def start_ce(units, enacted, pub):
             f"publication under its art. 218: '{a}'")
 
 
+def build_1801() -> dict:
+    act = B3.build("ley_1801_2016", "ley-1801-2016", "codigo-nacional-de-seguridad-y-convivencia-ciudadana", "CNSCC",
+                   "Código Nacional de Seguridad y Convivencia Ciudadana (Ley 1801 de 2016)",
+                   "Por la cual se expide el Código Nacional de Seguridad y Convivencia Ciudadana", start_1801)
+    # The same ruling struck Título VI itself ("Título declarado INEXEQUIBLE ... C-223-17"): the headings that leave with
+    # its articles on 20 June 2019 are credited to it (the engine credits headings only to acts).
+    for v in act["versions"]:
+        for page, _, _, key, _, effect, _ in DEFERRED:
+            if page == "ley_1801_2016" and v["from"] == effect and "titulos" not in v["credits"] and "units" in v:
+                v["credits"]["titulos"] = [key]
+    return act
+
+
 BUILDERS = {
-    "codigo-nacional-de-seguridad-y-convivencia-ciudadana": lambda: B3.build(
-        "ley_1801_2016", "ley-1801-2016", "codigo-nacional-de-seguridad-y-convivencia-ciudadana", "CNSCC",
-        "Código Nacional de Seguridad y Convivencia Ciudadana (Ley 1801 de 2016)",
-        "Por la cual se expide el Código Nacional de Seguridad y Convivencia Ciudadana", start_1801),
+    "codigo-nacional-de-seguridad-y-convivencia-ciudadana": build_1801,
     "sistema-de-seguridad-social-integral": lambda: B3.build(
         "ley_0100_1993", "ley-100-1993", "sistema-de-seguridad-social-integral", "L100",
         "Ley 100 de 1993 (Sistema de Seguridad Social Integral)",
