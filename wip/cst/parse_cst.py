@@ -150,7 +150,7 @@ def set_aside(u: dict) -> None:
 # original es el es el siguiente:>" (art. 260), "<Artículo subrogado por La ley 100 de 1993. Ver Notas del Editor. El
 # texto original es el siguiente:>" (arts. 273, 275, 277, 278, 280 to 284): the words that follow are the repealed text.
 SHOWN_REPEALED = re.compile(r"\s*&lt;(Art&iacute;culo (?:derogado|subrogado) por (?:el art&iacute;culo (?:<[^>]*>)?\d+(?:</A>)? de )?"
-                            r"[Ll]a [Ll]ey 100 de 1993)\.(?:(?!&gt;).)*?El texto original es el (?:es el )?siguiente:&gt;", re.I)
+                            r"[Ll]a [Ll]ey (?:<[^>]*>)?100(?:</A>)? de 1993)\.(?:(?!&gt;).)*?El texto original es el (?:es el )?siguiente:&gt;", re.I)
 SHOWN_REPEALED_UNITS: list[str] = []
 
 
@@ -167,7 +167,7 @@ def repealed_text_shown(u: dict) -> None:
     paras = [p for p in [first] + [u["items"][k][1] for k in ps[1:]] if E.plain(p).strip()]
     has_orig = any(it[0] == "box" and it[1] == "Legislación Anterior" and
                    re.search(r"Texto original del C(?:&oacute;|ó)digo", it[2]) for it in u["items"])
-    marker = "&lt;" + re.sub(r"\s+", " ", m.group(1)).replace("La ley", "la Ley") + ".&gt;"
+    marker = "&lt;" + re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", m.group(1))).replace("La ley", "la Ley") + ".&gt;"
     items = [it for k, it in enumerate(u["items"]) if (it[0] == "p" and k not in ps[1:])
              or (it[0] == "box" and it[1] != "Jurisprudencia Vigencia")]
     items = [("p", " " + marker) if it[0] == "p" and it[1] == u["items"][ps[0]][1] else it for it in items]
@@ -179,6 +179,33 @@ def repealed_text_shown(u: dict) -> None:
                       "<tbody><tr><td><p><span class='b_aj'>Texto original del Código Sustantivo del Trabajo:</span></p>"
                       f"{body}</td></tr></tbody>"))
     u["items"] = items
+
+
+_article_history = E.article_history
+
+
+def article_history(u: dict, jv_extra=None) -> dict:
+    """Art. 200 (enfermedad profesional): repealed by Decreto 1295 de 1994, art. 98 (its Notas de Vigencia), and revived
+    by the Corte Constitucional's Sentencia C-1155-08 of 26 November 2008, which struck art. 11 of that decree: 'la presente
+    declaración de inexequibilidad revive el artículo 200 del Código Sustantivo del Trabajo' (the ruling as the same note
+    quotes it). The page's text, with no amendment marker, is the code's original text, in force again."""
+    h = _article_history(u, jv_extra)
+    if u["name"] != "200":
+        return h
+    nv = " ".join(E.plain(p) for it in u["items"] if it[0] == "box" and it[1] == "Notas de Vigencia" for p in E.box_paras(it[2]))
+    m = re.search(r"Sentencia (C-1155-08) de (\d+ de \w+ de \d{4}).{0,900}?revive el art[íi]culo 200 del C[óo]digo Sustantivo", nv)
+    if not m or "derogado por el artículo 98 del Decreto 1295 de 1994" not in nv:
+        raise SystemExit("CST art. 200: the revival note changed; check the rule")
+    today = h["states"][-1][1]
+    if not today or today is E.UNKNOWN:
+        raise SystemExit("CST art. 200: no current text")
+    rep = E.register("dec-1295-1994")
+    ck = E.add_court(m.group(1), E.date_es(m.group(2)), None)
+    h["states"] = [("", today, ""), (E.law_day(rep), None, rep), (E.date_es(m.group(2)), today, ck)]
+    return h
+
+
+E.article_history = article_history
 
 
 def html_escape(s: str) -> str:
