@@ -31,6 +31,20 @@ V.ACTS = (("estatuto-organico-del-sistema-financiero", "estatuto_organico_sistem
 V.P.OUT = os.path.join(COUNTRY, "corpus.d", "97-batch6.json")
 REPEALED = {"codigo-procesal-del-trabajo-1948": "2026-04-02"}
 _full = P.full_versions
+_today = V.today
+
+
+def today(name):
+    """EOSF arts. 168 to 175: the page prints their text under '<Artículo derogado el a partir del 25 de mayo de 2021 ...>',
+    a marker parse_batch6 takes out of the text (it removes them on that day itself): not in force today."""
+    t = _today(name)
+    if name == parse_batch6.EOSF:
+        for n in parse_batch6.DEROG_2021_UNITS:
+            t[parse_batch6.E.unit_key(n)[0]] = []
+    return t
+
+
+V.today = today
 
 
 def main(argv):

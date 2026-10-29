@@ -275,6 +275,67 @@ def remove_on(act: dict, keys: list[str], day: str, law: str) -> None:
             del v["units"][x]
 
 
+ART306: list[str] = []
+
+
+def art306_timeline(units) -> list[tuple]:
+    """EOSF art. 306: the page prints only '<Inciso 1o. declarado INEXEQUIBLE>' ... '<Parágrafo declarado INEXEQUIBLE>',
+    each with its ruling and its original wording ('Texto original del artículo 306 del EOSF: ARTICULO 306. <INCISO
+    1o.> En la propuesta ...'), which the engine does not read. The history is read from those boxes: the original
+    wording from the start; inciso 3 struck by Sentencia C-037 de 1994 (3 February 1994); the rest by Sentencia C-452 de
+    1995 (5 October 1995)."""
+    u = next(x for x in units if x["name"] == "306")
+    las = [E.plain(it[2]) for it in u["items"] if it[0] == "box" and it[1] == "Legislación Anterior"]
+    jvs = [E.plain(it[2]) for it in u["items"] if it[0] == "box" and it[1] == "Jurisprudencia Vigencia"]
+    paras = []
+    for t in las:
+        m = re.match(r"Texto original (?:del artículo 306|inciso 3o\. artículo 306) del EOSF: (?:ARTICULO 306\. )?"
+                     r"(?:<INCISO \do\.> )?(.*)$", t)
+        if not m:
+            raise SystemExit(f"EOSF art. 306 earlier text: {t[:120]}")
+        paras.append(m.group(1).strip())
+    ok = (len(paras) == 5 and paras[4].startswith("PARAGRAFO.") and len(jvs) == 5
+          and all("Sentencia C-452-95 del 5 de octubre de 1995" in j for k, j in enumerate(jvs) if k != 2)
+          and "INEXEQUIBLE por la Corte Constitucional mediante Sentencia C-037-94 del 3 de febrero de 1994" in jvs[2])
+    if not ok:
+        raise SystemExit("EOSF art. 306: boxes changed")
+    epi = "CONTENIDO DEL PROGRAMA."
+    whole = [f"{epi} {paras[0]}"] + paras[1:]
+    c037 = E.add_court("C-037-94", "1994-02-03", None)
+    c452 = E.add_court("C-452-95", "1995-10-05", None)
+    ART306.extend(paras)
+    return [(None, "\n".join(whole), None),
+            ("1994-02-03", "\n".join(whole[:2] + whole[3:]), c037),
+            ("1995-10-05", None, c452)]
+
+
+def set_history(act: dict, key: str, label: str, timeline: list[tuple]) -> None:
+    """Give unit `key` the texts of `timeline` [(day or None for the first version, text or None, law)], adding a version
+    (reading as the one before it) on a day that has none, and crediting each change to its law."""
+    vs = act["versions"]
+    for day, _, _ in timeline[1:]:
+        if not any(v["from"] == day for v in vs):
+            prev = next(v for v in reversed(vs) if v["from"] < day and "units" in v)
+            k = next((i for i, v in enumerate(vs) if v["from"] > day), len(vs))
+            vs.insert(k, {"from": day, "units": dict(prev["units"]), "credits": {}, "source_url": prev["source_url"],
+                          "sha256": prev["sha256"]})
+    days = {d: (t, l) for d, t, l in timeline[1:]}
+    state = timeline[0][1]
+    for i, v in enumerate(vs):
+        if v["from"] in days:
+            state, law = days[v["from"]]
+            v["credits"][key] = [law]
+        else:
+            v["credits"].pop(key, None)
+        if "units" not in v:
+            continue
+        v["units"] = dict(v["units"])
+        if state is None:
+            v["units"].pop(key, None)
+        else:
+            v["units"][key] = {"label": label, "kind": "art", "text": f"# {label}\n{state}\n"}
+
+
 def build_eosf() -> dict:
     act = B3.build(EOSF, "dec-663-1993", "estatuto-organico-del-sistema-financiero", "EOSF",
                    "Estatuto Orgánico del Sistema Financiero (Decreto 663 de 1993)",
@@ -282,6 +343,9 @@ def build_eosf() -> dict:
                    "titulación y numeración", start_eosf)
     l = E.register("ley-1955-2019")
     remove_on(act, [E.unit_key(n)[0] for n in sorted(DEROG_2021_UNITS, key=int)], "2021-05-25", l)
+    set_history(act, "art-0306", "Art. 306", art306_timeline(P.doc_units(EOSF)))
+    DECISIONS.append("Estatuto Orgánico del Sistema Financiero: " + art306_timeline.__doc__.replace("\n    ", " ") .split(
+        ": ", 1)[1])
     return act
 
 
@@ -407,11 +471,7 @@ def start_2452(units, enacted, pub):
 
 
 BUILDERS: dict = {
-    "estatuto-organico-del-sistema-financiero": lambda: B3.build(
-        "estatuto_organico_sistema_financiero", "dec-663-1993", "estatuto-organico-del-sistema-financiero", "EOSF",
-        "Estatuto Orgánico del Sistema Financiero (Decreto 663 de 1993)",
-        "Por medio del cual se actualiza el Estatuto Orgánico del Sistema Financiero y se modifica su titulación y "
-        "numeración", start_eosf),
+    "estatuto-organico-del-sistema-financiero": build_eosf,
     "codigo-de-minas": lambda: B3.build(
         "ley_0685_2001", "ley-685-2001", "codigo-de-minas", "CMin", "Código de Minas (Ley 685 de 2001)",
         "Por la cual se expide el Código de Minas y se dictan otras disposiciones", start_minas),
@@ -491,7 +551,12 @@ def main(argv: list[str]) -> None:
                      "25 May 2021, credited to Ley 1955 de 2019, whose art. 336, par. 3, reads: 'Las disposiciones del "
                      "Capítulo VI de la Parte V del Estatuto Orgánico del Sistema Financiero perderán vigencia en el "
                      "término de 24 meses contados a partir de la vigencia de la presente ley' (the page's marker: "
-                     "'Artículo derogado el a partir del 25 de mayo de 2021 por el artículo 336 de la Ley 1955 de 2019').")
+                     "'Artículo derogado el a partir del 25 de mayo de 2021 por el artículo 336 de la Ley 1955 de 2019'). "
+                     "The page prints their last text under that marker; it is their text until that day.")
+    if SUPRIMIDO_UNITS:
+        DECISIONS.append("Estatuto Orgánico del Sistema Financiero: arts. " + ", ".join(sorted(SUPRIMIDO_UNITS, key=int))
+                         + " ('<Artículo Suprimido por disposición del artículo 57 de la Ley 454 de 1998>': the chapter "
+                         "they belonged to was abolished) are read as repealed by that act.")
     DECISIONS.append("Estatuto Orgánico del Sistema Financiero: art. 12, lit. d, prints '{menor de un (1) año}' in braces, "
                      "marking the words whose effect Decreto 2423 de 1993, art. 6, set aside for financial corporations "
                      "('en cuanto al plazo menor'); the decree changed no words, so the braces are dropped.")
