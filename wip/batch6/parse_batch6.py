@@ -178,8 +178,11 @@ CPT = "codigo_procedimental_laboral"
 # art. 336, par. 3 (its own page): 'Las disposiciones del Capítulo VI de la Parte V del Estatuto Orgánico del Sistema
 # Financiero perderán vigencia en el término de 24 meses contados a partir de la vigencia de la presente ley.' They are
 # given to the engine as articles repealed by that act, dated 25 May 2021.
-DEROG_2021 = re.compile(r"derogado el a partir del 25 de mayo de 2021 por")
+DEROG_2021 = re.compile(r"derogado el a partir del 25 de mayo de 2021 por (el art(?:í|&iacute;|i)culo (?:<A [^>]*>)?336(?:</A>)? "
+                        r"de la Ley 1955 de 2019)\.?(?:(?!&gt;).)*", re.S)
 DEROG_2021_UNITS: set[str] = set()
+SUPRIMIDO = re.compile(r"(?<=culo )Suprimido por disposici(?:ó|&oacute;|o)n del")
+SUPRIMIDO_UNITS: set[str] = set()
 # Articles without a number of their own: (page, exact heading on the page, heading given to the engine, engine number)
 NEW_ARTS = [
     ("ley_0142_1994", "ARTÍCULO NUEVO. DEL SISTEMA ÚNICO DE INFORMACIÓN.", None, "53NUEVO1"),
@@ -191,6 +194,8 @@ NEW_KEYS = {"53NUEVO1": ("art-0053-nuevo-1", "Art. nuevo 1 (después del art. 53
             "53NUEVO2": ("art-0053-nuevo-2", "Art. nuevo 2 (después del art. 53)"),
             "342NUEVO": ("art-0342-nuevo", "Art. nuevo (después del art. 342)")}
 NUMBER_IN_TEXT: list[str] = []
+WHOLE_MARK_DOT = re.compile(r"^(\s*&lt;Art(?:í|&iacute;|i)culo (?:INEXEQUIBLE|derogado|suspendido)(?:(?!&gt;).)*&gt;)\s*\.\s*$",
+                            re.S)
 _units_b5 = P.doc_units
 
 
@@ -211,22 +216,31 @@ def doc_units(name: str) -> list[dict]:
         for page, head, new, _ in NEW_ARTS:
             if page == name and u["label"] == head and new:
                 u["label"] = new
-        # '<Artículo INEXEQUIBLE>.': the full stop after the marker is the publisher's, not a word of the article.
-        u["items"] = [(it[0], re.sub(r"^(\s*&lt;Art[íi]culo INEXEQUIBLE&gt;)\.\s*$", r"\1", it[1])) + tuple(it[2:])
-                      if it[0] == "p" else it for it in u["items"]]
+        # EOSF arts. 143 to 145: '<Artículo Suprimido por disposición del artículo 57 de la Ley 454 de 1998>' (the
+        # chapter they belonged to was abolished): read as repealed by that act.
         if name == EOSF:
-            hit = False
             for k, it in enumerate(u["items"]):
-                if it[0] == "p" and DEROG_2021.search(it[1]):
-                    u["items"][k] = ("p", DEROG_2021.sub("derogado por", it[1])) + tuple(it[2:])
-                    hit = True
-            if hit:
+                if it[0] == "p" and SUPRIMIDO.search(it[1]):
+                    u["items"][k] = ("p", SUPRIMIDO.sub("derogado por", it[1])) + tuple(it[2:])
+                    SUPRIMIDO_UNITS.add(u["name"])
+        # '<Artículo INEXEQUIBLE>.', '<Artículo derogado por ...>.': a paragraph that is only a whole-article marker
+        # and a full stop; the full stop is the publisher's, not a word of the article.
+        u["items"] = [(it[0], WHOLE_MARK_DOT.sub(r"\1", it[1])) + tuple(it[2:]) if it[0] == "p" else it
+                      for it in u["items"]]
+        if name == EOSF:
+            # The page prints these articles' last text under the marker: the marker paragraph is taken out, so the
+            # engine rebuilds their history up to that text, and build_eosf() removes them on 25 May 2021.
+            ps = [it for it in u["items"] if it[0] == "p"]
+            if ps and DEROG_2021.search(ps[0][1]):
+                if E.plain(E.strip_markers(ps[0][1])).strip():
+                    raise SystemExit(f"EOSF art. {u['name']}: words beside the 2021 marker")
+                u["items"] = [it for it in u["items"] if it is not ps[0]]
                 DEROG_2021_UNITS.add(u["name"])
             # Art. 12 lit. d: '{menor de un (1) año}' in braces marks the words whose effect Decreto 2423 de 1993, art. 6,
             # set aside for financial corporations (its marker: 'en cuanto al plazo menor'); the decree changed no words
             # of the Estatuto, so the braces go.
             if u["name"] == "12":
-                u["items"] = [(it[0], it[1].replace("{menor de un (1) año}", "menor de un (1) año")) + tuple(it[2:])
+                u["items"] = [(it[0], re.sub(r"\{(menor de un \(1\) a(?:ñ|&ntilde;)o)\}", r"\1", it[1])) + tuple(it[2:])
                               if it[0] == "p" else it for it in u["items"]]
     if name == EOSF and sorted(DEROG_2021_UNITS, key=int) != [str(n) for n in range(168, 176)]:
         raise SystemExit(f"EOSF: 'derogado el a partir' markers on {sorted(DEROG_2021_UNITS)}")
@@ -235,16 +249,42 @@ def doc_units(name: str) -> list[dict]:
 
 P.doc_units = doc_units
 E.doc_units = doc_units
-_article_history = E.article_history
+def remove_on(act: dict, keys: list[str], day: str, law: str) -> None:
+    """Remove `keys` from every version from `day` on, credited to `law` on that day (a version on that day is added,
+    reading as the one before it, if there is none)."""
+    vs = act["versions"]
+    if not any(v["from"] == day for v in vs):
+        prev = next(v for v in reversed(vs) if v["from"] < day and "units" in v)
+        k = next(i for i, v in enumerate(vs) if v["from"] > day) if any(v["from"] > day for v in vs) else len(vs)
+        vs.insert(k, {"from": day, "units": dict(prev["units"]), "credits": {}, "source_url": prev["source_url"],
+                      "sha256": prev["sha256"]})
+    for v in vs:
+        if v["from"] < day:
+            continue
+        if v["from"] > day and any(x in v["credits"] for x in keys):
+            raise SystemExit(f"{act['short']}: {keys} changed again on {v['from']}")
+        if "units" not in v:
+            raise SystemExit(f"{act['short']}: version {v['from']} without units after {day}")
+        gone = [x for x in keys if x in v["units"]]
+        if v["from"] == day:
+            if len(gone) != len(keys):
+                raise SystemExit(f"{act['short']}: {set(keys) - set(gone)} absent before {day}")
+            for x in gone:
+                v["credits"][x] = [law]
+        for x in gone:
+            del v["units"][x]
 
 
-def article_history(u, jv_extra=None):
-    if u.get("page", "").startswith(EOSF) and u["name"] in DEROG_2021_UNITS:
-        E.UNIT_DAYS["ley-1955-2019"] = "2021-05-25"
-    return _article_history(u) if jv_extra is None else _article_history(u, jv_extra)
+def build_eosf() -> dict:
+    act = B3.build(EOSF, "dec-663-1993", "estatuto-organico-del-sistema-financiero", "EOSF",
+                   "Estatuto Orgánico del Sistema Financiero (Decreto 663 de 1993)",
+                   "Por medio del cual se actualiza el Estatuto Orgánico del Sistema Financiero y se modifica su "
+                   "titulación y numeración", start_eosf)
+    l = E.register("ley-1955-2019")
+    remove_on(act, [E.unit_key(n)[0] for n in sorted(DEROG_2021_UNITS, key=int)], "2021-05-25", l)
+    return act
 
 
-E.article_history = article_history
 _label_num = E.label_num
 _unit_key = E.unit_key
 
