@@ -1,12 +1,12 @@
 {
  "check": {
-  "acts": 14,
+  "acts": 18,
   "backwards": 0,
   "future_dated": 0,
   "merges": 0,
   "mismatches": 0,
   "missing_in_force": 0,
   "trailer_errors": 0,
-  "versions": 768
+  "versions": 1002
  }
 }
