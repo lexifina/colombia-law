@@ -33,6 +33,38 @@ E.RETRIEVED = "2026-10-29"  # this batch's fetch day (the part's `retrieved`)
 PRE_START = B4.PRE_START
 PRE_START.clear()
 
+# Typing slips in these acts' notes and earlier-text headings, each fixed by what the same article shows. wrong -> right.
+KEY_FIXES = {
+    "dec-673-1999": "dec-673-1994",   # EOSF art. 83: marker '<Numeral derogado por el artículo 17 del Decreto 673 de 1994>'
+    "dec-674-1999": "dec-673-1994",   # EOSF art. 83 num. 3: same marker; Decreto 673 de 1994, art. 17, names both numerals
+    "dec-2489-1989": "dec-2489-1999",  # EOSF art. 327: 'Texto modificado por el Decreto 2489 de 1989' (notes: art. 4 Decreto 2489 de 1999, DO 43.819)
+    "ley-685-2021": "ley-685-2001",   # Código de Minas art. 295: 'Texto original de la Ley 685 de 2021' (the code's own original)
+}
+E.KEY_FIXES.update(KEY_FIXES)
+DECISIONS.append("Estatuto Orgánico del Sistema Financiero and Código de Minas: typing slips in act numbers or years of the "
+                 "source's notes and earlier-text headings are read as the act the same article names: "
+                 + "; ".join(f"{E.law_label(a)} as {E.law_label(b)}" for a, b in KEY_FIXES.items()) + ".")
+# Acts the basedoc and Colpensiones do not hold, dated from what the EOSF's own notes or the act's text say.
+E.HAND_RULES["dec-673-1994"] = ("1994-05-01", "Decreto 673 de 1994 (Diario Oficial No. 41.287 of 29 March 1994), art. 17: "
+                                              "'El presente Decreto rige a partir del 1o de mayo de 1994, y deja sin efecto "
+                                              "... los numerales 1o y 3o del artículo 83 del Estatuto Orgánico del Sistema "
+                                              "Financiero ...' (the basedoc does not hold it: read from the Secretaría "
+                                              "Jurídica Distrital de Bogotá's Régimen Legal, "
+                                              "https://www.alcaldiabogota.gov.co/sisjur/normas/Norma1.jsp?i=7036, in the "
+                                              "cache)")
+E.HAND_RULES["dec-2423-1993"] = ("1994-01-01", "the Estatuto Orgánico del Sistema Financiero's note on art. 12: 'el ordinal "
+                                               "a) del artículo 6o. del Decreto 2423 de 1993; el cual entra en vigencia a "
+                                               "partir del 1o. de enero de 1994' (the basedoc does not hold the decree)")
+# Decreto 1154 de 1999 (struck whole by Sentencia C-969 de 1999): no source holds it; the EOSF's notes give its Diario
+# Oficial ('No 43.623, de 29 de Junio de 1999', a capital the engine's date pattern does not read). Default rule.
+E.PUB["dec-1154-1999"] = "1999-06-29"
+DECISIONS.append("Estatuto Orgánico del Sistema Financiero: " + E.HAND_RULES["dec-673-1994"][1] + ".")
+DECISIONS.append("Estatuto Orgánico del Sistema Financiero: Decreto 2423 de 1993 is dated 1 January 1994 from "
+                 + E.HAND_RULES["dec-2423-1993"][1] + ".")
+DECISIONS.append("Estatuto Orgánico del Sistema Financiero: Decreto 1154 de 1999 (struck whole by Sentencia C-969 de 1999) "
+                 "is held by no cached source; its Diario Oficial day (29 June 1999) is the EOSF notes', and it is dated by "
+                 "the default rule (two months after promulgation).")
+
 _page_header = E.page_header
 
 
