@@ -391,6 +391,27 @@ def drop_epigraph_only(act: dict) -> None:
                 EPIGRAPH_ONLY.append(f"{act['short']} {k} ({v['from']})")
 
 
+TITULOS_CREDITED: list[str] = []
+
+
+def credit_titulos(act: dict) -> None:
+    """titulos.md shows a heading while an article under it is in force, so a heading that comes or goes with an
+    article changes with it: where titulos changes on a day whose other changes are all credited to one law, it is
+    credited to that law (Ley 142 de 1994: 'CAPÍTULO I. PRINCIPIOS Y REGLAS' returns with the article Sentencia C-969 de
+    1999 restored)."""
+    prev = None
+    for v in act["versions"]:
+        if "units" not in v:
+            continue
+        cur = (v["units"].get("titulos") or {}).get("text")
+        if prev is not None and cur != prev[0] and "titulos" not in v["credits"]:
+            laws = {tuple(ls) for k, ls in v["credits"].items() if k != "titulos"}
+            if len(laws) == 1:
+                v["credits"]["titulos"] = list(next(iter(laws)))
+                TITULOS_CREDITED.append(f"{act['short']} {v['from']} ({', '.join(v['credits']['titulos'])})")
+        prev = (cur,)
+
+
 def debrace_versions(vs: list[dict], d50: str, l50: str) -> list[dict]:
     """'{empleador}' (Código Procesal del Trabajo): Ley 50 de 1990, art. 107, replaced 'patrono' with 'empleador'; the
     source shows the replaced word in braces (its Resumen de Notas de Vigencia, note 36). Before that law's day the
@@ -530,6 +551,12 @@ def main(argv: list[str]) -> None:
     acts = [BUILDERS[s]() for s in BUILDERS if s in only]
     for a in acts:
         drop_epigraph_only(a)
+        credit_titulos(a)
+    if TITULOS_CREDITED:
+        DECISIONS.append("Estatuto Orgánico del Sistema Financiero, Código de Minas, Código Procesal del Trabajo, Régimen de "
+                         "Insolvencia Empresarial and Régimen de los Servicios Públicos Domiciliarios: a change of titulos.md "
+                         "(the headings shown while an article under them is in force) on a day whose other changes are all "
+                         "credited to one law is credited to that law: " + "; ".join(TITULOS_CREDITED) + ".")
     if "c-366-11" in E.LAWS:
         E.LAWS["c-366-11"]["note"] = C366_NOTE
     if EPIGRAPH_ONLY:
