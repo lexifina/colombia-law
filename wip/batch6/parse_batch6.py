@@ -68,10 +68,25 @@ DECISIONS.append("Estatuto Orgánico del Sistema Financiero: Decreto 1154 de 199
 _page_header = E.page_header
 
 
+DO_MONTH_FIRST = re.compile(r"Diario Oficial No\.? ?[\d.]+,? de ([a-z]+) (\d{1,2}) de (\d{4})$")
+MONTH_FIRST_DO: set[str] = set()
+
+
 def page_header(page: str, year: str):
-    """The Estatuto Orgánico del Sistema Financiero's heading writes its day month first: '(Abril 2 de 1993)'."""
+    """The Estatuto Orgánico del Sistema Financiero's heading writes its day month first: '(Abril 2 de 1993)'. Some
+    amending acts' headings write the Diario Oficial day month first ('Diario Oficial No. 44.537, de agosto 31 de
+    2001', Ley 689 de 2001), which the engine does not read: that day is read here when the engine finds none."""
     if page != "estatuto_organico_sistema_financiero":
-        return _page_header(page, year)
+        enacted, pub = _page_header(page, year)
+        if pub is None and not page.startswith("http"):
+            ps = E.page_paras(page)
+            for p in ps[:12]:
+                m = DO_MONTH_FIRST.match(p)
+                if m and m.group(1) in E.MONTHS and m.group(3) == year:
+                    pub = f"{m.group(3)}-{E.MONTHS[m.group(1)]:02d}-{int(m.group(2)):02d}"
+                    MONTH_FIRST_DO.add(f"{page}: '{p}'")
+                    break
+        return enacted, pub
     ps = E.page_paras(page)
     i = ps.index("DECRETO 663 DE 1993")
     m = re.fullmatch(r"\(([A-Za-z]+) (\d{1,2}) de (\d{4})\)", ps[i + 1])
