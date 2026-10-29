@@ -9,18 +9,27 @@ It follows the shared design of [lexifina/global-law](https://github.com/lexifin
 | Folder | Act | History |
 | --- | --- | --- |
 | `constitucion/` | Constitución Política de Colombia (1991) | From promulgation (4 July 1991) to today: every Acto Legislativo that amended it, the 1991 Aclaración of Gaceta Constitucional No. 125, and the Constitutional Court rulings that struck amendments or parts of them |
-
+| `codigo-civil/` | Código Civil (Ley 84 de 1873) | From its sanction (26 May 1873), in the 1873 text the source reproduces, to today |
+| `ley-1581-2012/` | Ley 1581 de 2012 (protección de datos personales) | From promulgation (18 October 2012) to today |
 | `codigo-penal/` | Código Penal (Ley 599 de 2000) | From its entry into force (24 July 2001, one year after promulgation, art. 476) to today |
 | `codigo-general-del-proceso/` | Código General del Proceso (Ley 1564 de 2012) | From promulgation (12 July 2012; art. 627 staggers the start of most articles, see the first commit) to today |
-
+| `codigo-sustantivo-del-trabajo/` | Código Sustantivo del Trabajo | From the official edition (Diario Oficial No. 27.622, 7 June 1951; Decretos 2663 and 3743 de 1950) to today |
 | `codigo-de-comercio/` | Código de Comercio (Decreto 410 de 1971) | From its issue (27 March 1971; most of it from 1 January 1972, art. 2038) to today |
 | `cpaca/` | Código de Procedimiento Administrativo y de lo Contencioso Administrativo (Ley 1437 de 2011) | From its entry into force (2 July 2012, art. 308) to today |
 | `codigo-de-procedimiento-penal/` | Código de Procedimiento Penal (Ley 906 de 2004) | From publication (1 September 2004; by judicial district from 2005, art. 530) to today; one change on `futuro` |
 | `codigo-de-la-infancia-y-la-adolescencia/` | Código de la Infancia y la Adolescencia (Ley 1098 de 2006) | From promulgation (8 November 2006; most of it six months later, art. 216) to today |
+| `codigo-nacional-de-seguridad-y-convivencia-ciudadana/` | Código Nacional de Seguridad y Convivencia Ciudadana (Ley 1801 de 2016) | From its entry into force (29 January 2017, six months after promulgation, art. 243) to today |
+| `sistema-de-seguridad-social-integral/` | Ley 100 de 1993 (Sistema de Seguridad Social Integral) | From publication (23 December 1993, art. 289; pensions from 1 April 1994, art. 151) to today |
+| `codigo-general-disciplinario/` | Código General Disciplinario (Ley 1952 de 2019) | From promulgation (28 January 2019; in force only from 29 March 2022, see the first commit) to today |
+| `codigo-electoral/` | Código Electoral (Decreto 2241 de 1986) | From publication (1 August 1986, art. 218) to today |
+| `estatuto-tributario/` | Estatuto Tributario (Decreto 624 de 1989) | From its entry into force (30 May 1989, two months after publication, the decree's art. 3) to today, including the yearly decrees that updated its absolute values before the UVT |
+| `estatuto-general-de-contratacion/` | Estatuto General de Contratación de la Administración Pública (Ley 80 de 1993) | From promulgation (28 October 1993; most of it from 1 January 1994, art. 81) to today |
+| `estatuto-del-consumidor/` | Estatuto del Consumidor (Ley 1480 de 2011) | From its entry into force (12 April 2012, six months after promulgation, art. 84) to today |
+| `codigo-nacional-de-transito/` | Código Nacional de Tránsito Terrestre (Ley 769 de 2002) | From its entry into force (13 December 2002, three months after promulgation, art. 170) to today |
 
 Where a code's own vigencia article starts different parts on different days, its first commit is dated from the earliest of them and its note quotes the article. One change has no day in any source: Ley 44 de 1981 (Código de Comercio art. 159) is shown on 31 December 1981, the latest day it can have been sanctioned.
 
-The Código Civil and Ley 1581 de 2012 come from a separate part of the same build. The Código Sustantivo del Trabajo is being checked and is not on `main` yet.
+The acts come from separate parts of the same build (`corpus.d/`), each checked against today's text on the source before it reached `main`. Where the source gives no text for a provision in some period (most often the Estatuto Tributario's 1989 wording of articles later rewritten), the file reads "[La fuente no da el texto vigente en esta fecha.]" for that period.
 
 **The Código Penal's penalties after 2005.** Ley 890 de 2004, art. 14, raised every penalty of the Parte Especial by a third in the minimum and a half in the maximum, from 1 January 2005, without rewriting the articles. The source prints each article with the raised figures ("con las penas aumentadas") and keeps the earlier wording; this history follows it, so those changes are commits of Ley 890 de 2004 on 1 January 2005. The figures are the publisher's computation of art. 14, as its own warning says. The per-act `README.md` in each folder lists every provision, how often it changed and when.
 
@@ -95,7 +104,7 @@ This repository is not legal advice and not an official publication.
 
 ## En español
 
-Historia del derecho colombiano en git: un archivo por disposición y un commit por acto o sentencia, fechado el día de su entrada en vigencia y firmado por el acto legislativo o la sentencia de la Corte Constitucional que hizo el cambio (`git blame` nombra la norma de cada párrafo). Contiene la Constitución Política de 1991 desde su promulgación el 4 de julio de 1991, con todos sus Actos Legislativos y las sentencias que los declararon inexequibles.
+Historia del derecho colombiano en git: un archivo por disposición y un commit por acto o sentencia, fechado el día de su entrada en vigencia y firmado por el acto legislativo o la sentencia de la Corte Constitucional que hizo el cambio (`git blame` nombra la norma de cada párrafo). Contiene la Constitución Política de 1991 desde su promulgación el 4 de julio de 1991, con todos sus Actos Legislativos y las sentencias que los declararon inexequibles, y los códigos y leyes de la tabla de arriba (entre ellos el Código Civil, el Código Penal, el Código General del Proceso, el CPACA, el Estatuto Tributario, la Ley 80 de 1993, el Estatuto del Consumidor y el Código Nacional de Tránsito).
 
 - Texto vigente en una fecha: `python tools/en_vigor_el.py 2004-01-01 constitucion 15`
 - Fuente: Secretaría General del Senado (basedoc). La fuente no tiene versiones fechadas: cada versión se reconstruye con la "Legislación Anterior", las notas de vigencia y las marcas de modificación de la propia fuente. El texto de hoy coincide con el de la fuente en las 496 disposiciones (28 de octubre de 2026).
