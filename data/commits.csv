@@ -1,0 +1,2352 @@
+day,kind,law,acts,files,branch
+1873-05-26,start,ley-84-1873,codigo-civil,2681,main
+1887-07-19,law,ley-57-1887,codigo-civil,27,main
+1887-08-28,law,ley-153-1887,codigo-civil,23,main
+1890-12-02,law,ley-95-1890,codigo-civil,8,main
+1922-04-23,law,ley-8-1922,codigo-civil,2,main
+1931-01-20,law,ley-45-1930,codigo-civil,1,main
+1931-02-18,law,ley-67-1930,codigo-civil,3,main
+1931-05-31,law,ley-36-1931,codigo-civil,1,main
+1933-01-19,law,ley-28-1932,codigo-civil,32,main
+1936-05-07,law,ley-34-1936,codigo-civil,1,main
+1936-05-30,law,ley-45-1936,codigo-civil,11,main
+1936-06-17,law,ley-50-1936,codigo-civil,5,main
+1938-08-15,law,ley-92-1938,codigo-civil,6,main
+1941-12-24,law,ley-165-1941,codigo-civil,2,main
+1948-06-29,start,dec-2158-1948,codigo-procesal-del-trabajo-1948,131,main
+1950-11-09,law,dec-2663-1950,codigo-civil,9,main
+1951-06-07,start,,codigo-sustantivo-del-trabajo,486,main
+1954-02-26,law,dec-616-1954,codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,10,main
+1954-02-26,law,dec-617-1954,codigo-sustantivo-del-trabajo,12,main
+1956-03-10,law,dec-525-1956,codigo-sustantivo-del-trabajo,1,main
+1956-04-05,law,dec-753-1956,codigo-sustantivo-del-trabajo,1,main
+1956-10-22,law,dec-1761-1956,codigo-procesal-del-trabajo-1948,1,main
+1956-12-20,law,dec-3129-1956,codigo-sustantivo-del-trabajo,3,main
+1957-07-01,law,dec-59-1957,codigo-sustantivo-del-trabajo,2,main
+1957-09-06,law,dec-204-1957,codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,10,main
+1958-02-06,law,dec-18-1958,codigo-sustantivo-del-trabajo,2,main
+1960-03-25,law,ley-188-1959,codigo-sustantivo-del-trabajo,7,main
+1960-12-30,law,ley-140-1960,codigo-civil,18,main
+1962-02-01,law,ley-171-1961,codigo-sustantivo-del-trabajo,3,main
+1964-06-01,law,dec-528-1964,codigo-procesal-del-trabajo-1948,2,main
+1964-07-17,law,dec-1819-1964,codigo-procesal-del-trabajo-1948,1,main
+1965-09-04,law,dec-2351-1965,codigo-sustantivo-del-trabajo,40,main
+1967-01-25,law,dec-13-1967,codigo-sustantivo-del-trabajo,10,main
+1968-03-29,law,ley-16-1968,codigo-procesal-del-trabajo-1948,1,main
+1968-12-16,law,ley-48-1968,codigo-sustantivo-del-trabajo,2,main
+1969-02-21,law,ley-75-1968,codigo-civil,7,main
+1969-10-13,law,ley-3-1969,codigo-sustantivo-del-trabajo,4,main
+1969-12-19,law,ley-16-1969,codigo-procesal-del-trabajo-1948,1,main
+1970-08-05,law,dec-960-1970,codigo-civil,92,main
+1970-08-05,law,dec-1260-1970,codigo-civil,51,main
+1970-09-04,law,dec-1250-1970,codigo-civil,47,main
+1970-11-04,start,dec-1355-1970,codigo-nacional-de-policia-1970,230,main
+1971-02-10,law,dec-2055-1970,codigo-nacional-de-policia-1970,6,main
+1971-03-27,start,dec-410-1971,codigo-de-comercio,1958,main
+1971-06-29,law,dec-522-1971,codigo-nacional-de-policia-1970,79,main
+1971-07-01,start,dec-1400-1970,codigo-de-procedimiento-civil-1970,701,main
+1971-07-01,law,dec-1400-1970,codigo-civil,25,main
+1972-12-13,law,dec-2355-1972,codigo-sustantivo-del-trabajo,1,main
+1973-07-18,law,csj-1973-07-18,codigo-sustantivo-del-trabajo,1,main
+1974-02-12,law,ley-21-1973,codigo-nacional-de-policia-1970,1,main
+1974-12-18,start,dec-2811-1974,codigo-de-recursos-naturales,341,main
+1974-12-20,law,ley-27-1974,codigo-sustantivo-del-trabajo,2,main
+1975-01-28,law,ley-5-1975,codigo-civil,20,main
+1975-04-04,law,dec-2820-1974,codigo-civil,89,main
+1975-05-27,law,dec-772-1975,codigo-civil,11,main
+1976-02-18,law,ley-1-1976,codigo-civil,24,main
+1976-04-18,law,ley-1-1976,codigo-de-procedimiento-civil-1970,1,main
+1977-01-27,law,csj-1977-01-27,codigo-nacional-de-policia-1970,4,main
+1977-04-30,law,ley-22-1977,codigo-procesal-del-trabajo-1948,2,main
+1977-06-30,law,ley-22-1977,codigo-de-procedimiento-civil-1970,1,main
+1977-11-04,law,ley-27-1977,codigo-civil,8,main
+1979-01-24,start,ley-9-1979,codigo-sanitario-nacional,608,main
+1981-12-31,law,ley-44-1981,codigo-de-comercio,1,main
+1982-02-03,law,ley-20-1982,codigo-sustantivo-del-trabajo,2,main
+1982-03-09,law,ley-29-1982,codigo-civil,10,main
+1982-04-21,law,csj-1982-04-21,codigo-nacional-de-policia-1970,1,main
+1982-07-08,law,csj-1982-07-08,codigo-de-procedimiento-civil-1970,1,main
+1983-12-22,law,ley-51-1983,codigo-sustantivo-del-trabajo,1,main
+1984-02-24,law,ley-11-1984,codigo-civil codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,23,main
+1984-03-01,start,dec-1-1984,codigo-contencioso-administrativo-1984,267,main
+1984-03-01,law,dec-1-1984,codigo-de-procedimiento-civil-1970,1,main
+1984-03-17,law,ley-2-1984,codigo-de-procedimiento-civil-1970,2,main
+1984-07-19,law,csj-1984-07-19,codigo-contencioso-administrativo-1984,2,main
+1984-08-16,law,csj-1984-08-16,codigo-contencioso-administrativo-1984,3,main
+1984-10-17,law,csj-1984-10-17,codigo-contencioso-administrativo-1984,1,main
+1984-11-15,law,csj-1984-11-15,codigo-contencioso-administrativo-1984,1,main
+1984-11-22,law,csj-1984-11-22,codigo-contencioso-administrativo-1984,1,main
+1985-02-05,law,ley-39-1985,codigo-sustantivo-del-trabajo,10,main
+1986-01-22,law,ley-96-1985,codigo-contencioso-administrativo-1984,8,main
+1986-05-14,start,dec-1222-1986,codigo-de-regimen-departamental,339,main
+1986-05-14,start,dec-1333-1986,codigo-de-regimen-municipal,379,main
+1986-06-06,law,dec-1736-1986,codigo-de-regimen-departamental,3,main
+1986-08-01,start,dec-2241-1986,codigo-electoral,218,main
+1986-10-16,law,csj-1986-10-16,codigo-contencioso-administrativo-1984,0,main
+1987-02-24,law,ley-75-1986,codigo-sustantivo-del-trabajo codigo-de-regimen-municipal,4,main
+1987-05-05,law,dec-776-1987,codigo-sustantivo-del-trabajo,1,main
+1987-05-05,law,dec-778-1987,codigo-sustantivo-del-trabajo,1,main
+1988-02-04,law,ley-49-1987,codigo-de-regimen-municipal,1,main
+1988-02-12,law,ce-1988-02-12,codigo-de-regimen-departamental,2,main
+1988-03-22,law,ley-30-1988,codigo-contencioso-administrativo-1984,1,main
+1988-03-25,law,ley-14-1988,codigo-contencioso-administrativo-1984,6,main
+1988-03-25,law,ley-15-1988,codigo-de-regimen-municipal,2,main
+1988-04-28,law,csj-1988-04-28,codigo-de-regimen-departamental,2,main
+1988-05-23,law,dec-522-1988,codigo-de-procedimiento-civil-1970,1,main
+1988-06-02,law,csj-1988-06-02,codigo-de-regimen-municipal,1,main
+1988-06-07,law,dec-597-1988,codigo-contencioso-administrativo-1984,18,main
+1988-12-07,law,csj-1988-12-07,codigo-de-regimen-departamental,2,main
+1988-12-14,law,ley-62-1988,codigo-electoral,15,main
+1989-02-14,law,ley-62-1988,codigo-contencioso-administrativo-1984,1,main
+1989-02-21,law,ley-73-1988,codigo-sanitario-nacional,1,main
+1989-03-11,law,ley-9-1989,codigo-de-regimen-municipal,4,main
+1989-04-10,law,dec-719-1989,codigo-procesal-del-trabajo-1948,1,main
+1989-05-30,start,dec-624-1989,estatuto-tributario,898,main
+1989-07-01,law,dec-919-1989,codigo-sanitario-nacional,25,main
+1989-08-01,law,dec-1712-1989,codigo-civil,1,main
+1989-08-20,law,dec-1321-1989,estatuto-tributario,2,main
+1989-11-27,start,dec-2737-1989,codigo-del-menor,353,main
+1989-12-07,law,dec-2273-1989,codigo-de-procedimiento-civil-1970,1,main
+1989-12-07,law,dec-2279-1989,codigo-de-comercio codigo-de-procedimiento-civil-1970,31,main
+1989-12-07,law,dec-2282-1989,codigo-de-procedimiento-civil-1970,367,main
+1989-12-07,law,dec-2288-1989,codigo-contencioso-administrativo-1984,6,main
+1989-12-07,law,dec-2304-1989,codigo-contencioso-administrativo-1984,65,main
+1990-02-27,law,ley-84-1989,codigo-civil,1,main
+1990-02-28,law,ley-92-1989,codigo-de-regimen-municipal codigo-de-regimen-departamental,2,main
+1990-03-01,law,dec-2737-1989,codigo-civil codigo-sustantivo-del-trabajo codigo-nacional-de-policia-1970,23,main
+1990-03-03,law,ley-3-1990,codigo-de-regimen-municipal,4,main
+1990-03-05,law,ley-6-1990,codigo-electoral,22,main
+1990-03-10,law,ley-10-1990,estatuto-tributario codigo-de-regimen-departamental,4,main
+1990-06-20,law,csj-1990-06-20,codigo-contencioso-administrativo-1984,11,main
+1990-07-12,law,csj-1990-07-12,codigo-de-regimen-departamental,1,main
+1990-07-26,law,csj-1990-07-26,codigo-de-procedimiento-civil-1970,1,main
+1990-07-29,law,csj-1990-07-29,codigo-de-procedimiento-civil-1970,1,main
+1990-08-26,law,dec-1336-1990,codigo-nacional-de-policia-1970,3,main
+1990-12-19,law,ley-44-1990,codigo-de-regimen-municipal,4,main
+1990-12-19,law,ley-45-1990,codigo-de-comercio,12,main
+1991-01-01,law,ley-50-1990,codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,215,main
+1991-02-19,law,ley-45-1990,codigo-de-procedimiento-civil-1970,1,main
+1991-02-28,law,ley-49-1990,estatuto-tributario,68,main
+1991-02-28,law,ley-53-1990,codigo-de-regimen-municipal codigo-de-regimen-departamental,13,main
+1991-02-28,law,csj-1991-02-28,codigo-de-procedimiento-civil-1970,1,main
+1991-03-14,law,csj-1991-03-14,codigo-de-procedimiento-civil-1970,1,main
+1991-03-16,law,ley-2-1991,codigo-de-regimen-municipal,1,main
+1991-04-25,law,csj-1991-04-25,codigo-de-procedimiento-civil-1970,1,main
+1991-05-21,law,ley-23-1991,codigo-procesal-del-trabajo-1948,3,main
+1991-06-13,law,csj-1991-06-13,codigo-del-menor,2,main
+1991-07-04,start,constitucion-1991,constitucion,442,main
+1991-07-25,law,csj-1991-07-25,codigo-contencioso-administrativo-1984,1,main
+1991-08-27,law,dec-1643-1991,estatuto-tributario,63,main
+1991-08-27,law,dec-1653-1991,estatuto-tributario,2,main
+1991-08-27,law,dec-1655-1991,estatuto-tributario,10,main
+1991-09-25,law,aclaracion-gaceta-125,constitucion,2,main
+1991-11-19,start,dec-2591-1991,accion-de-tutela,56,main
+1992-01-25,law,dec-2651-1991,codigo-de-procedimiento-civil-1970,2,main
+1992-05-18,start,ley-4-1992,regimen-salarial-y-prestacional,23,main
+1992-06-18,start,ley-5-1992,reglamento-del-congreso,398,main
+1992-06-30,law,ley-6-1992,estatuto-tributario,159,main
+1992-10-01,law,c-543-92,accion-de-tutela,3,main
+1992-12-18,law,ley-25-1992,codigo-civil codigo-de-procedimiento-civil-1970,10,main
+1992-12-29,start,ley-30-1992,educacion-superior,145,main
+1992-12-31,start,dec-2153-1992,superintendencia-de-industria-y-comercio-1992,60,main
+1993-01-04,start,ley-31-1992,banco-de-la-republica,67,main
+1993-01-27,start,ley-42-1993,control-fiscal,111,main
+1993-02-04,law,c-025-93,reglamento-del-congreso,5,main
+1993-02-05,start,ley-44-1993,derecho-de-autor-1993,71,main
+1993-02-26,law,c-061-93,reglamento-del-congreso,1,main
+1993-03-26,law,fe-de-erratas-1993-03-26,banco-de-la-republica,1,main
+1993-04-20,law,c-143-93,codigo-de-regimen-municipal codigo-de-regimen-departamental,2,main
+1993-04-22,law,c-151-93,reglamento-del-congreso,1,main
+1993-05-02,start,dec-663-1993,estatuto-organico-del-sistema-financiero,323,main
+1993-07-12,law,fe-de-erratas-1993-07-12,banco-de-la-republica,1,main
+1993-07-22,start,dec-1421-1993,estatuto-organico-de-bogota,181,main
+1993-08-17,law,al-1-1993,constitucion,1,main
+1993-08-20,start,ley-65-1993,codigo-penitenciario-y-carcelario,175,main
+1993-08-24,law,ley-69-1993,estatuto-organico-del-sistema-financiero,1,main
+1993-08-26,law,c-345-93,codigo-contencioso-administrativo-1984,2,main
+1993-08-31,start,ley-70-1993,comunidades-negras,69,main
+1993-08-31,law,ley-72-1993,educacion-superior,1,main
+1993-10-16,law,c-536-96,codigo-de-regimen-departamental,1,main
+1993-10-28,start,ley-80-1993,estatuto-general-de-contratacion,82,main
+1993-10-28,law,c-485-93,banco-de-la-republica,1,main
+1993-11-03,start,ley-82-1993,mujer-cabeza-de-familia,23,main
+1993-11-11,law,c-529-93,control-fiscal,1,main
+1993-11-11,law,c-531-93,accion-de-tutela,1,main
+1993-11-24,law,al-2-1993,constitucion,1,main
+1993-11-29,start,ley-87-1993,control-interno,16,main
+1993-11-29,law,c-549-93,estatuto-tributario,0,main
+1993-12-16,law,al-3-1993,constitucion,3,main
+1993-12-22,start,ley-99-1993,ley-general-ambiental,119,main
+1993-12-22,law,ley-99-1993,codigo-de-recursos-naturales,5,main
+1993-12-23,start,ley-101-1993,desarrollo-agropecuario-y-pesquero,100,main
+1993-12-23,start,ley-100-1993,sistema-de-seguridad-social-integral,289,main
+1993-12-23,law,ley-100-1993,codigo-sustantivo-del-trabajo estatuto-organico-del-sistema-financiero,20,main
+1993-12-28,law,ley-80-1993,codigo-contencioso-administrativo-1984 codigo-de-regimen-departamental,14,main
+1993-12-30,start,ley-105-1993,ley-de-transporte,72,main
+1994-01-01,law,dec-2360-1993,estatuto-organico-del-sistema-financiero,1,main
+1994-01-01,law,dec-2423-1993,estatuto-organico-del-sistema-financiero,0,main
+1994-01-27,law,c-022-94,educacion-superior,1,main
+1994-01-27,law,c-024-94,codigo-nacional-de-policia-1970,1,main
+1994-01-29,law,dec-2359-1993,estatuto-organico-del-sistema-financiero,10,main
+1994-02-03,law,c-037-94,estatuto-organico-del-sistema-financiero,1,main
+1994-02-08,start,ley-115-1994,ley-general-de-educacion,223,main
+1994-02-08,law,ley-115-1994,educacion-superior,1,main
+1994-02-09,start,ley-119-1994,servicio-nacional-de-aprendizaje,52,main
+1994-02-23,law,ley-128-1994,codigo-de-regimen-municipal,27,main
+1994-03-10,law,c-103-94,codigo-de-procedimiento-civil-1970,1,main
+1994-03-10,law,c-105-94,codigo-civil,9,main
+1994-03-10,law,c-110-94,codigo-sustantivo-del-trabajo,0,main
+1994-03-23,start,ley-130-1994,estatuto-basico-de-los-partidos,54,main
+1994-03-24,law,ce-1994-03-24,estatuto-organico-de-bogota,1,main
+1994-05-01,law,dec-673-1994,estatuto-organico-del-sistema-financiero,1,main
+1994-05-09,start,ley-131-1994,voto-programatico,15,main
+1994-05-19,law,c-241-94,reglamento-del-congreso,1,main
+1994-05-26,law,c-248-94,estatuto-organico-del-sistema-financiero,1,main
+1994-05-31,start,ley-134-1994,mecanismos-de-participacion-ciudadana,104,main
+1994-06-02,start,ley-136-1994,regimen-municipal,204,main
+1994-06-02,law,ley-136-1994,codigo-de-regimen-municipal,2,main
+1994-06-03,start,ley-137-1994,estados-de-excepcion,59,main
+1994-06-24,start,dec-1295-1994,sistema-general-de-riesgos-profesionales,99,main
+1994-06-24,law,dec-1284-1994,estatuto-organico-del-sistema-financiero,1,main
+1994-06-24,law,dec-1295-1994,codigo-sustantivo-del-trabajo,9,main
+1994-07-11,start,ley-142-1994,servicios-publicos-domiciliarios,190,main
+1994-07-11,law,ley-142-1994,codigo-de-regimen-municipal,2,main
+1994-07-12,start,ley-143-1994,ley-electrica,98,main
+1994-07-14,law,c-319-94,reglamento-del-congreso,8,main
+1994-07-14,law,c-320-94,control-fiscal,1,main
+1994-07-19,start,ley-152-1994,ley-organica-del-plan-de-desarrollo,53,main
+1994-08-05,start,ley-160-1994,reforma-agraria,113,main
+1994-08-05,law,ley-160-1994,desarrollo-agropecuario-y-pesquero,1,main
+1994-08-24,law,dec-1259-1994,sistema-de-seguridad-social-integral,1,main
+1994-09-02,start,ley-163-1994,disposiciones-electorales-1994,17,main
+1994-09-02,law,ley-163-1994,regimen-municipal,1,main
+1994-09-08,law,c-397-94,sistema-de-seguridad-social-integral,1,main
+1994-09-15,law,c-409-94,sistema-de-seguridad-social-integral,1,main
+1994-10-20,law,c-454-94,estatuto-general-de-contratacion,0,main
+1994-11-03,law,c-489-94,desarrollo-agropecuario-y-pesquero,1,main
+1994-11-03,law,c-497-94,reglamento-del-congreso,1,main
+1994-11-21,law,c-521-94,banco-de-la-republica,0,main
+1994-11-25,law,ley-166-1994,regimen-municipal,1,main
+1994-12-06,law,c-555-94,ley-general-de-educacion,0,main
+1994-12-22,law,ley-174-1994,estatuto-tributario desarrollo-agropecuario-y-pesquero,6,main
+1994-12-28,law,ley-177-1994,regimen-municipal,10,main
+1995-01-01,law,ley-179-1994,sistema-de-seguridad-social-integral reglamento-del-congreso,4,main
+1995-01-18,start,ley-181-1995,ley-del-deporte,93,main
+1995-01-18,law,ley-181-1995,sistema-de-seguridad-social-integral estatuto-tributario educacion-superior,3,main
+1995-01-20,start,ley-182-1995,television,66,main
+1995-02-28,law,c-051-95,codigo-sustantivo-del-trabajo,1,main
+1995-03-22,law,c-126-95,sistema-de-seguridad-social-integral,1,main
+1995-03-30,law,ley-186-1995,reglamento-del-congreso,2,main
+1995-03-30,law,c-129-95,regimen-municipal,1,main
+1995-05-04,law,c-194-95,regimen-municipal,1,main
+1995-05-16,law,c-217-96,codigo-de-procedimiento-civil-1970,0,main
+1995-05-18,law,c-223-95,regimen-municipal,1,main
+1995-05-25,law,c-229-95,regimen-municipal,3,main
+1995-05-25,law,c-231-95,regimen-municipal,2,main
+1995-06-01,law,c-246-95,desarrollo-agropecuario-y-pesquero,1,main
+1995-06-06,start,ley-190-1995,moralidad-en-la-administracion-publica,86,main
+1995-06-07,law,c-252-95,ley-general-de-educacion,1,main
+1995-06-07,law,c-255-95,sistema-de-seguridad-social-integral,1,main
+1995-06-22,law,c-267-95,regimen-municipal,1,main
+1995-06-23,law,ley-191-1995,regimen-municipal,1,main
+1995-07-06,law,c-295-95,servicio-nacional-de-aprendizaje,3,main
+1995-07-11,law,fe-de-erratas-1995-07-11,servicios-publicos-domiciliarios,8,main
+1995-07-19,law,c-315-95,regimen-salarial-y-prestacional,0,main
+1995-07-27,law,c-328-95,ley-de-transporte,1,main
+1995-08-24,law,c-374-95,servicios-publicos-domiciliarios,1,main
+1995-08-24,law,c-376-95,sistema-de-seguridad-social-integral,1,main
+1995-09-07,law,c-394-95,codigo-penitenciario-y-carcelario,3,main
+1995-10-02,law,ley-201-1995,ley-general-ambiental regimen-municipal,4,main
+1995-10-05,law,c-452-95,estatuto-organico-del-sistema-financiero,1,main
+1995-10-30,law,c-483-95,codigo-sustantivo-del-trabajo,1,main
+1995-11-02,law,c-489-95,estatuto-tributario,0,main
+1995-11-30,law,c-564-95,television,1,main
+1995-12-01,law,al-1-1995,constitucion,1,main
+1995-12-04,law,c-577-95,sistema-de-seguridad-social-integral,1,main
+1995-12-06,law,dec-2150-1995,codigo-civil sistema-de-seguridad-social-integral ley-general-de-educacion desarrollo-agropecuario-y-pesquero derecho-de-autor-1993 sistema-general-de-riesgos-profesionales,12,main
+1995-12-07,law,c-584-95,sistema-de-seguridad-social-integral,0,main
+1995-12-20,law,ley-225-1995,servicio-nacional-de-aprendizaje,1,main
+1995-12-21,law,ley-226-1995,estatuto-organico-del-sistema-financiero,1,main
+1995-12-21,law,al-2-1995,constitucion,1,main
+1995-12-22,law,ley-223-1995,estatuto-tributario estatuto-organico-de-bogota codigo-de-regimen-departamental,177,main
+1995-12-26,law,ley-232-1995,codigo-nacional-de-policia-1970,2,main
+1995-12-26,law,ley-238-1995,sistema-de-seguridad-social-integral,1,main
+1996-01-17,law,dec-62-1996,estatuto-general-de-contratacion,1,main
+1996-01-17,law,al-1-1996,constitucion,2,main
+1996-01-18,start,ley-256-1996,competencia-desleal,34,main
+1996-01-18,start,dec-111-1996,estatuto-organico-del-presupuesto,128,main
+1996-01-18,law,ley-256-1996,codigo-de-comercio,6,main
+1996-01-18,law,c-006-96,educacion-superior,2,main
+1996-01-18,law,c-008-96,ley-del-deporte,1,main
+1996-01-23,law,c-023-96,estatuto-organico-del-presupuesto,2,main
+1996-02-05,law,c-038-96,moralidad-en-la-administracion-publica,1,main
+1996-02-15,law,c-054-96,moralidad-en-la-administracion-publica,1,main
+1996-03-07,law,c-093-96,television,0,main
+1996-03-15,start,ley-270-1996,ley-estatutaria-de-la-administracion-de-justicia,184,main
+1996-03-15,law,ley-270-1996,reglamento-del-congreso,4,main
+1996-03-21,law,c-112-96,regimen-municipal,1,main
+1996-03-22,law,ley-273-1996,reglamento-del-congreso,4,main
+1996-04-15,law,ley-276-1996,ley-de-transporte,2,main
+1996-05-10,law,ley-278-1996,codigo-sustantivo-del-trabajo,1,main
+1996-05-15,law,ley-270-1996,codigo-contencioso-administrativo-1984,3,main
+1996-05-16,law,c-222-96,reglamento-del-congreso,1,main
+1996-05-30,law,c-244a-96,codigo-de-procedimiento-civil-1970,1,main
+1996-06-03,law,c-245-96,reglamento-del-congreso,1,main
+1996-06-06,law,c-253-96,servicios-publicos-domiciliarios,1,main
+1996-06-20,law,ley-222-1995,codigo-civil codigo-de-comercio codigo-de-procedimiento-civil-1970,183,main
+1996-07-05,law,ley-286-1996,servicios-publicos-domiciliarios,2,main
+1996-07-11,law,c-306-96,estatuto-organico-del-presupuesto,1,main
+1996-07-11,law,c-310-96,television,1,main
+1996-07-18,law,c-316-96,regimen-municipal,1,main
+1996-07-22,start,ley-294-1996,violencia-intrafamiliar,21,main
+1996-07-30,start,ley-300-1996,ley-general-de-turismo,114,main
+1996-08-01,law,c-333-96,estatuto-general-de-contratacion,0,main
+1996-08-02,law,ley-301-1996,desarrollo-agropecuario-y-pesquero,8,main
+1996-08-14,law,c-365-96,reglamento-del-congreso,1,main
+1996-08-22,law,c-385-96,reglamento-del-congreso,0,main
+1996-08-22,law,c-386-96,reglamento-del-congreso,5,main
+1996-08-22,law,c-389-96,sistema-de-seguridad-social-integral,0,main
+1996-09-16,law,ley-315-1996,estatuto-general-de-contratacion,1,main
+1996-09-26,law,c-484-96,comunidades-negras,1,main
+1996-09-26,law,c-492-96,estatuto-tributario,0,main
+1996-09-26,law,c-493-96,codigo-de-regimen-municipal,1,main
+1996-10-10,law,c-528-96,codigo-de-regimen-departamental,1,main
+1996-10-16,law,c-283-02,codigo-de-regimen-departamental,1,main
+1996-10-16,law,c-534-96,ley-general-ambiental,0,main
+1996-10-24,law,c-562-96,ley-general-de-educacion,1,main
+1996-10-30,law,c-579-96,sistema-de-seguridad-social-integral,1,main
+1996-11-06,law,c-595-96,codigo-civil,2,main
+1996-11-06,law,c-599-96,servicios-publicos-domiciliarios,2,main
+1996-11-21,law,c-625-96,ley-del-deporte,2,main
+1996-11-21,law,c-631-96,moralidad-en-la-administracion-publica,0,main
+1996-11-21,law,c-636-96,codigo-contencioso-administrativo-1984,1,main
+1996-11-28,law,c-663-96,sistema-de-seguridad-social-integral,0,main
+1996-11-28,law,c-666-96,codigo-de-procedimiento-civil-1970,0,main
+1996-12-05,law,c-690-96,estatuto-tributario,0,main
+1996-12-09,law,c-709-96,moralidad-en-la-administracion-publica,1,main
+1996-12-09,law,c-710-96,codigo-sustantivo-del-trabajo,1,main
+1996-12-09,law,c-711-96,television,0,main
+1996-12-12,law,ley-330-1996,codigo-de-regimen-departamental,4,main
+1996-12-24,law,ley-335-1996,television,20,main
+1996-12-28,start,ley-336-1996,estatuto-nacional-de-transporte,91,main
+1996-12-31,law,ley-344-1996,sistema-de-seguridad-social-integral ley-general-ambiental ley-del-deporte,3,main
+1997-01-23,law,c-011-97,reglamento-del-congreso,1,main
+1997-01-23,law,dec-165-1997,estatuto-general-de-contratacion,1,main
+1997-02-04,start,ley-358-1997,endeudamiento-territorial,18,main
+1997-02-04,law,dec-252-1997,estatuto-general-de-contratacion,1,main
+1997-02-06,law,c-054-97,control-fiscal,0,main
+1997-02-11,start,ley-361-1997,integracion-social-de-personas-con-limitacion,74,main
+1997-02-11,law,c-065-97,control-fiscal,0,main
+1997-02-21,law,ley-362-1997,codigo-procesal-del-trabajo-1948,1,main
+1997-02-21,law,ley-365-1997,estatuto-organico-del-sistema-financiero moralidad-en-la-administracion-publica,4,main
+1997-02-26,law,c-089-97,sistema-de-seguridad-social-integral,1,main
+1997-03-19,law,c-148-97,reglamento-del-congreso,1,main
+1997-04-15,law,c-192-97,estatuto-organico-del-presupuesto,0,main
+1997-04-24,law,c-209-97,ley-general-de-turismo,1,main
+1997-04-24,law,c-210-97,ley-general-de-educacion,2,main
+1997-05-20,law,c-242-97,servicios-publicos-domiciliarios,1,main
+1997-05-30,law,c-243-96,accion-de-tutela,1,main
+1997-06-05,law,c-285-97,violencia-intrafamiliar,1,main
+1997-06-06,start,ley-373-1997,uso-eficiente-del-agua,18,main
+1997-06-06,law,ley-373-1997,servicios-publicos-domiciliarios,1,main
+1997-06-25,law,c-315-97,estatuto-organico-del-presupuesto,0,main
+1997-06-27,law,dec-1671-1997,ley-general-de-turismo,11,main
+1997-06-27,law,dec-1681-1997,moralidad-en-la-administracion-publica,7,main
+1997-06-27,law,dec-1687-1997,ley-general-ambiental,2,main
+1997-07-03,law,c-320-97,ley-del-deporte,2,main
+1997-07-09,start,ley-375-1997,ley-de-la-juventud,52,main
+1997-07-14,law,ley-383-1997,estatuto-tributario ley-de-transporte,28,main
+1997-07-23,law,c-347-97,estatuto-general-de-contratacion,1,main
+1997-07-24,start,ley-387-1997,desplazamiento-forzado,36,main
+1997-07-24,start,ley-388-1997,ley-de-desarrollo-territorial,140,main
+1997-07-24,law,ley-388-1997,codigo-de-regimen-municipal,16,main
+1997-07-29,law,c-350-97,television,0,main
+1997-07-30,start,ley-393-1997,accion-de-cumplimiento,32,main
+1997-07-30,law,ley-393-1997,ley-general-ambiental,7,main
+1997-08-04,law,c-354-97,estatuto-organico-del-presupuesto,0,main
+1997-08-07,start,ley-397-1997,ley-general-de-cultura,84,main
+1997-08-07,law,ley-397-1997,ley-general-de-educacion,1,main
+1997-08-28,law,c-406-97,codigo-del-menor,1,main
+1997-08-28,law,c-407-97,codigo-de-procedimiento-civil-1970,1,main
+1997-08-28,law,c-410-97,sistema-de-seguridad-social-integral,1,main
+1997-09-04,law,c-424-97,codigo-de-procedimiento-civil-1970,1,main
+1997-09-18,law,c-445-97,television,1,main
+1997-09-18,law,c-448-97,regimen-municipal,2,main
+1997-09-25,law,c-470-97,codigo-sustantivo-del-trabajo,0,main
+1997-09-25,law,c-471-97,codigo-contencioso-administrativo-1984,1,main
+1997-09-25,law,c-474-97,reglamento-del-congreso,1,main
+1997-10-15,law,c-521-97,codigo-de-regimen-departamental,0,main
+1997-10-23,law,c-540-97,control-fiscal,0,main
+1997-11-06,law,c-560-97,ley-general-de-educacion,1,main
+1997-11-06,law,c-567-97,moralidad-en-la-administracion-publica,1,main
+1997-11-06,law,c-570-97,regimen-municipal,1,main
+1997-11-11,law,c-622-97,codigo-sustantivo-del-trabajo,1,main
+1997-12-17,law,al-1-1997,constitucion,1,main
+1997-12-23,law,ley-415-1997,codigo-penitenciario-y-carcelario,3,main
+1997-12-26,start,ley-418-1997,orden-publico,133,main
+1998-01-22,law,c-004-98,codigo-civil,1,main
+1998-01-22,law,c-005-98,estatuto-tributario,0,main
+1998-01-24,law,ley-389-1997,codigo-de-comercio,3,main
+1998-02-19,start,ley-400-1997,construcciones-sismo-resistentes,57,main
+1998-03-04,law,c-054-98,sistema-de-seguridad-social-integral,1,main
+1998-04-01,law,c-126-98,codigo-de-recursos-naturales,0,main
+1998-04-01,law,c-127-98,ley-de-desarrollo-territorial,1,main
+1998-04-28,law,c-155-98,ley-general-de-cultura,1,main
+1998-04-29,law,c-157-98,accion-de-cumplimiento,3,main
+1998-04-29,law,c-160-98,estatuto-tributario,0,main
+1998-05-04,law,c-177-98,sistema-de-seguridad-social-integral,0,main
+1998-05-06,law,c-183-98,estatuto-tributario,0,main
+1998-05-06,law,c-184-98,codigo-penitenciario-y-carcelario,4,main
+1998-06-03,law,c-271-98,codigo-penitenciario-y-carcelario,0,main
+1998-06-03,law,c-275-98,estatuto-organico-del-presupuesto,0,main
+1998-06-12,law,ley-443-1998,ley-de-transporte moralidad-en-la-administracion-publica,3,main
+1998-06-17,law,c-299-98,codigo-sustantivo-del-trabajo,0,main
+1998-06-23,law,c-269-98,codigo-de-procedimiento-civil-1970,1,main
+1998-06-30,law,c-317-98,ley-del-deporte,2,main
+1998-06-30,law,c-318-98,estatuto-tributario,1,main
+1998-07-08,law,ley-446-1998,estatuto-general-de-contratacion codigo-procesal-del-trabajo-1948 codigo-contencioso-administrativo-1984 codigo-de-procedimiento-civil-1970,55,main
+1998-07-08,law,c-340-98,orden-publico,0,main
+1998-07-21,law,c-372-98,codigo-sustantivo-del-trabajo,0,main
+1998-07-27,law,c-378-98,sistema-de-seguridad-social-integral,0,main
+1998-07-27,law,c-379-98,codigo-civil,1,main
+1998-08-06,law,ley-454-1998,estatuto-organico-del-sistema-financiero,6,main
+1998-08-10,law,dec-1569-1998,codigo-de-regimen-municipal codigo-de-regimen-departamental,4,main
+1998-08-10,law,c-405-98,regimen-municipal,0,main
+1998-09-07,law,dec-1818-1998,estatuto-general-de-contratacion,1,main
+1998-09-09,law,ley-475-1998,reglamento-del-congreso,0,main
+1998-09-15,law,c-495-98,ley-de-desarrollo-territorial regimen-municipal,2,main
+1998-10-01,law,c-539-98,moralidad-en-la-administracion-publica,1,main
+1998-10-01,law,c-542-98,sistema-de-seguridad-social-integral,1,main
+1998-10-01,law,c-543-98,constitucion,1,main
+1998-10-21,law,c-594-98,codigo-de-procedimiento-civil-1970,1,main
+1998-11-05,law,c-665-98,codigo-sustantivo-del-trabajo,1,main
+1998-11-12,law,c-662-98,codigo-procesal-del-trabajo-1948,1,main
+1998-11-16,law,dec-2331-1998,estatuto-organico-del-sistema-financiero,2,main
+1998-12-10,law,c-772-98,estatuto-general-de-contratacion,1,main
+1998-12-28,law,ley-488-1998,estatuto-tributario desarrollo-agropecuario-y-pesquero,65,main
+1998-12-30,start,ley-489-1998,organizacion-de-la-administracion-publica,122,main
+1999-02-10,law,c-066-99,ley-de-transporte estatuto-nacional-de-transporte,3,main
+1999-02-10,law,c-068-99,codigo-civil codigo-de-comercio,2,main
+1999-03-10,law,c-152-99,ley-general-de-cultura,0,main
+1999-03-24,law,c-188-99,codigo-contencioso-administrativo-1984,1,main
+1999-04-07,law,c-197-99,codigo-contencioso-administrativo-1984,0,main
+1999-04-29,law,c-220-97,estatuto-organico-del-presupuesto,0,main
+1999-05-12,law,c-333-99,television,0,main
+1999-05-26,law,c-371-99,codigo-contencioso-administrativo-1984,0,main
+1999-06-10,law,dec-978-1999,moralidad-en-la-administracion-publica,5,main
+1999-06-29,law,dec-1122-1999,sistema-de-seguridad-social-integral estatuto-general-de-contratacion servicios-publicos-domiciliarios ley-general-ambiental ley-de-desarrollo-territorial educacion-superior regimen-municipal estatuto-nacional-de-transporte codigo-de-regimen-municipal moralidad-en-la-administracion-publica codigo-de-regimen-departamental sistema-general-de-riesgos-profesionales,71,main
+1999-06-29,law,dec-1124-1999,ley-general-ambiental reforma-agraria,2,main
+1999-06-29,law,dec-1144-1999,control-fiscal,15,main
+1999-06-29,law,dec-1164-1999,estatuto-organico-del-sistema-financiero,24,main
+1999-06-29,law,dec-1165-1999,servicios-publicos-domiciliarios,8,main
+1999-06-29,law,dec-1179-1999,ley-de-transporte estatuto-nacional-de-transporte,3,main
+1999-07-01,law,ley-504-1999,codigo-penitenciario-y-carcelario,2,main
+1999-07-07,law,c-481-99,banco-de-la-republica,1,main
+1999-07-14,law,c-510-99,regimen-municipal,3,main
+1999-07-22,law,c-517-99,educacion-superior,1,main
+1999-07-30,law,ley-508-1999,sistema-de-seguridad-social-integral servicios-publicos-domiciliarios ley-general-ambiental,3,main
+1999-08-02,law,ley-506-1999,television,1,main
+1999-08-04,start,ley-510-1999,sistema-financiero-y-asegurador-1999,124,main
+1999-08-04,law,ley-510-1999,codigo-de-comercio sistema-de-seguridad-social-integral estatuto-organico-del-sistema-financiero,54,main
+1999-08-04,law,c-349-94,codigo-de-regimen-municipal,1,main
+1999-08-06,start,ley-472-1998,acciones-populares-y-de-grupo,87,main
+1999-08-06,law,c-215-99,acciones-populares-y-de-grupo,2,main
+1999-08-10,law,al-1-1999,constitucion ley-de-desarrollo-territorial,2,main
+1999-08-11,law,c-583-99,ley-general-de-educacion,1,main
+1999-08-15,start,ley-526-1999,unidad-de-informacion-y-analisis-financiero,14,main
+1999-08-15,law,ley-526-1999,estatuto-organico-del-sistema-financiero,2,main
+1999-08-21,start,ley-527-1999,comercio-electronico,48,main
+1999-08-23,law,c-608-99,regimen-salarial-y-prestacional,0,main
+1999-08-29,law,dec-1154-1999,estatuto-organico-del-sistema-financiero,4,main
+1999-09-01,law,c-643-99,codigo-nacional-de-policia-1970,1,main
+1999-09-09,law,c-671-99,organizacion-de-la-administracion-publica,1,main
+1999-09-09,law,c-674-99,estatuto-tributario,1,main
+1999-09-16,law,c-700-99,estatuto-organico-del-sistema-financiero,1,main
+1999-09-16,law,ce-1999-09-16,codigo-electoral,1,main
+1999-09-20,law,c-702-99,organizacion-de-la-administracion-publica,6,main
+1999-09-22,law,c-710-99,regimen-salarial-y-prestacional,1,main
+1999-10-06,law,c-740-99,estatuto-tributario,1,main
+1999-10-20,law,c-815-99,codigo-sustantivo-del-trabajo,0,main
+1999-10-20,law,c-817-99,codigo-del-menor,4,main
+1999-11-03,law,c-866-99,organizacion-de-la-administracion-publica,2,main
+1999-11-18,law,c-923-99,sistema-de-seguridad-social-integral estatuto-general-de-contratacion servicios-publicos-domiciliarios ley-general-ambiental ley-de-desarrollo-territorial educacion-superior regimen-municipal estatuto-organico-de-bogota estatuto-nacional-de-transporte codigo-de-regimen-municipal moralidad-en-la-administracion-publica codigo-de-regimen-departamental sistema-general-de-riesgos-profesionales,68,main
+1999-11-18,law,c-925-99,codigo-de-procedimiento-civil-1970,1,main
+1999-12-01,law,c-953-99,organizacion-de-la-administracion-publica codigo-de-regimen-departamental,2,main
+1999-12-01,law,c-969-99,estatuto-organico-del-sistema-financiero servicios-publicos-domiciliarios ley-de-transporte estatuto-nacional-de-transporte,21,main
+1999-12-07,law,c-590-95,regimen-municipal,1,main
+1999-12-13,law,dec-2474-1999,servicios-publicos-domiciliarios ley-electrica,2,main
+1999-12-17,law,dec-2478-1999,desarrollo-agropecuario-y-pesquero,1,main
+1999-12-23,start,ley-546-1999,financiacion-de-vivienda,58,main
+1999-12-23,law,ley-546-1999,estatuto-tributario,1,main
+1999-12-23,law,ley-548-1999,orden-publico,1,main
+1999-12-30,law,ley-550-1999,codigo-sustantivo-del-trabajo,1,main
+2000-01-01,law,dec-2587-1999,estatuto-tributario,36,main
+2000-02-02,law,c-087-00,codigo-nacional-de-policia-1970,1,main
+2000-02-07,law,ley-572-2000,codigo-de-procedimiento-civil-1970,1,main
+2000-02-09,law,c-112-00,codigo-civil,1,main
+2000-02-11,law,dec-169-2000,regimen-municipal codigo-de-regimen-departamental,5,main
+2000-02-11,law,ley-575-2000,violencia-intrafamiliar,12,main
+2000-02-17,law,dec-2489-1999,estatuto-organico-del-sistema-financiero,6,main
+2000-02-17,law,dec-219-2000,ley-general-de-turismo,8,main
+2000-02-22,law,dec-266-2000,sistema-de-seguridad-social-integral servicios-publicos-domiciliarios ley-general-ambiental estatuto-organico-de-bogota estatuto-nacional-de-transporte codigo-de-regimen-municipal moralidad-en-la-administracion-publica codigo-de-regimen-departamental sistema-general-de-riesgos-profesionales,52,main
+2000-02-22,law,dec-267-2000,control-fiscal,0,main
+2000-02-23,law,c-162-00,television,1,main
+2000-02-23,law,c-164-00,sistema-general-de-riesgos-profesionales,1,main
+2000-03-01,law,c-208-00,banco-de-la-republica,1,main
+2000-03-15,law,c-289-00,codigo-civil,2,main
+2000-03-19,law,ley-550-1999,sistema-financiero-y-asegurador-1999 codigo-de-procedimiento-civil-1970,2,main
+2000-04-05,law,c-384-00,estatuto-organico-del-sistema-financiero sistema-financiero-y-asegurador-1999,4,main
+2000-04-07,law,dec-101-2000,estatuto-nacional-de-transporte,1,main
+2000-05-04,law,c-484-00,control-fiscal,1,main
+2000-05-05,law,c-531-00,integracion-social-de-personas-con-limitacion,0,main
+2000-05-16,law,c-557-00,ley-general-ambiental,1,main
+2000-05-17,law,c-567-00,codigo-sustantivo-del-trabajo,3,main
+2000-05-26,law,dec-955-2000,educacion-superior ley-de-transporte,2,main
+2000-05-31,start,ley-581-2000,ley-de-cuotas,17,main
+2000-05-31,law,c-643-00,reglamento-del-congreso,0,main
+2000-06-08,law,c-660-00,codigo-civil,1,main
+2000-06-08,law,c-665-00,sistema-de-seguridad-social-integral,1,main
+2000-06-12,law,ley-582-2000,ley-del-deporte,2,main
+2000-06-14,law,ley-584-2000,codigo-sustantivo-del-trabajo,19,main
+2000-06-14,law,c-697-00,ley-general-de-turismo,1,main
+2000-06-21,law,c-727-00,organizacion-de-la-administracion-publica,3,main
+2000-06-21,law,c-729-00,sistema-financiero-y-asegurador-1999,1,main
+2000-06-28,law,ley-585-2000,ley-estatutaria-de-la-administracion-de-justicia,3,main
+2000-06-29,law,c-795-00,ley-de-desarrollo-territorial,1,main
+2000-06-29,law,c-796-00,estatuto-tributario,1,main
+2000-06-29,law,c-797-00,codigo-sustantivo-del-trabajo,8,main
+2000-07-06,law,c-844-00,regimen-municipal,1,main
+2000-07-07,law,ley-589-2000,codigo-contencioso-administrativo-1984,1,main
+2000-07-12,start,ley-590-2000,mipymes,48,main
+2000-07-12,law,ley-590-2000,superintendencia-de-industria-y-comercio-1992,2,main
+2000-07-14,law,ley-592-2000,codigo-de-procedimiento-civil-1970,1,main
+2000-07-20,start,ley-594-2000,ley-general-de-archivos,53,main
+2000-07-26,law,c-955-00,financiacion-de-vivienda,7,main
+2000-08-02,law,c-993-00,codigo-sustantivo-del-trabajo,0,main
+2000-08-03,law,ley-607-2000,desarrollo-agropecuario-y-pesquero,6,main
+2000-08-16,law,c-1062-00,acciones-populares-y-de-grupo,0,main
+2000-08-18,start,ley-610-2000,responsabilidad-fiscal,70,main
+2000-08-18,law,ley-610-2000,control-fiscal,19,main
+2000-08-18,law,al-2-2000,constitucion,1,main
+2000-08-23,law,al-1-2000,constitucion,1,main
+2000-08-24,law,c-1109-00,codigo-civil,0,main
+2000-08-30,law,c-1140-00,financiacion-de-vivienda,5,main
+2000-09-06,law,c-1161-00,estatuto-organico-del-sistema-financiero,0,main
+2000-09-13,law,c-1185-00,codigo-sustantivo-del-trabajo,1,main
+2000-09-20,law,c-1265-00,financiacion-de-vivienda,1,main
+2000-09-26,law,c-1316-00,sistema-de-seguridad-social-integral servicios-publicos-domiciliarios ley-general-ambiental estatuto-organico-de-bogota estatuto-nacional-de-transporte codigo-de-regimen-municipal moralidad-en-la-administracion-publica,48,main
+2000-09-26,law,c-1318-00,regimen-municipal codigo-de-regimen-departamental,5,main
+2000-10-05,law,ley-616-2000,estatuto-basico-de-los-partidos,1,main
+2000-10-09,start,ley-617-2000,ley-617-2000,98,main
+2000-10-09,law,ley-617-2000,regimen-municipal estatuto-organico-de-bogota ley-general-de-cultura ley-del-deporte desarrollo-agropecuario-y-pesquero moralidad-en-la-administracion-publica control-interno codigo-de-regimen-departamental,27,main
+2000-10-11,law,c-1369-00,codigo-sustantivo-del-trabajo,0,main
+2000-10-19,law,c-1403-00,servicios-publicos-domiciliarios educacion-superior ley-de-transporte,3,main
+2000-10-25,law,c-1436-00,estatuto-general-de-contratacion,0,main
+2000-10-25,law,c-1437-00,organizacion-de-la-administracion-publica,1,main
+2000-10-25,law,c-1440-00,codigo-civil,2,main
+2000-10-25,law,c-1441-00,estatuto-tributario,1,main
+2000-10-25,law,c-1444-00,codigo-nacional-de-policia-1970,1,main
+2000-11-08,law,c-1510-00,codigo-penitenciario-y-carcelario,0,main
+2000-11-08,law,c-1541-00,codigo-procesal-del-trabajo-1948,1,main
+2000-11-29,law,c-1641-00,estatuto-organico-del-sistema-financiero sistema-financiero-y-asegurador-1999,3,main
+2000-11-29,law,c-1645-00,estatuto-organico-del-presupuesto,1,main
+2000-12-12,law,c-1714-00,estatuto-tributario,1,main
+2000-12-29,law,ley-632-2000,servicios-publicos-domiciliarios,2,main
+2000-12-29,law,ley-633-2000,estatuto-tributario ley-617-2000,66,main
+2001-01-01,law,dec-2661-2000,estatuto-tributario,31,main
+2001-01-17,law,ley-643-2001,codigo-de-regimen-municipal,1,main
+2001-01-17,law,c-007-01,codigo-civil,0,main
+2001-01-24,law,c-046-01,codigo-nacional-de-policia-1970,1,main
+2001-01-24,law,c-047-01,orden-publico,1,main
+2001-01-24,law,c-060-01,television,1,main
+2001-03-03,law,ley-647-2001,educacion-superior,1,main
+2001-04-25,law,c-410-01,integracion-social-de-personas-con-limitacion,0,main
+2001-05-04,law,c-442-01,estatuto-organico-del-presupuesto,1,main
+2001-05-05,law,c-558-01,servicios-publicos-domiciliarios,0,main
+2001-05-10,law,c-533-00,codigo-civil,0,main
+2001-05-15,law,c-500-01,sistema-financiero-y-asegurador-1999,0,main
+2001-05-22,law,c-540-01,ley-617-2000,2,main
+2001-06-05,law,c-579-01,ley-617-2000,1,main
+2001-06-30,law,ley-644-2001,control-fiscal,1,main
+2001-07-05,law,c-709-01,codigo-contencioso-administrativo-1984,0,main
+2001-07-11,law,c-742-01,reglamento-del-congreso,1,main
+2001-07-24,start,ley-600-2000,codigo-de-procedimiento-penal-2000,551,main
+2001-07-24,start,ley-599-2000,codigo-penal,479,main
+2001-07-24,law,ley-600-2000,reglamento-del-congreso moralidad-en-la-administracion-publica,2,main
+2001-07-24,law,c-760-01,codigo-de-procedimiento-penal-2000,26,main
+2001-07-25,law,c-774-01,codigo-de-procedimiento-penal-2000,1,main
+2001-07-25,law,c-775-01,codigo-de-procedimiento-penal-2000,1,main
+2001-07-25,law,c-776-01,codigo-de-procedimiento-penal-2000,1,main
+2001-07-25,law,c-778-01,ley-617-2000,1,main
+2001-07-25,law,c-780-01,estatuto-organico-del-sistema-financiero sistema-financiero-y-asegurador-1999,0,main
+2001-07-30,law,ley-666-2001,ley-general-de-cultura,6,main
+2001-08-04,start,ley-675-2001,propiedad-horizontal,88,main
+2001-08-04,law,ley-678-2001,estatuto-general-de-contratacion,1,main
+2001-08-04,law,ley-679-2001,codigo-penal,2,main
+2001-08-08,law,c-828-01,estatuto-tributario,0,main
+2001-08-08,law,c-832-01,codigo-contencioso-administrativo-1984,0,main
+2001-08-09,law,c-837-01,ley-617-2000,1,main
+2001-08-09,law,c-840-01,responsabilidad-fiscal,0,main
+2001-08-11,law,ley-680-2001,television,2,main
+2001-08-23,law,ley-688-2001,estatuto-nacional-de-transporte,1,main
+2001-08-29,law,c-920-01,ley-617-2000,1,main
+2001-09-05,law,c-949-01,estatuto-general-de-contratacion,1,main
+2001-09-08,start,ley-685-2001,codigo-de-minas,356,main
+2001-09-08,law,ley-685-2001,estatuto-tributario,2,main
+2001-09-19,law,c-992-01,estatuto-tributario,1,main
+2001-09-26,law,c-1026-01,codigo-del-menor,0,main
+2001-10-18,law,c-1098-01,regimen-municipal ley-617-2000,3,main
+2001-10-24,law,c-1105-01,ley-617-2000,1,main
+2001-10-24,law,c-1115-01,estatuto-tributario,1,main
+2001-10-31,law,ley-689-2001,servicios-publicos-domiciliarios,19,main
+2001-11-08,law,c-1172-01,television,1,main
+2001-11-15,law,c-1194-01,accion-de-cumplimiento,1,main
+2001-11-29,law,c-1258-01,ley-617-2000,0,main
+2001-12-21,start,ley-715-2001,sistema-general-de-participaciones,114,main
+2001-12-21,law,ley-715-2001,sistema-de-seguridad-social-integral ley-general-de-educacion,17,main
+2001-12-27,law,dec-2667-2001,codigo-penal,1,main
+2001-12-29,law,ley-716-2001,estatuto-tributario,4,main
+2001-12-29,law,ley-719-2001,derecho-de-autor-1993,2,main
+2001-12-31,law,al-2-2001,constitucion,1,main
+2002-01-01,law,al-1-2001,constitucion,3,main
+2002-01-01,law,dec-2794-2001,estatuto-tributario,35,main
+2002-01-16,start,ley-731-2002,mujeres-rurales,36,main
+2002-01-24,law,ley-640-2001,sistema-financiero-y-asegurador-1999,1,main
+2002-01-31,law,ley-732-2002,servicios-publicos-domiciliarios,1,main
+2002-01-31,law,ley-733-2002,codigo-penal,11,main
+2002-01-31,law,al-1-2002,constitucion,1,main
+2002-02-13,law,c-092-02,codigo-del-menor,1,main
+2002-02-14,law,c-107-02,sistema-de-seguridad-social-integral,0,main
+2002-03-05,law,c-158-02,ley-de-desarrollo-territorial,1,main
+2002-03-19,law,c-201-02,codigo-sustantivo-del-trabajo,2,main
+2002-04-03,law,c-228-02,codigo-de-procedimiento-penal-2000,1,main
+2002-04-04,law,c-232-02,codigo-penal,0,main
+2002-04-09,law,c-246-02,codigo-civil,0,main
+2002-04-09,law,c-247-02,control-fiscal,1,main
+2002-04-16,law,c-265-02,propiedad-horizontal,1,main
+2002-04-23,law,c-290-02,servicios-publicos-domiciliarios,2,main
+2002-04-23,law,c-292-02,codigo-de-procedimiento-civil-1970,1,main
+2002-04-30,law,c-316-02,codigo-de-procedimiento-penal-2000,1,main
+2002-05-01,law,ley-738-2002,codigo-penal,1,main
+2002-05-02,law,c-317-02,codigo-penal,1,main
+2002-05-02,law,c-318-02,propiedad-horizontal,0,main
+2002-05-05,start,ley-734-2002,codigo-disciplinario-unico,222,main
+2002-05-07,law,c-339-02,codigo-de-minas,2,main
+2002-05-14,law,c-370-02,codigo-penal codigo-de-procedimiento-penal-2000,3,main
+2002-05-22,law,c-389-02,servicios-publicos-domiciliarios,1,main
+2002-05-22,law,c-392-02,codigo-penal,0,main
+2002-05-28,law,c-415-02,estatuto-organico-del-sistema-financiero sistema-financiero-y-asegurador-1999,0,main
+2002-05-28,law,c-418-02,codigo-de-minas,0,main
+2002-05-28,law,c-422-02,codigo-nacional-de-policia-1970,0,main
+2002-05-29,law,c-426-02,codigo-contencioso-administrativo-1984,0,main
+2002-06-04,law,ley-741-2002,mecanismos-de-participacion-ciudadana voto-programatico,4,main
+2002-06-07,start,ley-743-2002,accion-comunal-2002,79,main
+2002-06-08,law,ley-712-2001,codigo-procesal-del-trabajo-1948,56,main
+2002-06-12,law,c-452-02,sistema-general-de-riesgos-profesionales,17,main
+2002-06-26,law,c-488-02,propiedad-horizontal,0,main
+2002-06-26,law,c-490-02,codigo-nacional-de-policia-1970,0,main
+2002-07-03,law,c-506-02,estatuto-tributario,0,main
+2002-07-03,law,c-508-02,estatuto-general-de-contratacion,0,main
+2002-07-10,law,c-522-02,propiedad-horizontal,0,main
+2002-07-19,start,ley-749-2002,educacion-tecnica-y-tecnologica,21,main
+2002-07-19,law,ley-746-2002,codigo-nacional-de-policia-1970,16,main
+2002-07-19,law,ley-747-2002,codigo-penal,8,main
+2002-07-19,law,ley-753-2002,regimen-municipal,1,main
+2002-07-25,law,ley-755-2002,codigo-sustantivo-del-trabajo,1,main
+2002-07-30,law,dec-1512-2002,sistema-general-de-participaciones,1,main
+2002-07-30,law,dec-1561-2002,estatuto-nacional-de-transporte,1,main
+2002-07-30,law,ley-759-2002,codigo-penal,2,main
+2002-08-06,law,c-616-02,estatuto-tributario,0,main
+2002-08-07,start,ley-768-2002,distritos-de-barranquilla-cartagena-y-santa-marta,50,main
+2002-08-07,law,al-2-2002,constitucion,5,main
+2002-08-08,law,c-617-02,sistema-general-de-participaciones,5,main
+2002-08-08,law,c-618-02,sistema-general-de-participaciones,0,main
+2002-08-08,law,c-619-02,responsabilidad-fiscal,1,main
+2002-08-13,law,c-646-02,codigo-contencioso-administrativo-1984,1,main
+2002-09-17,law,ley-771-2002,ley-estatutaria-de-la-administracion-de-justicia,2,main
+2002-09-24,law,c-789-02,sistema-de-seguridad-social-integral,0,main
+2002-09-24,law,c-791-02,sistema-general-de-participaciones,0,main
+2002-09-24,law,c-793-02,sistema-general-de-participaciones,1,main
+2002-10-01,law,c-805-02,codigo-de-procedimiento-penal-2000,0,main
+2002-10-07,law,dec-1577-2002,estatuto-organico-del-sistema-financiero,6,main
+2002-10-08,law,c-832-02,sistema-general-de-participaciones,1,main
+2002-10-08,law,c-836-02,codigo-de-procedimiento-penal-2000,0,main
+2002-10-22,law,c-886-02,estatuto-tributario,6,main
+2002-10-22,law,c-891-02,codigo-de-minas,0,main
+2002-10-29,law,c-916-02,codigo-penal,0,main
+2002-10-29,law,c-918-02,sistema-general-de-participaciones,1,main
+2002-11-06,law,c-948-02,codigo-disciplinario-unico,2,main
+2002-11-13,law,c-974-02,sistema-general-de-participaciones,1,main
+2002-11-13,law,c-975-02,derecho-de-autor-1993,2,main
+2002-11-13,law,c-983-02,codigo-civil,1,main
+2002-11-26,law,c-1024-02,codigo-de-procedimiento-penal-2000,0,main
+2002-11-27,law,c-1033-02,codigo-civil,0,main
+2002-12-03,law,c-1066-02,codigo-disciplinario-unico,0,main
+2002-12-03,law,c-1068-02,codigo-penal,0,main
+2002-12-04,law,c-1074-02,ley-de-desarrollo-territorial,0,main
+2002-12-05,law,c-1076-02,codigo-disciplinario-unico,6,main
+2002-12-05,law,c-1080-02,codigo-penal,0,main
+2002-12-09,law,dec-2978-2002,sistema-general-de-participaciones,1,main
+2002-12-13,start,ley-769-2002,codigo-nacional-de-transito,170,main
+2002-12-17,start,ley-776-2002,prestaciones-riesgos-profesionales,23,main
+2002-12-17,law,ley-776-2002,sistema-general-de-riesgos-profesionales,5,main
+2002-12-18,law,ley-777-2002,codigo-penal,1,main
+2002-12-20,law,al-3-2002,constitucion,3,main
+2002-12-27,start,ley-789-2002,ley-789-2002,52,main
+2002-12-27,law,ley-787-2002,ley-de-transporte,1,main
+2002-12-27,law,ley-788-2002,codigo-penal estatuto-tributario,90,main
+2002-12-27,law,ley-789-2002,codigo-sustantivo-del-trabajo desarrollo-agropecuario-y-pesquero,7,main
+2002-12-27,law,ley-791-2002,codigo-civil,13,main
+2002-12-31,law,c-620-01,codigo-de-procedimiento-penal-2000,8,main
+2003-01-01,law,dec-3257-2002,estatuto-tributario,35,main
+2003-01-15,law,ley-795-2003,estatuto-organico-del-sistema-financiero sistema-financiero-y-asegurador-1999 endeudamiento-territorial,75,main
+2003-01-20,law,c-004-03,codigo-de-procedimiento-penal-2000,0,main
+2003-01-21,law,c-005-03,sistema-general-de-participaciones,1,main
+2003-01-28,law,c-033-03,codigo-de-procedimiento-penal-2000,0,main
+2003-01-28,law,c-036-03,codigo-disciplinario-unico,1,main
+2003-01-28,law,c-037-03,codigo-disciplinario-unico,1,main
+2003-01-28,law,c-040-03,codigo-de-procedimiento-penal-2000,0,main
+2003-01-28,law,c-043-03,regimen-municipal,1,main
+2003-01-29,start,ley-797-2003,reforma-pensional-2003,23,main
+2003-01-29,law,ley-797-2003,sistema-de-seguridad-social-integral ley-general-de-cultura,19,main
+2003-02-04,law,c-065-03,codigo-civil,1,main
+2003-02-11,law,c-096-03,codigo-de-procedimiento-penal-2000,0,main
+2003-02-11,law,c-097-03,sistema-general-de-participaciones,1,main
+2003-02-23,law,ley-782-2002,orden-publico,54,main
+2003-02-25,law,c-150-03,servicios-publicos-domiciliarios,1,main
+2003-03-04,law,c-183-03,distritos-de-barranquilla-cartagena-y-santa-marta,1,main
+2003-03-11,law,c-205-03,codigo-penal,1,main
+2003-03-18,law,c-230-03,codigo-civil,0,main
+2003-03-18,law,c-231-03,estatuto-tributario,0,main
+2003-03-25,law,c-252-03,codigo-disciplinario-unico,0,main
+2003-04-01,law,c-273-03,codigo-sustantivo-del-trabajo,1,main
+2003-04-09,law,ley-794-2003,codigo-de-procedimiento-civil-1970,80,main
+2003-04-25,law,dec-1000-2003,orden-publico,1,main
+2003-05-06,law,c-355-03,codigo-nacional-de-transito,1,main
+2003-05-13,law,c-385-03,codigo-nacional-de-transito,1,main
+2003-05-23,law,dec-1300-2003,reforma-agraria,3,main
+2003-05-23,law,dec-1292-2003,reforma-agraria,1,main
+2003-05-27,law,c-429-03,codigo-nacional-de-transito,0,main
+2003-05-27,law,c-430-03,codigo-civil,1,main
+2003-05-27,law,c-431-03,codigo-de-procedimiento-penal-2000,1,main
+2003-06-03,law,c-450-03,codigo-disciplinario-unico,0,main
+2003-06-03,law,c-451-03,codigo-de-procedimiento-penal-2000,0,main
+2003-06-09,law,ley-809-2003,codigo-contencioso-administrativo-1984,1,main
+2003-06-16,law,ley-810-2003,ley-de-desarrollo-territorial,5,main
+2003-06-27,law,ley-812-2003,estatuto-tributario servicios-publicos-domiciliarios ley-de-desarrollo-territorial reforma-agraria uso-eficiente-del-agua,8,main
+2003-07-01,law,c-523-03,codigo-nacional-de-policia-1970,0,main
+2003-07-01,law,c-524-03,ley-organica-del-plan-de-desarrollo,1,main
+2003-07-02,law,ley-811-2003,estatuto-organico-del-sistema-financiero desarrollo-agropecuario-y-pesquero,37,main
+2003-07-03,law,ley-813-2003,codigo-penal,3,main
+2003-07-03,law,c-529-03,codigo-nacional-de-transito,1,main
+2003-07-03,law,c-530-03,codigo-nacional-de-transito,3,main
+2003-07-03,law,c-532-03,codigo-nacional-de-transito,1,main
+2003-07-03,law,c-566-03,sistema-general-de-participaciones,0,main
+2003-07-03,law,al-1-2003,constitucion,15,main
+2003-07-09,start,ley-819-2003,responsabilidad-fiscal-y-transparencia,29,main
+2003-07-09,law,ley-819-2003,estatuto-organico-del-presupuesto,2,main
+2003-07-10,start,ley-820-2003,arrendamiento-de-vivienda-urbana,44,main
+2003-07-10,law,ley-820-2003,codigo-civil codigo-de-procedimiento-civil-1970,2,main
+2003-07-10,law,ley-821-2003,ley-617-2000,1,main
+2003-07-11,start,ley-823-2003,igualdad-de-oportunidades-para-las-mujeres,15,main
+2003-07-19,law,ley-828-2003,ley-789-2002,1,main
+2003-07-29,law,c-622-03,codigo-penal,1,main
+2003-08-05,law,c-652-03,codigo-penal,0,main
+2003-08-05,law,c-655-03,ley-789-2002,1,main
+2003-08-06,law,c-681-03,regimen-salarial-y-prestacional,1,main
+2003-08-12,law,c-690-03,estatuto-tributario,1,main
+2003-08-12,law,c-692-03,codigo-nacional-de-policia-1970,2,main
+2003-08-26,law,c-741-03,servicios-publicos-domiciliarios,0,main
+2003-09-09,law,c-776-03,estatuto-tributario,2,main
+2003-09-10,law,c-781-03,codigo-sustantivo-del-trabajo ley-789-2002,2,main
+2003-09-16,law,c-798-03,codigo-de-procedimiento-civil-1970,1,main
+2003-09-16,law,c-799-03,codigo-nacional-de-transito,1,main
+2003-09-16,law,c-800-03,ley-789-2002,1,main
+2003-09-16,law,c-801-03,ley-789-2002,2,main
+2003-09-23,law,c-835-03,reforma-pensional-2003,1,main
+2003-09-23,law,c-839-03,reforma-pensional-2003,1,main
+2003-09-30,law,c-873-03,codigo-de-procedimiento-penal-2000,1,main
+2003-10-07,law,c-893-03,codigo-disciplinario-unico,0,main
+2003-10-07,law,c-896-03,estatuto-tributario,1,main
+2003-10-14,start,ley-842-2003,ejercicio-de-la-ingenieria,79,main
+2003-10-15,law,c-936-03,estatuto-organico-del-sistema-financiero,0,main
+2003-10-21,law,c-964-03,mujer-cabeza-de-familia,0,main
+2003-10-21,law,c-968-03,codigo-procesal-del-trabajo-1948,0,main
+2003-11-05,law,c-1037-03,codigo-sustantivo-del-trabajo sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2003-11-11,law,c-1056-03,sistema-de-seguridad-social-integral reforma-pensional-2003,8,main
+2003-11-11,law,c-1063-03,codigo-de-recursos-naturales,2,main
+2003-11-13,law,c-1071-03,codigo-de-minas,1,main
+2003-11-19,start,ley-850-2003,veedurias-ciudadanas,25,main
+2003-11-19,law,c-1089-03,sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2003-11-19,law,c-1090-03,codigo-nacional-de-transito,1,main
+2003-11-19,law,c-1093-03,educacion-superior,0,main
+2003-11-19,law,c-1094-03,sistema-de-seguridad-social-integral reforma-pensional-2003,2,main
+2003-11-25,law,c-1114-03,estatuto-tributario,1,main
+2003-12-02,law,a-226-03,ejercicio-de-la-ingenieria,1,main
+2003-12-02,law,c-1150-03,estatuto-organico-del-sistema-financiero,1,main
+2003-12-02,law,c-1152-03,estatuto-tributario,2,main
+2003-12-19,law,al-2-2003,constitucion,4,main
+2003-12-29,law,ley-860-2003,sistema-de-seguridad-social-integral,2,main
+2003-12-29,law,ley-863-2003,estatuto-tributario sistema-general-de-participaciones codigo-de-regimen-municipal,69,main
+2003-12-30,law,ley-868-2003,reglamento-del-congreso,3,main
+2004-01-01,law,dec-3804-2003,estatuto-tributario,29,main
+2004-01-08,law,al-1-2004,constitucion,0,main
+2004-01-20,law,c-014-04,codigo-disciplinario-unico,0,main
+2004-01-20,law,c-015-04,ley-789-2002,0,main
+2004-01-27,law,c-038-04,ley-789-2002,1,main
+2004-01-27,law,c-040-04,sistema-general-de-participaciones,1,main
+2004-01-28,law,dec-206-2004,estatuto-organico-del-sistema-financiero,3,main
+2004-02-10,law,c-106-04,codigo-nacional-de-transito,0,main
+2004-02-17,law,c-123-04,codigo-de-procedimiento-penal-2000,0,main
+2004-02-17,law,c-124-04,reglamento-del-congreso,1,main
+2004-02-24,law,c-155-04,estatuto-organico-del-sistema-financiero,0,main
+2004-03-02,law,c-170-04,codigo-del-menor,1,main
+2004-03-02,law,c-173-04,sistema-de-seguridad-social-integral reforma-pensional-2003,2,main
+2004-03-16,law,c-249-04,estatuto-general-de-contratacion,0,main
+2004-03-16,law,c-250-04,sistema-general-de-riesgos-profesionales,1,main
+2004-03-30,law,c-305-04,estatuto-tributario,1,main
+2004-03-31,law,c-313-04,constitucion,1,main
+2004-04-27,law,c-370-04,estatuto-tributario,1,main
+2004-04-27,law,c-372-04,constitucion reglamento-del-congreso,2,main
+2004-04-27,law,c-375-04,reforma-pensional-2003,0,main
+2004-05-11,law,c-460-04,responsabilidad-fiscal-y-transparencia,1,main
+2004-06-01,law,c-558-04,codigo-de-procedimiento-penal-2000,0,main
+2004-06-03,law,ley-882-2004,codigo-penal,1,main
+2004-06-08,law,c-568-04,sistema-general-de-participaciones,3,main
+2004-06-08,law,c-569-04,acciones-populares-y-de-grupo,2,main
+2004-06-08,law,c-570-04,ejercicio-de-la-ingenieria,11,main
+2004-06-08,law,c-571-04,codigo-de-regimen-departamental,3,main
+2004-06-29,law,c-620-04,codigo-electoral,0,main
+2004-06-29,law,c-622-04,estatuto-tributario,1,main
+2004-07-07,law,ley-890-2004,codigo-penal,10,main
+2004-07-08,law,c-662-04,codigo-de-procedimiento-civil-1970,1,main
+2004-07-27,law,ley-902-2004,ley-de-desarrollo-territorial,2,main
+2004-07-27,law,ley-903-2004,codigo-nacional-de-transito,1,main
+2004-08-02,law,ley-905-2004,mipymes,23,main
+2004-08-03,law,c-720-04,ley-617-2000,0,main
+2004-08-03,law,c-723-04,sistema-general-de-participaciones,2,main
+2004-08-10,law,c-754-04,sistema-de-seguridad-social-integral,1,main
+2004-08-19,law,dec-2636-2004,codigo-penitenciario-y-carcelario,11,main
+2004-08-24,law,c-797-04,sistema-de-seguridad-social-integral reforma-pensional-2003,2,main
+2004-08-30,law,c-816-04,constitucion,4,main
+2004-09-01,start,ley-906-2004,codigo-de-procedimiento-penal,535,main
+2004-09-01,law,dec-2637-2004,ley-estatutaria-de-la-administracion-de-justicia,7,main
+2004-09-14,law,c-886-04,arrendamiento-de-vivienda-urbana,1,main
+2004-09-21,law,c-910-04,estatuto-tributario,0,main
+2004-09-23,start,ley-909-2004,empleo-publico-y-carrera-administrativa,60,main
+2004-09-29,law,c-934-04,codigo-sustantivo-del-trabajo,0,main
+2004-10-12,law,c-993-04,estatuto-tributario,1,main
+2004-10-12,law,c-998-04,codigo-de-procedimiento-penal-2000,1,main
+2004-10-20,law,c-1024-04,sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2004-10-21,law,c-1026-04,codigo-civil,1,main
+2004-11-24,law,c-1175-04,codigo-nacional-de-policia-1970,2,main
+2004-12-24,law,ley-920-2004,ley-789-2002,2,main
+2004-12-28,law,al-2-2004,constitucion,4,main
+2004-12-30,law,ley-926-2004,codigo-de-minas,1,main
+2004-12-31,law,ley-937-2004,codigo-de-procedimiento-penal,1,main
+2005-01-01,law,ley-890-2004,codigo-penal,294,main
+2005-01-01,law,dec-4344-2004,estatuto-tributario,37,main
+2005-01-25,law,c-035-05,ley-789-2002,1,main
+2005-01-25,law,c-036-05,codigo-de-minas,1,main
+2005-02-08,law,c-101-05,codigo-civil,1,main
+2005-02-22,law,c-148-05,codigo-penal,2,main
+2005-03-03,law,c-191-05,ejercicio-de-la-ingenieria,1,main
+2005-03-15,law,c-237-05,codigo-nacional-de-policia-1970,1,main
+2005-03-15,law,c-240-05,codigo-procesal-del-trabajo-1948,0,main
+2005-03-19,law,dec-775-2005,sistema-financiero-y-asegurador-1999,2,main
+2005-04-04,law,c-332-05,constitucion,1,main
+2005-04-14,law,c-401-05,codigo-sustantivo-del-trabajo,0,main
+2005-04-26,law,c-423-05,sistema-general-de-participaciones,1,main
+2005-04-26,law,c-424-05,derecho-de-autor-1993,0,main
+2005-04-26,law,c-425-05,prestaciones-riesgos-profesionales,1,main
+2005-04-28,law,ley-954-2005,codigo-contencioso-administrativo-1984,6,main
+2005-05-03,law,c-448-05,mipymes,1,main
+2005-05-10,law,c-474-05,codigo-nacional-de-transito,1,main
+2005-05-17,law,c-501-05,empleo-publico-y-carrera-administrativa,1,main
+2005-05-17,law,c-503-05,codigo-de-procedimiento-civil-1970,1,main
+2005-05-24,law,c-534-05,codigo-civil,1,main
+2005-05-24,law,c-538-05,distritos-de-barranquilla-cartagena-y-santa-marta,2,main
+2005-05-24,law,c-543-05,estatuto-tributario,1,main
+2005-06-08,law,c-590-05,codigo-de-procedimiento-penal,1,main
+2005-06-09,law,c-591-05,codigo-de-procedimiento-penal,2,main
+2005-06-09,law,c-593-05,codigo-nacional-de-policia-1970,1,main
+2005-06-30,law,c-672-05,ley-estatutaria-de-la-administracion-de-justicia,8,main
+2005-06-30,law,c-673-05,codigo-de-procedimiento-penal,0,main
+2005-06-30,law,c-675-05,ley-general-de-educacion,3,main
+2005-07-06,law,c-706-05,estatuto-tributario,1,main
+2005-07-08,start,ley-964-2005,mercado-de-valores,87,main
+2005-07-08,start,ley-962-2005,racionalizacion-de-tramites-2005,87,main
+2005-07-08,law,ley-962-2005,codigo-sustantivo-del-trabajo sistema-de-seguridad-social-integral estatuto-tributario ley-de-desarrollo-territorial ley-general-de-educacion codigo-de-regimen-municipal educacion-tecnica-y-tecnologica codigo-de-regimen-departamental desplazamiento-forzado,16,main
+2005-07-08,law,ley-964-2005,sistema-financiero-y-asegurador-1999,3,main
+2005-07-12,law,c-730-05,codigo-de-procedimiento-penal,1,main
+2005-07-12,law,c-731-05,arrendamiento-de-vivienda-urbana,1,main
+2005-07-14,law,c-733-05,empleo-publico-y-carrera-administrativa,1,main
+2005-07-15,start,ley-972-2005,enfermedades-ruinosas-o-catastroficas,7,main
+2005-07-25,start,ley-975-2005,justicia-y-paz,73,main
+2005-07-25,law,ley-975-2005,codigo-penal,1,main
+2005-07-25,law,al-1-2005,constitucion,1,main
+2005-07-26,law,c-777-05,codigo-de-procedimiento-penal,1,main
+2005-07-28,law,c-782-05,codigo-de-procedimiento-penal,0,main
+2005-08-10,law,c-822-05,codigo-de-procedimiento-penal,2,main
+2005-08-17,law,c-850-05,codigo-nacional-de-policia-1970,1,main
+2005-08-17,law,c-853-05,ley-de-transporte,0,main
+2005-08-23,law,c-875-05,estatuto-tributario,0,main
+2005-08-29,start,ley-985-2005,trata-de-personas,24,main
+2005-08-29,law,ley-985-2005,codigo-penal codigo-de-procedimiento-penal,2,main
+2005-08-29,law,ley-986-2005,codigo-de-procedimiento-civil-1970,1,main
+2005-08-30,law,c-897-05,codigo-penal,1,main
+2005-09-06,law,dec-3075-2005,racionalizacion-de-tramites-2005,1,main
+2005-09-06,law,c-928-05,orden-publico,0,main
+2005-09-26,law,c-979-05,codigo-de-procedimiento-penal,1,main
+2005-10-03,law,c-1004-05,codigo-sustantivo-del-trabajo,1,main
+2005-11-10,law,ley-995-2005,codigo-sustantivo-del-trabajo,1,main
+2005-11-11,law,c-1152-05,sistema-general-de-riesgos-profesionales,1,main
+2005-11-15,law,c-1154-05,codigo-de-procedimiento-penal,0,main
+2005-11-17,law,c-1171-05,codigo-electoral,1,main
+2005-11-17,law,c-1177-05,codigo-de-procedimiento-penal,0,main
+2005-11-22,law,c-1188-05,codigo-sustantivo-del-trabajo,0,main
+2005-11-22,law,c-1189-05,empleo-publico-y-carrera-administrativa,0,main
+2005-11-22,law,c-1194-05,codigo-de-procedimiento-penal,0,main
+2005-11-24,start,ley-996-2005,ley-de-garantias-electorales,43,main
+2005-11-29,law,c-1230-05,empleo-publico-y-carrera-administrativa,0,main
+2005-11-29,law,c-1234-05,codigo-sustantivo-del-trabajo,0,main
+2005-11-29,law,c-1235-05,codigo-civil,1,main
+2005-12-05,law,c-1260-05,codigo-de-procedimiento-penal,1,main
+2005-12-30,law,ley-1002-2005,estatuto-organico-del-sistema-financiero,1,main
+2005-12-31,law,ley-1004-2005,estatuto-tributario distritos-de-barranquilla-cartagena-y-santa-marta,6,main
+2006-01-01,law,dec-4715-2005,estatuto-tributario,36,main
+2006-01-08,law,ley-964-2005,estatuto-tributario estatuto-organico-del-sistema-financiero financiacion-de-vivienda,12,main
+2006-01-23,start,ley-1010-2006,acoso-laboral,19,main
+2006-01-23,law,ley-1012-2006,educacion-superior,2,main
+2006-01-23,law,ley-1013-2006,ley-general-de-educacion,1,main
+2006-01-27,start,ley-1014-2006,cultura-del-emprendimiento,25,main
+2006-01-27,law,dec-231-2006,acoso-laboral,1,main
+2006-02-08,law,c-073-06,empleo-publico-y-carrera-administrativa,0,main
+2006-02-08,law,c-075-06,servicios-publicos-domiciliarios,0,main
+2006-02-22,law,c-111-06,sistema-de-seguridad-social-integral,1,main
+2006-02-22,law,c-117-06,codigo-nacional-de-policia-1970,1,main
+2006-02-22,law,c-120-06,racionalizacion-de-tramites-2005,1,main
+2006-03-12,law,al-2-2005,constitucion,1,main
+2006-03-15,law,c-190-06,codigo-de-procedimiento-penal,0,main
+2006-04-05,law,c-275-06,codigo-de-procedimiento-civil-1970,0,main
+2006-05-07,start,ley-1015-2006,regimen-disciplinario-de-la-policia,61,main
+2006-05-10,law,c-355-06,codigo-penal,2,main
+2006-05-18,law,c-370-06,codigo-penal justicia-y-paz,13,main
+2006-05-31,law,c-423-06,codigo-de-procedimiento-penal,0,main
+2006-05-31,law,c-425-06,codigo-de-procedimiento-penal,0,main
+2006-06-07,law,c-454-06,codigo-de-procedimiento-penal,0,main
+2006-06-07,law,c-456-06,codigo-de-procedimiento-penal,1,main
+2006-06-13,law,ley-1028-2006,codigo-penal,6,main
+2006-06-14,law,ley-1029-2006,ley-general-de-educacion,1,main
+2006-06-14,law,c-473-06,ley-general-de-educacion,0,main
+2006-06-22,law,ley-1031-2006,regimen-municipal estatuto-organico-de-bogota,2,main
+2006-06-22,law,ley-1032-2006,codigo-penal,4,main
+2006-07-19,law,ley-974-2005,reglamento-del-congreso,12,main
+2006-07-19,law,ley-1033-2006,empleo-publico-y-carrera-administrativa,3,main
+2006-07-25,law,c-575-06,justicia-y-paz,0,main
+2006-07-26,start,ley-1064-2006,educacion-para-el-trabajo,9,main
+2006-07-26,law,ley-1060-2006,codigo-civil,14,main
+2006-07-26,law,ley-1064-2006,estatuto-tributario,1,main
+2006-07-29,start,ley-1066-2006,cartera-publica,21,main
+2006-07-29,law,ley-1066-2006,estatuto-tributario,9,main
+2006-08-09,law,ley-1085-2006,reglamento-del-congreso,1,main
+2006-08-23,law,c-716-06,codigo-de-comercio,1,main
+2006-08-30,law,c-738-06,acoso-laboral,1,main
+2006-09-06,start,ley-1090-2006,ejercicio-de-la-psicologia,94,main
+2006-09-18,law,ley-1093-2006,empleo-publico-y-carrera-administrativa,1,main
+2006-09-20,law,c-789-06,codigo-de-procedimiento-penal,1,main
+2006-09-20,law,c-792-06,codigo-procesal-del-trabajo-1948,0,main
+2006-09-27,law,c-804-06,codigo-civil,1,main
+2006-10-04,law,c-819-06,regimen-disciplinario-de-la-policia,2,main
+2006-10-04,law,c-820-06,codigo-civil,1,main
+2006-10-04,law,c-823-06,codigo-sustantivo-del-trabajo,1,main
+2006-10-18,law,c-858-06,sistema-general-de-riesgos-profesionales,3,main
+2006-10-24,law,ley-1094-2006,estatuto-organico-del-sistema-financiero mercado-de-valores,2,main
+2006-11-01,law,c-898-06,acoso-laboral,1,main
+2006-11-02,start,ley-1095-2006,habeas-corpus,10,main
+2006-11-08,start,ley-1098-2006,codigo-de-la-infancia-y-la-adolescencia,217,main
+2006-11-15,law,dec-4011-2006,codigo-de-la-infancia-y-la-adolescencia,4,main
+2006-11-23,law,ley-1101-2006,ley-general-de-turismo,8,main
+2006-11-29,law,c-990-06,codigo-de-comercio,1,main
+2006-12-05,law,c-1033-06,codigo-de-procedimiento-penal,1,main
+2006-12-27,start,ley-1116-2006,regimen-de-insolvencia,126,main
+2006-12-27,law,ley-1111-2006,codigo-penal sistema-de-seguridad-social-integral estatuto-tributario ley-789-2002,117,main
+2006-12-27,law,ley-1114-2006,ley-789-2002 financiacion-de-vivienda,2,main
+2006-12-27,law,ley-1117-2006,servicios-publicos-domiciliarios,1,main
+2006-12-30,start,ley-1121-2006,financiacion-del-terrorismo,28,main
+2006-12-30,law,ley-1121-2006,codigo-penal codigo-de-procedimiento-penal estatuto-organico-del-sistema-financiero codigo-de-procedimiento-penal-2000 moralidad-en-la-administracion-publica unidad-de-informacion-y-analisis-financiero,15,main
+2007-01-09,start,ley-1122-2007,reforma-del-sistema-de-salud-2007,47,main
+2007-01-09,law,ley-1122-2007,sistema-de-seguridad-social-integral,4,main
+2007-02-07,law,res-cne-53-2007,estatuto-basico-de-los-partidos,1,main
+2007-02-14,law,c-094-07,codigo-de-procedimiento-civil-1970,0,main
+2007-02-14,law,c-095-07,financiacion-del-terrorismo,1,main
+2007-02-14,law,ley-1127-2007,reglamento-del-congreso,1,main
+2007-02-22,law,ley-1106-2006,orden-publico,6,main
+2007-02-27,law,ley-1107-2006,codigo-contencioso-administrativo-1984,1,main
+2007-03-02,law,dec-578-2007,codigo-de-la-infancia-y-la-adolescencia,4,main
+2007-03-07,law,c-154-07,codigo-de-procedimiento-penal,1,main
+2007-03-14,law,c-175-07,empleo-publico-y-carrera-administrativa,0,main
+2007-03-14,law,c-176-07,codigo-nacional-de-policia-1970,1,main
+2007-03-14,law,c-179-07,codigo-nacional-de-policia-1970,1,main
+2007-03-21,law,c-209-07,codigo-de-procedimiento-penal,1,main
+2007-03-21,law,c-210-07,codigo-de-procedimiento-penal,1,main
+2007-04-12,law,dec-379-2007,estatuto-tributario,1,main
+2007-04-18,law,c-278-07,desplazamiento-forzado,2,main
+2007-04-25,law,c-291-07,codigo-penal,3,main
+2007-05-03,law,c-310-07,codigo-sustantivo-del-trabajo,1,main
+2007-05-03,law,c-311-07,codigo-sustantivo-del-trabajo,2,main
+2007-05-04,law,ley-1134-2007,codigo-electoral,1,main
+2007-05-08,law,ley-1098-2006,codigo-civil codigo-penal codigo-sustantivo-del-trabajo codigo-del-menor,282,main
+2007-05-09,law,c-336-07,codigo-de-procedimiento-penal,0,main
+2007-05-22,start,ley-1123-2007,codigo-disciplinario-del-abogado,113,main
+2007-05-23,law,c-392-07,cultura-del-emprendimiento,0,main
+2007-05-23,law,c-393-07,ley-789-2002,0,main
+2007-06-22,law,ley-1136-2007,estatuto-organico-de-bogota,1,main
+2007-06-27,law,ley-1116-2006,codigo-civil estatuto-tributario,2,main
+2007-07-06,law,al-2-2007,constitucion,2,main
+2007-07-10,start,ley-1145-2007,sistema-nacional-de-discapacidad,20,main
+2007-07-10,start,ley-1146-2007,violencia-sexual-contra-ninos,20,main
+2007-07-10,law,ley-1145-2007,integracion-social-de-personas-con-limitacion,1,main
+2007-07-10,law,ley-1147-2007,reglamento-del-congreso,12,main
+2007-07-10,law,ley-1148-2007,regimen-municipal ley-617-2000,2,main
+2007-07-11,law,c-516-07,codigo-de-procedimiento-penal,5,main
+2007-07-11,law,c-519-07,codigo-de-procedimiento-penal,1,main
+2007-07-11,law,c-521-07,sistema-de-seguridad-social-integral,1,main
+2007-07-13,law,ley-1149-2007,codigo-procesal-del-trabajo-1948,18,main
+2007-07-16,start,ley-1150-2007,ley-1150-2007,34,main
+2007-07-18,law,c-543-07,codigo-sustantivo-del-trabajo,0,main
+2007-07-18,law,c-544-07,codigo-civil,1,main
+2007-07-25,law,ley-1151-2007,sistema-de-seguridad-social-integral servicios-publicos-domiciliarios ley-general-ambiental reforma-agraria reforma-del-sistema-de-salud-2007 ley-electrica mipymes desarrollo-agropecuario-y-pesquero justicia-y-paz uso-eficiente-del-agua,19,main
+2007-07-25,law,c-554-07,ley-general-ambiental,1,main
+2007-07-25,law,ley-1152-2007,desarrollo-agropecuario-y-pesquero,7,main
+2007-07-28,law,ley-1142-2007,codigo-penal codigo-de-procedimiento-penal codigo-de-procedimiento-penal-2000,54,main
+2007-08-12,law,dec-2175-2007,estatuto-organico-del-sistema-financiero,10,main
+2007-08-14,law,dec-2190-2007,regimen-de-insolvencia,2,main
+2007-08-14,law,c-622-07,acciones-populares-y-de-grupo,0,main
+2007-08-22,law,c-654-07,educacion-superior,0,main
+2007-09-05,law,c-691-07,organizacion-de-la-administracion-publica,0,main
+2007-09-11,law,c-720-07,codigo-nacional-de-policia-1970,1,main
+2007-09-26,law,c-782-07,educacion-tecnica-y-tecnologica,1,main
+2007-10-03,law,c-810-07,integracion-social-de-personas-con-limitacion,0,main
+2007-10-03,law,c-811-07,sistema-de-seguridad-social-integral,0,main
+2007-10-04,start,ley-1164-2007,talento-humano-en-salud,39,main
+2007-10-10,law,c-832-07,ejercicio-de-la-psicologia,1,main
+2007-10-24,law,c-884-07,codigo-disciplinario-del-abogado,1,main
+2007-10-28,law,al-3-2007,constitucion,1,main
+2007-10-31,law,c-909-07,codigo-de-comercio,0,main
+2007-11-07,law,c-921-07,sistema-general-de-participaciones,0,main
+2007-11-08,law,c-932-07,estatuto-general-de-contratacion,0,main
+2007-11-14,law,c-950-07,reforma-del-sistema-de-salud-2007,1,main
+2007-11-14,law,c-953-07,reforma-del-sistema-de-salud-2007,1,main
+2007-11-14,law,c-955-07,reforma-del-sistema-de-salud-2007,0,main
+2007-11-14,law,c-957-07,reforma-del-sistema-de-salud-2007,1,main
+2007-11-14,law,c-960-07,acoso-laboral,0,main
+2007-11-21,law,c-1001-07,television,0,main
+2007-11-21,law,c-1003-07,codigo-civil,1,main
+2007-11-21,law,c-1005-07,codigo-electoral,0,main
+2007-12-04,law,c-1041-07,reforma-del-sistema-de-salud-2007,0,main
+2007-12-04,law,c-1042-07,reforma-del-sistema-de-salud-2007,0,main
+2007-12-27,law,ley-1173-2007,regimen-de-insolvencia,1,main
+2007-12-31,law,ley-1181-2007,codigo-penal,1,main
+2008-01-01,start,ley-1176-2007,sistema-general-de-participaciones-2007,36,main
+2008-01-01,law,al-1-2007,constitucion,5,main
+2008-01-01,law,al-4-2007,constitucion,2,main
+2008-01-01,law,ley-1176-2007,sistema-general-de-participaciones,9,main
+2008-01-16,law,ley-1150-2007,estatuto-general-de-contratacion ley-789-2002,21,main
+2008-01-23,law,c-035-08,reforma-del-sistema-de-salud-2007,1,main
+2008-01-30,law,c-061-08,codigo-de-la-infancia-y-la-adolescencia,1,main
+2008-02-13,law,c-116-08,acciones-populares-y-de-grupo,0,main
+2008-02-13,law,c-117-08,reforma-del-sistema-de-salud-2007,0,main
+2008-02-14,law,dec-4817-2007,estatuto-tributario,1,main
+2008-02-20,law,c-162-08,educacion-tecnica-y-tecnologica,0,main
+2008-02-20,law,c-163-08,codigo-de-procedimiento-penal,0,main
+2008-02-25,law,res-cne-242-2008,estatuto-basico-de-los-partidos,1,main
+2008-02-27,law,c-185-08,codigo-de-procedimiento-penal,1,main
+2008-02-27,law,c-186-08,codigo-de-procedimiento-penal,0,main
+2008-03-05,law,c-225-08,reglamento-del-congreso,1,main
+2008-03-05,law,c-228-08,codigo-de-la-infancia-y-la-adolescencia,1,main
+2008-03-06,law,c-230a-08,codigo-electoral,12,main
+2008-03-11,law,c-256-08,codigo-de-la-infancia-y-la-adolescencia,0,main
+2008-03-11,law,c-259-08,ley-1150-2007,1,main
+2008-03-12,law,ley-1185-2008,ley-general-de-cultura codigo-nacional-de-policia-1970,25,main
+2008-04-02,law,c-290-08,codigo-disciplinario-del-abogado,1,main
+2008-04-02,law,c-293-08,codigo-disciplinario-unico,0,main
+2008-04-09,law,c-318-08,codigo-de-procedimiento-penal,0,main
+2008-04-16,law,c-336-08,sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2008-04-25,start,ley-1188-2008,registro-calificado,7,main
+2008-04-30,law,c-425-08,codigo-de-procedimiento-penal,1,main
+2008-05-09,law,ley-1194-2008,codigo-de-procedimiento-civil-1970,2,main
+2008-05-14,law,c-462-08,ley-general-ambiental,1,main
+2008-05-14,law,c-463-08,reforma-del-sistema-de-salud-2007,0,main
+2008-05-14,law,c-465-08,codigo-sustantivo-del-trabajo,1,main
+2008-05-14,law,c-466-08,codigo-sustantivo-del-trabajo,1,main
+2008-05-28,law,c-536-08,codigo-de-procedimiento-penal,1,main
+2008-05-28,law,c-545-08,codigo-de-procedimiento-penal,0,main
+2008-06-23,law,ley-1200-2008,codigo-penal,1,main
+2008-07-02,law,c-666-08,codigo-disciplinario-unico,0,main
+2008-07-03,law,ley-1202-2008,reglamento-del-congreso,1,main
+2008-07-09,law,c-691-08,codigo-sustantivo-del-trabajo,2,main
+2008-07-09,law,c-693-08,estatuto-general-de-contratacion,0,main
+2008-07-09,law,c-695-08,codigo-sustantivo-del-trabajo,0,main
+2008-07-14,law,ley-1210-2008,codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,5,main
+2008-07-15,law,c-713-08,ley-estatutaria-de-la-administracion-de-justicia,0,main
+2008-07-16,start,ley-1228-2008,fajas-de-retiro-de-carreteras,12,main
+2008-07-16,start,ley-1221-2008,teletrabajo,9,main
+2008-07-16,law,ley-1215-2008,servicios-publicos-domiciliarios,1,main
+2008-07-16,law,ley-1220-2008,codigo-penal,7,main
+2008-07-16,law,ley-1229-2008,construcciones-sismo-resistentes,3,main
+2008-07-17,law,ley-1232-2008,mujer-cabeza-de-familia,13,main
+2008-07-23,law,dec-2711-2008,sistema-general-de-participaciones-2007,1,main
+2008-07-23,law,ley-1236-2008,codigo-penal,13,main
+2008-07-25,law,ley-1239-2008,codigo-nacional-de-transito,3,main
+2008-07-30,law,c-756-08,talento-humano-en-salud,2,main
+2008-08-05,start,ley-1242-2008,codigo-nacional-de-navegacion-fluvial,89,main
+2008-08-20,law,c-798-08,codigo-penal,1,main
+2008-09-03,law,c-858-08,codigo-sustantivo-del-trabajo,0,main
+2008-09-03,law,c-862-08,ley-1150-2007,1,main
+2008-09-17,law,c-903-08,ley-617-2000,1,main
+2008-10-09,law,dec-3930-2008,codigo-de-procedimiento-civil-1970,3,main
+2008-10-17,start,ley-1231-2008,factura-como-titulo-valor,10,main
+2008-10-17,law,ley-1231-2008,codigo-de-comercio,6,main
+2008-10-22,law,c-1035-08,sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2008-10-29,law,c-1063-08,talento-humano-en-salud,2,main
+2008-10-29,law,c-1065-08,sistema-de-seguridad-social-integral,0,main
+2008-11-17,law,dec-4335-2008,codigo-disciplinario-unico,1,main
+2008-11-17,law,dec-4336-2008,codigo-penal,2,main
+2008-11-25,law,dec-4450-2008,codigo-penal,1,main
+2008-11-26,law,c-1155-08,codigo-sustantivo-del-trabajo sistema-general-de-riesgos-profesionales,3,main
+2008-11-27,start,ley-1251-2008,adultos-mayores,36,main
+2008-11-27,start,ley-1252-2008,residuos-peligrosos,19,main
+2008-11-27,law,ley-1250-2008,sistema-de-seguridad-social-integral,2,main
+2008-12-03,law,c-1184-08,codigo-penal,0,main
+2008-12-03,law,c-1186-08,codigo-de-procedimiento-civil-1970,0,main
+2008-12-04,start,ley-1257-2008,violencia-contra-las-mujeres,40,main
+2008-12-04,law,c-1198-08,codigo-de-procedimiento-penal,3,main
+2008-12-04,law,ley-1257-2008,codigo-penal codigo-de-procedimiento-penal violencia-intrafamiliar,12,main
+2008-12-05,start,ley-1258-2008,sociedad-por-acciones-simplificada,47,main
+2008-12-05,law,c-1199-08,justicia-y-paz,0,main
+2008-12-26,law,ley-1263-2008,ley-general-ambiental,1,main
+2008-12-26,law,al-1-2008,constitucion,1,main
+2008-12-31,start,ley-1266-2008,habeas-data,23,main
+2008-12-31,law,ley-1269-2008,ley-general-de-educacion,1,main
+2009-01-05,law,ley-1273-2009,codigo-penal codigo-de-procedimiento-penal,14,main
+2009-01-05,law,ley-1280-2009,codigo-sustantivo-del-trabajo,1,main
+2009-01-05,law,ley-1281-2009,codigo-nacional-de-transito,1,main
+2009-01-08,law,dec-21-2009,codigo-de-procedimiento-civil-1970,3,main
+2009-01-22,law,ley-1285-2009,ley-estatutaria-de-la-administracion-de-justicia codigo-contencioso-administrativo-1984,27,main
+2009-01-23,start,ley-1286-2009,ciencia-tecnologia-e-innovacion,36,main
+2009-01-25,law,dec-4449-2008,codigo-penal,2,main
+2009-01-27,law,c-025-09,codigo-de-procedimiento-penal,1,main
+2009-01-27,law,res-cne-5-2009,estatuto-basico-de-los-partidos,1,main
+2009-01-28,law,c-029-09,codigo-civil codigo-penal codigo-de-procedimiento-penal sistema-de-seguridad-social-integral estatuto-general-de-contratacion estatuto-organico-del-sistema-financiero codigo-disciplinario-unico reglamento-del-congreso ley-617-2000 violencia-contra-las-mujeres violencia-intrafamiliar justicia-y-paz moralidad-en-la-administracion-publica desplazamiento-forzado,0,main
+2009-01-28,law,c-033-09,constitucion,1,main
+2009-02-24,law,c-131-09,codigo-de-procedimiento-penal,0,main
+2009-02-25,law,c-133-09,sistema-financiero-y-asegurador-1999,1,main
+2009-02-25,law,c-136-09,codigo-disciplinario-unico,1,main
+2009-03-03,start,ley-1287-2009,accesibilidad,10,main
+2009-03-05,law,ley-1288-2009,codigo-penal,7,main
+2009-03-10,law,dec-763-2009,ley-general-de-cultura,1,main
+2009-03-18,law,c-175-09,desarrollo-agropecuario-y-pesquero,7,main
+2009-03-30,law,c-224-09,codigo-penal,1,main
+2009-03-30,law,c-225-09,codigo-penal,2,main
+2009-03-30,law,c-226-09,codigo-penal,1,main
+2009-04-01,law,c-241-09,acciones-populares-y-de-grupo,1,main
+2009-04-03,law,ley-1294-2009,sistema-general-de-participaciones sistema-general-de-participaciones-2007,2,main
+2009-04-29,law,ley-1296-2009,ley-617-2000,1,main
+2009-05-01,law,ley-1297-2009,ley-general-de-educacion,1,main
+2009-05-05,law,c-313-09,ley-617-2000,1,main
+2009-05-13,law,c-325-09,ley-617-2000,1,main
+2009-05-20,law,c-349-09,codigo-sustantivo-del-trabajo,1,main
+2009-05-20,law,c-350-09,codigo-disciplinario-unico,1,main
+2009-06-05,start,ley-1306-2009,personas-con-discapacidad-mental,121,main
+2009-06-05,law,ley-1306-2009,codigo-civil codigo-de-procedimiento-civil-1970,205,main
+2009-06-17,law,c-409-09,codigo-de-procedimiento-penal,1,main
+2009-06-26,law,c-417-09,codigo-penal,1,main
+2009-06-26,law,ley-1309-2009,codigo-penal,6,main
+2009-06-26,law,ley-1310-2009,codigo-nacional-de-transito,1,main
+2009-07-01,law,c-428-09,sistema-de-seguridad-social-integral,1,main
+2009-07-01,law,c-430-09,sistema-de-seguridad-social-integral,1,main
+2009-07-08,law,dec-2566-2009,codigo-sustantivo-del-trabajo,1,main
+2009-07-09,law,ley-1311-2009,codigo-penal,2,main
+2009-07-09,law,ley-1312-2009,codigo-de-procedimiento-penal,5,main
+2009-07-13,start,ley-1314-2009,contabilidad-e-informacion-financiera,17,main
+2009-07-13,start,ley-1324-2009,evaluacion-de-la-calidad-de-la-educacion,15,main
+2009-07-13,law,ley-1316-2009,integracion-social-de-personas-con-limitacion,1,main
+2009-07-13,law,ley-1318-2009,reglamento-del-congreso,3,main
+2009-07-14,law,al-1-2009,constitucion,14,main
+2009-07-15,start,ley-1328-2009,reforma-financiera-2009,104,main
+2009-07-15,law,c-468-09,codigo-penal,1,main
+2009-07-15,law,ley-1326-2009,codigo-penal,1,main
+2009-07-15,law,ley-1328-2009,codigo-de-comercio sistema-de-seguridad-social-integral estatuto-organico-del-sistema-financiero financiacion-de-vivienda mercado-de-valores sistema-financiero-y-asegurador-1999 banco-de-la-republica,50,main
+2009-07-17,law,ley-1329-2009,codigo-penal,3,main
+2009-07-21,start,ley-1335-2009,prevencion-del-consumo-de-tabaco,37,main
+2009-07-21,start,ley-1333-2009,procedimiento-sancionatorio-ambiental,67,main
+2009-07-21,law,ley-1333-2009,ley-general-ambiental,5,main
+2009-07-21,law,ley-1336-2009,codigo-penal,2,main
+2009-07-24,start,ley-1340-2009,proteccion-de-la-competencia,35,main
+2009-07-24,law,ley-1340-2009,superintendencia-de-industria-y-comercio-1992,4,main
+2009-07-30,start,ley-1341-2009,tecnologias-de-la-informacion-y-las-comunicaciones,74,main
+2009-08-04,law,c-520-09,codigo-contencioso-administrativo-1984,1,main
+2009-08-04,law,c-521-09,codigo-penal,0,main
+2009-08-26,law,c-575-09,codigo-penal,1,main
+2009-08-27,law,c-588-09,constitucion,1,main
+2009-09-30,law,c-684-09,codigo-de-la-infancia-y-la-adolescencia,1,main
+2009-10-14,start,ley-1355-2009,obesidad,22,main
+2009-10-20,law,c-748-09,estatuto-tributario,0,main
+2009-10-23,law,ley-1356-2009,codigo-penal codigo-nacional-de-policia-1970,14,main
+2009-11-11,law,c-806-09,codigo-de-procedimiento-penal,0,main
+2009-11-11,law,c-807-09,codigo-de-procedimiento-civil-1970,0,main
+2009-11-12,law,ley-1357-2009,codigo-penal,4,main
+2009-11-15,law,dec-3523-2009,superintendencia-de-industria-y-comercio-1992,46,main
+2009-11-25,law,c-853-09,codigo-penal financiacion-del-terrorismo,2,main
+2009-12-03,start,ley-1361-2009,proteccion-integral-a-la-familia,14,main
+2009-12-16,law,c-942-09,talento-humano-en-salud,0,main
+2009-12-21,law,ley-1364-2009,estatuto-organico-del-sistema-financiero,1,main
+2009-12-21,law,al-2-2009,constitucion,1,main
+2009-12-29,law,ley-1368-2009,regimen-municipal,2,main
+2009-12-30,start,ley-1369-2009,servicios-postales,54,main
+2009-12-30,law,ley-1369-2009,estatuto-general-de-contratacion,1,main
+2009-12-30,law,ley-1370-2009,estatuto-tributario,10,main
+2009-12-31,law,ley-1098-2006,codigo-del-menor,57,main
+2010-01-15,law,ley-1379-2010,estatuto-tributario ley-general-de-cultura,2,main
+2010-01-18,law,dec-74-2010,estatuto-organico-del-sistema-financiero,3,main
+2010-01-21,law,dec-126-2010,codigo-penal codigo-disciplinario-unico reforma-del-sistema-de-salud-2007,11,main
+2010-01-21,law,dec-127-2010,estatuto-tributario,1,main
+2010-01-21,law,dec-129-2010,estatuto-tributario,3,main
+2010-01-21,law,dec-130-2010,codigo-penal,1,main
+2010-01-21,law,dec-131-2010,sistema-de-seguridad-social-integral reforma-del-sistema-de-salud-2007 talento-humano-en-salud,5,main
+2010-01-25,law,ley-1380-2010,regimen-de-insolvencia codigo-de-procedimiento-civil-1970,2,main
+2010-01-29,law,res-cne-33-2010,estatuto-basico-de-los-partidos,1,main
+2010-01-30,law,ley-1341-2009,estatuto-general-de-contratacion servicios-publicos-domiciliarios,4,main
+2010-02-01,law,c-040-10,constitucion,1,main
+2010-02-03,law,c-055-10,codigo-de-la-infancia-y-la-adolescencia,0,main
+2010-02-04,law,c-063-10,reforma-del-sistema-de-salud-2007,0,main
+2010-02-09,law,ley-1382-2010,codigo-de-minas,35,main
+2010-02-10,law,c-070-10,codigo-procesal-del-trabajo-1948,0,main
+2010-03-03,law,c-145-10,codigo-civil,1,main
+2010-03-14,law,al-3-2005,constitucion,1,main
+2010-03-16,law,ley-1383-2010,codigo-nacional-de-transito,24,main
+2010-03-17,law,c-181-10,reforma-del-sistema-de-salud-2007,0,main
+2010-04-16,law,c-252-10,sistema-de-seguridad-social-integral estatuto-tributario estatuto-organico-del-sistema-financiero reforma-del-sistema-de-salud-2007 talento-humano-en-salud,9,main
+2010-04-16,law,c-253-10,estatuto-tributario,1,main
+2010-04-19,start,ley-1384-2010,atencion-integral-del-cancer,24,main
+2010-04-21,law,c-298-10,estatuto-organico-del-sistema-financiero,3,main
+2010-04-28,law,c-302-10,codigo-penal sistema-de-seguridad-social-integral codigo-disciplinario-unico reforma-del-sistema-de-salud-2007,12,main
+2010-05-12,law,c-332-10,codigo-penal,1,main
+2010-05-12,law,c-333-10,reforma-financiera-2009,1,main
+2010-05-12,law,c-334-10,codigo-de-procedimiento-penal,1,main
+2010-05-19,law,c-376-10,ley-general-de-educacion,0,main
+2010-05-19,law,c-378-10,accion-de-tutela,1,main
+2010-05-26,law,c-402-10,reforma-agraria,1,main
+2010-05-26,law,c-403-10,tecnologias-de-la-informacion-y-las-comunicaciones,2,main
+2010-06-30,law,c-537-10,proteccion-de-la-competencia,0,main
+2010-07-02,start,ley-1392-2010,enfermedades-huerfanas,17,main
+2010-07-12,start,ley-1393-2010,rentas-para-la-salud,42,main
+2010-07-12,law,ley-1393-2010,codigo-penal estatuto-tributario,5,main
+2010-07-12,law,ley-1395-2010,codigo-de-procedimiento-penal estatuto-organico-del-sistema-financiero codigo-procesal-del-trabajo-1948 codigo-de-procedimiento-penal-2000 codigo-contencioso-administrativo-1984 codigo-de-procedimiento-civil-1970,99,main
+2010-07-14,law,ley-1397-2010,codigo-nacional-de-transito,4,main
+2010-07-15,law,dec-2555-2010,estatuto-organico-del-sistema-financiero,1,main
+2010-07-21,law,dec-128-2010,sistema-de-seguridad-social-integral,1,main
+2010-08-17,start,ley-1407-2010,codigo-penal-militar,627,main
+2010-08-24,law,c-648-10,codigo-de-procedimiento-penal,1,main
+2010-09-06,law,c-702-10,constitucion,1,main
+2010-10-20,law,c-828-10,codigo-penal codigo-de-procedimiento-penal codigo-de-procedimiento-penal-2000,0,main
+2010-10-20,law,c-831-10,estatuto-tributario,0,main
+2010-10-28,law,c-844-10,codigo-de-comercio,0,main
+2010-11-11,start,ley-1413-2010,economia-del-cuidado,8,main
+2010-11-11,start,ley-1414-2010,epilepsia,28,main
+2010-11-11,law,ley-1414-2010,reforma-del-sistema-de-salud-2007,1,main
+2010-11-16,law,c-913-10,codigo-penal,7,main
+2010-11-16,law,c-914-10,orden-publico,0,main
+2010-11-23,law,c-936-10,codigo-de-procedimiento-penal,0,main
+2010-11-24,law,c-940-10,accion-de-tutela,0,main
+2010-11-24,law,ley-1416-2010,ley-617-2000,1,main
+2010-12-01,law,c-979-10,sistema-general-de-participaciones,1,main
+2010-12-01,law,c-981-10,codigo-nacional-de-transito,0,main
+2010-12-02,law,c-985-10,codigo-civil,1,main
+2010-12-13,start,ley-1419-2010,telesalud,13,main
+2010-12-17,law,dec-4673-2010,procedimiento-sancionatorio-ambiental,1,main
+2010-12-21,law,dec-4702-2010,codigo-disciplinario-unico,1,main
+2010-12-29,start,ley-1429-2010,ley-de-formalizacion-y-generacion-de-empleo,66,main
+2010-12-29,law,dec-4827-2010,ley-general-de-educacion,1,main
+2010-12-29,law,dec-4829-2010,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2010-12-29,law,ley-1425-2010,acciones-populares-y-de-grupo,3,main
+2010-12-29,law,ley-1426-2010,codigo-penal,4,main
+2010-12-29,law,ley-1429-2010,codigo-sustantivo-del-trabajo estatuto-tributario regimen-de-insolvencia ley-general-de-turismo sistema-general-de-riesgos-profesionales,34,main
+2010-12-29,law,ley-1430-2010,estatuto-tributario ley-789-2002 codigo-de-regimen-municipal reforma-financiera-2009 orden-publico,35,main
+2011-01-04,law,ley-1431-2011,reglamento-del-congreso,3,main
+2011-01-06,law,dec-15-2011,codigo-nacional-de-transito,2,main
+2011-01-06,law,dec-17-2011,sistema-general-de-participaciones talento-humano-en-salud rentas-para-la-salud,3,main
+2011-01-06,law,ley-1434-2011,reglamento-del-congreso,8,main
+2011-01-19,start,ley-1438-2011,reforma-del-sistema-de-salud-2011,146,main
+2011-01-19,law,ley-1438-2011,sistema-de-seguridad-social-integral ley-789-2002 sistema-general-de-participaciones reforma-del-sistema-de-salud-2007 cartera-publica enfermedades-huerfanas talento-humano-en-salud sistema-general-de-riesgos-profesionales,22,main
+2011-01-20,law,res-cne-1-2011,estatuto-basico-de-los-partidos,1,main
+2011-01-21,law,dec-141-2011,ley-general-ambiental,9,main
+2011-02-13,law,dec-4629-2010,ley-general-ambiental,1,main
+2011-02-21,law,ley-1421-2010,orden-publico,19,main
+2011-02-23,law,dec-4733-2010,codigo-penal-militar,6,main
+2011-02-23,law,c-100-11,codigo-penal,0,main
+2011-02-28,law,dec-4838-2010,estatuto-tributario,1,main
+2011-03-16,law,c-185-11,codigo-penal,0,main
+2011-03-29,law,ley-1443-2011,educacion-superior,1,main
+2011-03-29,law,c-218-11,codigo-nacional-de-transito sistema-general-de-participaciones talento-humano-en-salud rentas-para-la-salud,4,main
+2011-03-29,law,c-219-11,codigo-nacional-de-transito,1,main
+2011-04-06,law,c-250-11,codigo-de-procedimiento-penal,0,main
+2011-04-06,law,c-258-11,regimen-disciplinario-de-la-policia,0,main
+2011-04-12,law,c-276-11,ley-general-ambiental,9,main
+2011-04-13,law,c-283-11,codigo-civil,0,main
+2011-05-04,law,c-337-11,teletrabajo,0,main
+2011-05-12,law,ley-1445-2011,codigo-penal ley-del-deporte,4,main
+2011-05-13,law,c-372-11,codigo-procesal-del-trabajo-1948,1,main
+2011-05-25,law,c-439-11,codigo-nacional-de-transito,0,main
+2011-05-25,law,c-444-11,codigo-penal-militar,1,main
+2011-05-26,law,ley-1446-2011,sistema-general-de-participaciones,2,main
+2011-05-31,law,al-1-2011,constitucion,1,main
+2011-06-09,law,ley-1447-2011,codigo-de-regimen-municipal codigo-de-regimen-departamental racionalizacion-de-tramites-2005,14,main
+2011-06-10,start,ley-1448-2011,ley-de-victimas-y-restitucion-de-tierras,209,main
+2011-06-10,law,ley-1448-2011,justicia-y-paz,5,main
+2011-06-13,law,c-470-11,codigo-procesal-del-trabajo-1948,2,main
+2011-06-16,law,ley-1450-2011,estatuto-tributario codigo-nacional-de-transito estatuto-organico-del-sistema-financiero servicios-publicos-domiciliarios ley-1150-2007 ley-789-2002 ley-de-formalizacion-y-generacion-de-empleo ley-general-ambiental ley-de-desarrollo-territorial codigo-de-recursos-naturales educacion-superior sistema-general-de-participaciones tecnologias-de-la-informacion-y-las-comunicaciones reforma-del-sistema-de-salud-2011 reforma-agraria ley-general-de-turismo reforma-del-sistema-de-salud-2007 estatuto-nacional-de-transporte mipymes mercado-de-valores ciencia-tecnologia-e-innovacion sistema-general-de-participaciones-2007,55,main
+2011-06-21,law,al-2-2011,constitucion,3,main
+2011-06-24,law,ley-1453-2011,codigo-civil codigo-penal codigo-de-procedimiento-penal codigo-de-la-infancia-y-la-adolescencia codigo-nacional-de-policia-1970,79,main
+2011-06-28,law,dec-2244-2011,ley-de-victimas-y-restitucion-de-tierras,1,main
+2011-06-29,start,ley-1454-2011,ley-organica-de-ordenamiento-territorial,41,main
+2011-06-30,start,ley-1465-2011,sistema-nacional-de-migraciones,9,main
+2011-06-30,law,ley-1468-2011,codigo-sustantivo-del-trabajo,4,main
+2011-07-01,law,al-3-2011,constitucion,3,main
+2011-07-07,law,al-4-2011,constitucion,1,main
+2011-07-12,start,ley-1474-2011,estatuto-anticorrupcion,136,main
+2011-07-12,law,ley-1474-2011,codigo-penal codigo-de-procedimiento-penal estatuto-general-de-contratacion ley-1150-2007 codigo-disciplinario-unico organizacion-de-la-administracion-publica reforma-del-sistema-de-salud-2011 control-interno,54,main
+2011-07-14,start,ley-1475-2011,partidos-y-procesos-electorales,56,main
+2011-07-18,law,al-5-2011,constitucion,2,main
+2011-08-10,law,c-600-11,codigo-de-procedimiento-civil-1970,0,main
+2011-09-19,law,c-685-11,regimen-de-insolvencia,1,main
+2011-09-26,law,dec-3565-2011,ley-general-ambiental,2,main
+2011-11-03,law,dec-4142-2011,rentas-para-la-salud,2,main
+2011-11-03,law,dec-4169-2011,tecnologias-de-la-informacion-y-las-comunicaciones,3,main
+2011-11-03,law,dec-4174-2011,estatuto-organico-del-sistema-financiero,2,main
+2011-11-03,law,dec-4183-2011,ley-del-deporte,4,main
+2011-11-23,law,ley-1481-2011,racionalizacion-de-tramites-2005,4,main
+2011-11-24,law,al-6-2011,constitucion,3,main
+2011-11-30,law,c-898-11,regimen-municipal,1,main
+2011-12-01,law,ley-1482-2011,codigo-penal,4,main
+2011-12-14,law,c-936-11,reforma-del-sistema-de-salud-2011,0,main
+2011-12-26,start,ley-1493-2011,espectaculos-publicos-de-las-artes-escenicas,38,main
+2011-12-26,law,dec-4886-2011,superintendencia-de-industria-y-comercio-1992,2,main
+2011-12-26,law,ley-1493-2011,ley-del-deporte,1,main
+2011-12-29,start,ley-1496-2011,igualdad-salarial,10,main
+2011-12-29,law,ley-1496-2011,codigo-sustantivo-del-trabajo igualdad-de-oportunidades-para-las-mujeres,3,main
+2011-12-30,start,ley-1503-2011,seguridad-vial,26,main
+2011-12-30,law,ley-1503-2011,codigo-nacional-de-transito ley-general-de-educacion educacion-superior,6,main
+2012-01-01,law,ley-1473-2011,ley-organica-del-plan-de-desarrollo estatuto-organico-del-presupuesto,4,main
+2012-01-10,start,dec-19-2012,ley-antitramites,239,main
+2012-01-10,law,dec-19-2012,codigo-de-comercio sistema-de-seguridad-social-integral estatuto-tributario estatuto-general-de-contratacion codigo-nacional-de-transito estatuto-organico-del-sistema-financiero codigo-de-minas ley-1150-2007 estatuto-anticorrupcion ley-de-formalizacion-y-generacion-de-empleo ley-de-desarrollo-territorial codigo-disciplinario-unico comercio-electronico organizacion-de-la-administracion-publica empleo-publico-y-carrera-administrativa proteccion-de-la-competencia reforma-del-sistema-de-salud-2011 reforma-agraria ley-general-de-cultura integracion-social-de-personas-con-limitacion moralidad-en-la-administracion-publica control-interno construcciones-sismo-resistentes codigo-de-procedimiento-civil-1970 superintendencia-de-industria-y-comercio-1992 racionalizacion-de-tramites-2005 rentas-para-la-salud,78,main
+2012-01-13,law,dec-53-2012,estatuto-organico-del-sistema-financiero,1,main
+2012-01-30,law,res-cne-70-2012,estatuto-basico-de-los-partidos,1,main
+2012-02-01,law,c-030-12,codigo-disciplinario-unico,1,main
+2012-02-07,law,c-052-12,ley-de-victimas-y-restitucion-de-tierras,0,main
+2012-02-22,law,c-122-12,codigo-sustantivo-del-trabajo,0,main
+2012-02-29,law,c-133-12,estatuto-tributario rentas-para-la-salud,3,main
+2012-03-07,law,c-171-12,reforma-del-sistema-de-salud-2011,0,main
+2012-03-10,start,ley-1508-2012,asociaciones-publico-privadas,40,main
+2012-03-10,law,ley-1508-2012,estatuto-general-de-contratacion ley-1150-2007,2,main
+2012-03-13,law,dec-53-2012,ley-antitramites,3,main
+2012-03-22,law,c-238-12,codigo-civil,0,main
+2012-03-22,law,c-239-12,codigo-de-procedimiento-penal,0,main
+2012-03-28,law,c-249-12,constitucion,1,main
+2012-04-12,start,ley-1480-2011,estatuto-del-consumidor,85,main
+2012-04-12,law,ley-1480-2011,servicios-postales,1,main
+2012-04-13,law,ley-1520-2012,codigo-penal,2,main
+2012-04-18,law,c-292-12,ley-de-formalizacion-y-generacion-de-empleo,1,main
+2012-04-20,law,dec-790-2012,desplazamiento-forzado,3,main
+2012-04-24,start,ley-1523-2012,gestion-del-riesgo-de-desastres,97,main
+2012-04-24,law,ley-1523-2012,codigo-disciplinario-unico,1,main
+2012-04-25,law,c-300-12,ley-1150-2007,0,main
+2012-04-27,start,ley-1527-2012,libranza,15,main
+2012-05-09,law,c-330-12,ley-electrica,1,main
+2012-05-09,law,c-333-12,justicia-y-paz,0,main
+2012-05-16,law,c-366-12,ley-general-ambiental,2,main
+2012-05-16,law,c-370-12,estatuto-anticorrupcion codigo-disciplinario-unico,0,main
+2012-05-24,law,c-383-12,codigo-sustantivo-del-trabajo,0,main
+2012-06-01,law,dec-19-2012,ley-1150-2007,1,main
+2012-06-15,law,ley-1536-2012,estatuto-tributario,1,main
+2012-06-20,start,ley-1537-2012,desarrollo-urbano-y-vivienda,66,main
+2012-06-20,law,ley-1537-2012,estatuto-tributario ley-de-desarrollo-territorial cartera-publica financiacion-de-vivienda,7,main
+2012-06-28,law,c-491-12,codigo-penal,0,main
+2012-07-02,start,ley-1437-2011,cpaca,310,main
+2012-07-02,law,ley-1437-2011,ley-estatutaria-de-la-administracion-de-justicia codigo-contencioso-administrativo-1984 racionalizacion-de-tramites-2005,232,main
+2012-07-05,law,ley-1542-2012,codigo-de-procedimiento-penal,1,main
+2012-07-05,law,ley-1546-2012,ley-general-de-educacion,1,main
+2012-07-05,law,ley-1548-2012,codigo-nacional-de-transito,1,main
+2012-07-06,start,ley-1551-2012,modernizacion-de-los-municipios,51,main
+2012-07-06,law,ley-1551-2012,estatuto-anticorrupcion regimen-municipal,25,main
+2012-07-09,law,ley-1555-2012,estatuto-tributario estatuto-organico-del-sistema-financiero reforma-financiera-2009,4,main
+2012-07-10,law,ley-1557-2012,codigo-nacional-de-navegacion-fluvial,1,main
+2012-07-10,law,ley-1558-2012,ley-general-de-turismo,12,main
+2012-07-11,start,ley-1562-2012,riesgos-laborales,33,main
+2012-07-11,law,ley-1562-2012,sistema-de-seguridad-social-integral sistema-general-de-riesgos-profesionales,9,main
+2012-07-12,start,ley-1564-2012,codigo-general-del-proceso,628,main
+2012-07-12,law,ley-1564-2012,codigo-civil cpaca estatuto-del-consumidor codigo-procesal-del-trabajo-1948 regimen-de-insolvencia ley-estatutaria-de-la-administracion-de-justicia sociedad-por-acciones-simplificada codigo-de-procedimiento-civil-1970 racionalizacion-de-tramites-2005 ley-antitramites,26,main
+2012-07-31,start,ley-1566-2012,consumo-de-sustancias-psicoactivas,12,main
+2012-07-31,law,al-1-2012,constitucion,2,main
+2012-08-08,law,c-619-12,estatuto-anticorrupcion,1,main
+2012-08-15,law,c-630-12,estatuto-general-de-contratacion estatuto-anticorrupcion,2,main
+2012-08-15,law,c-634-12,ley-antitramites,1,main
+2012-08-23,law,c-644-12,reforma-agraria,3,main
+2012-08-23,law,c-645-12,codigo-de-procedimiento-penal,0,main
+2012-09-13,law,c-715-12,ley-de-victimas-y-restitucion-de-tierras,3,main
+2012-09-26,law,c-744-12,integracion-social-de-personas-con-limitacion ley-antitramites,2,main
+2012-10-01,start,ley-1579-2012,estatuto-de-registro-de-instrumentos-publicos,105,main
+2012-10-01,law,ley-1564-2012,codigo-de-procedimiento-civil-1970,7,main
+2012-10-01,law,ley-1580-2012,sistema-de-seguridad-social-integral,7,main
+2012-10-10,law,c-782-12,codigo-de-procedimiento-penal,0,main
+2012-10-12,start,ley-1563-2012,estatuto-de-arbitraje,120,main
+2012-10-12,law,ley-1563-2012,codigo-sustantivo-del-trabajo codigo-de-comercio estatuto-general-de-contratacion estatuto-del-consumidor codigo-procesal-del-trabajo-1948 ley-1150-2007 codigo-de-procedimiento-civil-1970,21,main
+2012-10-17,law,dec-1736-2012,codigo-general-del-proceso,12,main
+2012-10-18,start,ley-1581-2012,ley-1581-2012,31,main
+2012-10-18,law,c-820-12,ley-de-victimas-y-restitucion-de-tierras,0,main
+2012-10-30,law,c-890-12,estatuto-tributario,0,main
+2012-10-31,law,c-892-12,codigo-sustantivo-del-trabajo,0,main
+2012-10-31,law,c-896-12,estatuto-del-consumidor,1,main
+2012-11-28,law,c-1016-12,ley-1150-2007 ley-antitramites,0,main
+2012-11-28,law,c-1017-12,reglamento-del-congreso,0,main
+2012-11-28,law,c-1021-12,estatuto-tributario,1,main
+2012-12-05,law,c-1056-12,constitucion,1,main
+2012-12-10,law,ley-1593-2012,desarrollo-urbano-y-vivienda,1,main
+2012-12-26,law,ley-1607-2012,sistema-de-seguridad-social-integral estatuto-tributario ley-de-formalizacion-y-generacion-de-empleo reforma-del-sistema-de-salud-2011 codigo-de-regimen-municipal ciencia-tecnologia-e-innovacion libranza ley-antitramites,161,main
+2012-12-28,law,al-2-2012,constitucion,3,main
+2012-12-29,law,dec-2184-2012,estatuto-del-consumidor,2,main
+2013-01-02,law,ley-1608-2013,reforma-del-sistema-de-salud-2011,1,main
+2013-01-02,law,ley-1610-2013,codigo-sustantivo-del-trabajo,1,main
+2013-01-08,law,dec-2294-2012,asociaciones-publico-privadas,1,main
+2013-01-21,start,ley-1616-2013,salud-mental,45,main
+2013-01-22,law,res-cne-5-2013,estatuto-basico-de-los-partidos,1,main
+2013-01-23,law,c-011-13,codigo-penal,2,main
+2013-01-23,law,c-015-13,libranza,1,main
+2013-02-03,law,ley-1592-2012,justicia-y-paz,46,main
+2013-02-03,law,dec-2464-2012,riesgos-laborales,1,main
+2013-02-05,start,ley-1617-2013,distritos-especiales,139,main
+2013-02-10,law,dec-2558-2012,ciencia-tecnologia-e-innovacion,1,main
+2013-02-11,law,c-066-13,integracion-social-de-personas-con-limitacion,0,main
+2013-02-20,law,c-084-13,estatuto-anticorrupcion codigo-disciplinario-unico,0,main
+2013-02-27,start,ley-1618-2013,derechos-de-las-personas-con-discapacidad,33,main
+2013-02-27,law,c-099-12,ley-de-victimas-y-restitucion-de-tierras,0,main
+2013-02-27,law,c-100-13,modernizacion-de-los-municipios,2,main
+2013-03-06,law,c-105-13,regimen-municipal modernizacion-de-los-municipios,2,main
+2013-03-06,law,c-107-13,regimen-municipal modernizacion-de-los-municipios,2,main
+2013-03-15,start,ley-1620-2013,convivencia-escolar,40,main
+2013-03-21,law,c-157-13,codigo-general-del-proceso,0,main
+2013-04-17,start,ley-1621-2013,inteligencia-y-contrainteligencia,47,main
+2013-04-17,law,ley-1621-2013,reglamento-del-congreso unidad-de-informacion-y-analisis-financiero,8,main
+2013-04-18,law,c-224-13,estatuto-del-consumidor,1,main
+2013-04-24,law,c-258-13,regimen-salarial-y-prestacional,1,main
+2013-04-29,start,ley-1625-2013,areas-metropolitanas,43,main
+2013-04-29,start,ley-1622-2013,estatuto-de-ciudadania-juvenil,80,main
+2013-04-29,law,ley-1622-2013,acoso-laboral ley-de-la-juventud,53,main
+2013-05-07,law,c-257-13,estatuto-anticorrupcion codigo-disciplinario-unico,0,main
+2013-05-13,law,c-366-11,codigo-de-minas,35,main
+2013-05-15,law,c-280-13,ley-de-victimas-y-restitucion-de-tierras,1,main
+2013-05-23,law,c-313-13,reforma-financiera-2009,0,main
+2013-05-31,law,dec-1140-2013,estatuto-organico-del-sistema-financiero,1,main
+2013-06-18,start,ley-1636-2013,proteccion-al-cesante,50,main
+2013-06-18,law,ley-1636-2013,ley-789-2002,5,main
+2013-06-26,law,c-359-13,desarrollo-urbano-y-vivienda,0,main
+2013-07-02,law,ley-1639-2013,codigo-penal reforma-del-sistema-de-salud-2011,2,main
+2013-07-03,law,c-400-13,cpaca,1,main
+2013-07-03,law,c-404-13,codigo-civil,1,main
+2013-07-10,law,c-434-13,estatuto-general-de-contratacion estatuto-anticorrupcion,0,main
+2013-07-10,law,c-436-13,codigo-general-del-proceso,0,main
+2013-07-11,law,c-438-13,ley-de-victimas-y-restitucion-de-tierras,2,main
+2013-07-11,law,ley-1640-2013,ley-617-2000,2,main
+2013-07-12,start,ley-1641-2013,habitantes-de-la-calle,14,main
+2013-07-12,law,ley-1650-2013,ley-general-de-educacion,2,main
+2013-07-12,law,ley-1651-2013,ley-general-de-educacion,6,main
+2013-07-12,law,ley-1652-2013,codigo-de-procedimiento-penal,3,main
+2013-07-15,start,ley-1658-2013,eliminacion-del-mercurio,15,main
+2013-07-15,law,al-1-2013,constitucion,1,main
+2013-07-17,law,c-461-13,codigo-civil,0,main
+2013-07-17,law,c-462-13,ley-de-victimas-y-restitucion-de-tierras,1,main
+2013-07-23,law,c-472-13,codigo-penal,4,main
+2013-07-30,law,ley-1675-2013,codigo-penal ley-general-de-cultura,4,main
+2013-08-02,law,c-511-13,codigo-nacional-de-policia-1970,0,main
+2013-08-02,law,c-513-13,codigo-civil,1,main
+2013-08-15,law,c-532-13,justicia-y-paz,1,main
+2013-08-15,law,c-533-13,modernizacion-de-los-municipios,0,main
+2013-08-22,law,c-555-13,tecnologias-de-la-informacion-y-las-comunicaciones,0,main
+2013-09-04,law,c-612-13,estatuto-de-registro-de-instrumentos-publicos,0,main
+2013-10-16,law,c-699-13,modernizacion-de-los-municipios,1,main
+2013-10-20,law,ley-1676-2013,codigo-civil,4,main
+2013-10-25,law,c-740-13,constitucion,3,main
+2013-11-06,law,c-766-13,estatuto-tributario,1,main
+2013-11-13,law,c-824-13,estatuto-anticorrupcion,1,main
+2013-11-13,law,c-830-13,modernizacion-de-los-municipios,0,main
+2013-11-20,law,c-833-13,estatuto-tributario,1,main
+2013-11-20,law,c-835-13,espectaculos-publicos-de-las-artes-escenicas,1,main
+2013-11-20,law,c-838-13,codigo-de-procedimiento-civil-1970,0,main
+2013-11-20,law,c-839-13,codigo-de-procedimiento-penal,0,main
+2013-11-20,law,ley-1681-2013,regimen-municipal,1,main
+2013-11-22,start,ley-1682-2013,infraestructura-de-transporte,74,main
+2013-11-27,law,ley-1682-2013,estatuto-general-de-contratacion estatuto-anticorrupcion ley-de-transporte fajas-de-retiro-de-carreteras,4,main
+2013-12-03,law,c-911-13,justicia-y-paz,0,main
+2013-12-03,law,c-912-13,ley-de-victimas-y-restitucion-de-tierras,0,main
+2013-12-04,law,c-914-13,sistema-de-seguridad-social-integral riesgos-laborales,4,main
+2013-12-11,law,c-934-13,codigo-de-comercio,0,main
+2013-12-11,law,c-935-13,sistema-nacional-de-discapacidad,1,main
+2013-12-11,law,ley-1687-2013,educacion-superior estatuto-organico-del-presupuesto desarrollo-urbano-y-vivienda evaluacion-de-la-calidad-de-la-educacion,7,main
+2013-12-17,law,ley-1694-2013,estatuto-tributario,1,main
+2013-12-19,law,ley-1696-2013,codigo-penal codigo-nacional-de-transito,4,main
+2013-12-27,start,ley-1702-2013,agencia-nacional-de-seguridad-vial,25,main
+2013-12-27,start,ley-1700-2013,ventas-multinivel,14,main
+2013-12-27,law,dec-3049-2013,infraestructura-de-transporte,2,main
+2013-12-27,law,ley-1702-2013,estatuto-nacional-de-transporte,3,main
+2014-01-01,law,ley-1564-2012,codigo-civil codigo-de-comercio codigo-de-la-infancia-y-la-adolescencia estatuto-del-consumidor ley-de-desarrollo-territorial ley-estatutaria-de-la-administracion-de-justicia competencia-desleal propiedad-horizontal arrendamiento-de-vivienda-urbana personas-con-discapacidad-mental codigo-del-menor codigo-de-procedimiento-civil-1970,744,main
+2014-01-19,law,ley-1673-2013,financiacion-de-vivienda,1,main
+2014-01-20,start,ley-1709-2014,reforma-del-codigo-penitenciario-2014,107,main
+2014-01-20,law,ley-1709-2014,codigo-penal codigo-de-la-infancia-y-la-adolescencia codigo-disciplinario-unico codigo-penitenciario-y-carcelario,99,main
+2014-01-29,law,c-035-14,ley-de-desarrollo-territorial,0,main
+2014-01-31,law,res-cne-284-2014,estatuto-basico-de-los-partidos,1,main
+2014-02-04,law,c-072-14,areas-metropolitanas,0,main
+2014-02-20,start,ley-1676-2013,garantias-mobiliarias,92,main
+2014-02-20,law,ley-1676-2013,codigo-general-del-proceso codigo-de-comercio codigo-de-minas factura-como-titulo-valor,10,main
+2014-02-20,law,dec-2974-2013,estatuto-tributario,1,main
+2014-03-05,law,c-123-14,codigo-de-minas,0,main
+2014-03-05,law,dec-476-2014,infraestructura-de-transporte,1,main
+2014-03-27,law,c-180-14,justicia-y-paz,1,main
+2014-05-07,law,c-278-14,codigo-civil,0,main
+2014-05-13,start,ley-1715-2014,energias-renovables,47,main
+2014-05-15,law,c-284-14,cpaca,1,main
+2014-05-20,law,c-286-14,justicia-y-paz,11,main
+2014-05-20,law,c-288-14,empleo-publico-y-carrera-administrativa,0,main
+2014-06-04,law,c-334-14,cpaca,2,main
+2014-06-11,law,c-367-14,accion-de-tutela,0,main
+2014-06-11,law,c-371-14,reforma-agraria,0,main
+2014-06-18,law,ley-1719-2014,codigo-penal ley-de-victimas-y-restitucion-de-tierras,13,main
+2014-06-25,law,c-385-14,habitantes-de-la-calle,1,main
+2014-06-26,law,c-390-14,codigo-de-procedimiento-penal,0,main
+2014-07-02,law,c-417-14,distritos-especiales,1,main
+2014-07-09,law,c-466-14,codigo-civil,0,main
+2014-07-11,law,ley-1727-2014,codigo-de-comercio,8,main
+2014-07-16,law,c-504-14,sistema-de-seguridad-social-integral,2,main
+2014-07-16,law,c-507-14,codigo-general-del-proceso,1,main
+2014-07-18,law,ley-1728-2014,reforma-agraria,2,main
+2014-07-20,start,ley-1708-2014,codigo-de-extincion-de-dominio,219,main
+2014-07-29,law,ley-1730-2014,codigo-nacional-de-transito,1,main
+2014-07-30,law,c-572a-14,estatuto-de-arbitraje,1,main
+2014-07-31,law,ley-1731-2014,estatuto-tributario estatuto-organico-del-sistema-financiero,5,main
+2014-08-05,law,dec-1477-2014,codigo-sustantivo-del-trabajo,1,main
+2014-08-20,law,c-591-14,codigo-de-procedimiento-penal,1,main
+2014-09-06,start,ley-1712-2014,ley-de-transparencia,34,main
+2014-09-08,start,ley-1733-2014,cuidados-paliativos,10,main
+2014-09-10,law,c-668-14,codigo-nacional-de-policia-1970,1,main
+2014-09-11,law,c-687-14,distritos-especiales,1,main
+2014-10-15,law,c-757-14,codigo-penal reforma-del-codigo-penitenciario-2014,0,main
+2014-10-21,start,ley-1735-2014,servicios-financieros-transaccionales,15,main
+2014-10-21,law,ley-1735-2014,estatuto-organico-del-sistema-financiero,2,main
+2014-10-29,law,c-793-14,gestion-del-riesgo-de-desastres,2,main
+2014-10-30,law,c-795-14,ley-de-victimas-y-restitucion-de-tierras,1,main
+2014-11-12,law,c-848-14,codigo-de-procedimiento-penal codigo-de-procedimiento-penal-2000,0,main
+2014-11-19,law,c-879-14,codigo-disciplinario-del-abogado,0,main
+2014-11-19,law,c-882-14,garantias-mobiliarias,1,main
+2014-12-04,law,c-951-14,cpaca,0,main
+2014-12-23,start,ley-1740-2014,inspeccion-de-la-educacion-superior,27,main
+2014-12-23,law,ley-1739-2014,estatuto-tributario,29,main
+2014-12-23,law,ley-1740-2014,educacion-superior,6,main
+2014-12-26,law,ley-1742-2014,infraestructura-de-transporte,8,main
+2014-12-26,law,ley-1743-2014,codigo-general-del-proceso ley-estatutaria-de-la-administracion-de-justicia,5,main
+2014-12-26,law,ley-1748-2014,reforma-financiera-2009,1,main
+2015-01-01,law,ley-1437-2011,codigo-contencioso-administrativo-1984,22,main
+2015-01-21,law,c-020-15,sistema-de-seguridad-social-integral,0,main
+2015-01-23,law,dec-142-2015,energias-renovables,1,main
+2015-02-06,law,res-cne-131-2015,estatuto-basico-de-los-partidos,1,main
+2015-02-12,law,c-052-15,estatuto-organico-del-presupuesto,1,main
+2015-02-16,start,ley-1751-2015,ley-estatutaria-de-salud,27,main
+2015-02-18,law,ley-1738-2014,orden-publico,7,main
+2015-02-18,law,c-071-15,codigo-de-la-infancia-y-la-adolescencia,0,main
+2015-02-24,law,c-083-15,estatuto-anticorrupcion,0,main
+2015-04-06,law,c-145-15,codigo-penitenciario-y-carcelario reforma-del-codigo-penitenciario-2014,0,main
+2015-04-07,law,c-146-15,cpaca,0,main
+2015-05-26,law,dec-1050-2015,estatuto-tributario,1,main
+2015-06-03,law,ley-1752-2015,codigo-penal,2,main
+2015-06-09,law,ley-1753-2015,codigo-de-la-infancia-y-la-adolescencia sistema-de-seguridad-social-integral estatuto-tributario codigo-nacional-de-transito estatuto-organico-del-sistema-financiero codigo-de-minas servicios-publicos-domiciliarios ley-1150-2007 ley-general-ambiental ley-de-desarrollo-territorial codigo-de-recursos-naturales codigo-penitenciario-y-carcelario ley-de-victimas-y-restitucion-de-tierras ley-general-de-educacion educacion-superior organizacion-de-la-administracion-publica ley-617-2000 tecnologias-de-la-informacion-y-las-comunicaciones reforma-del-sistema-de-salud-2011 reforma-agraria asociaciones-publico-privadas ley-general-de-turismo reforma-del-sistema-de-salud-2007 estatuto-de-registro-de-instrumentos-publicos financiacion-de-vivienda desarrollo-urbano-y-vivienda personas-con-discapacidad-mental mipymes mercado-de-valores television agencia-nacional-de-seguridad-vial ley-antitramites reforma-del-codigo-penitenciario-2014,69,main
+2015-06-25,law,al-1-2015,constitucion,1,main
+2015-06-30,start,ley-1755-2015,derecho-de-peticion,2,main
+2015-06-30,law,ley-1755-2015,cpaca,21,main
+2015-07-01,law,c-410-15,infraestructura-de-transporte,1,main
+2015-07-01,law,al-2-2015,constitucion cpaca ley-estatutaria-de-la-administracion-de-justicia,31,main
+2015-07-06,start,ley-1761-2015,feminicidio,13,main
+2015-07-06,start,ley-1762-2015,ley-anticontrabando,57,main
+2015-07-06,start,ley-1757-2015,participacion-democratica,114,main
+2015-07-06,law,ley-1757-2015,veedurias-ciudadanas,2,main
+2015-07-06,law,ley-1760-2015,codigo-de-procedimiento-penal,3,main
+2015-07-06,law,ley-1761-2015,codigo-penal,4,main
+2015-07-06,law,ley-1762-2015,codigo-penal codigo-de-comercio estatuto-nacional-de-transporte unidad-de-informacion-y-analisis-financiero,21,main
+2015-07-08,law,c-424-15,codigo-procesal-del-trabajo-1948,0,main
+2015-07-13,law,dec-1494-2015,ley-de-transparencia,4,main
+2015-07-22,law,c-458-15,sistema-de-seguridad-social-integral ley-general-de-educacion reforma-del-sistema-de-salud-2011 riesgos-laborales financiacion-de-vivienda integracion-social-de-personas-con-limitacion servicio-nacional-de-aprendizaje,8,main
+2015-07-23,law,ley-1765-2015,codigo-penal-militar,16,main
+2015-08-05,law,c-493-15,desarrollo-urbano-y-vivienda,1,main
+2015-08-12,law,c-516-15,codigo-de-extincion-de-dominio,3,main
+2015-09-02,law,c-562-15,ley-antitramites,1,main
+2015-09-07,law,dec-1771-2015,sistema-general-de-participaciones,1,main
+2015-09-16,law,c-602-15,codigo-penitenciario-y-carcelario reforma-del-codigo-penitenciario-2014,2,main
+2015-09-16,law,dec-1862-2015,ley-de-transparencia,1,main
+2015-09-30,law,c-623-15,reforma-agraria,2,main
+2015-10-28,law,c-669-15,infraestructura-de-transporte,0,main
+2015-11-04,law,c-683-15,codigo-de-la-infancia-y-la-adolescencia,0,main
+2015-11-11,law,c-694-15,justicia-y-paz,1,main
+2015-11-11,law,dec-2199-2015,ley-de-transparencia,1,main
+2015-11-25,law,c-721-15,cpaca,1,main
+2015-11-25,law,c-725-15,codigo-civil,1,main
+2015-11-25,law,c-727-15,codigo-civil,1,main
+2015-12-02,law,c-741-15,codigo-de-la-infancia-y-la-adolescencia,0,main
+2015-12-07,law,dec-2371-2015,estatuto-organico-del-sistema-financiero desarrollo-agropecuario-y-pesquero,3,main
+2015-12-10,law,c-750-15,codigo-general-del-proceso infraestructura-de-transporte,1,main
+2016-01-06,law,ley-1773-2016,codigo-penal,4,main
+2016-01-06,law,ley-1774-2016,codigo-civil codigo-penal codigo-de-procedimiento-penal,5,main
+2016-01-29,start,ley-1776-2016,zidres,33,main
+2016-02-02,start,ley-1778-2016,soborno-transnacional,38,main
+2016-02-02,law,ley-1778-2016,codigo-penal estatuto-general-de-contratacion estatuto-anticorrupcion,4,main
+2016-02-02,law,res-cne-82-2016,estatuto-basico-de-los-partidos,1,main
+2016-02-03,law,c-026-16,codigo-penitenciario-y-carcelario reforma-del-codigo-penitenciario-2014,0,main
+2016-02-17,law,c-066-16,sistema-de-seguridad-social-integral reforma-pensional-2003,2,main
+2016-02-17,law,c-069-16,ley-de-victimas-y-restitucion-de-tierras,0,main
+2016-02-18,law,dec-269-2016,zidres,1,main
+2016-02-24,law,dec-335-2016,estatuto-anticorrupcion,1,main
+2016-04-06,law,c-156-16,codigo-de-procedimiento-penal,0,main
+2016-04-11,law,ley-1779-2016,orden-publico,1,main
+2016-04-20,law,c-191-16,codigo-penal ley-anticontrabando,2,main
+2016-04-20,law,c-192-16,distritos-especiales,2,main
+2016-04-27,law,c-209-16,estatuto-tributario,0,main
+2016-05-02,start,ley-1780-2016,empleo-y-emprendimiento-juvenil,29,main
+2016-05-02,law,ley-1780-2016,ley-de-formalizacion-y-generacion-de-empleo proteccion-al-cesante,2,main
+2016-05-18,law,c-261-16,estatuto-anticorrupcion ley-antitramites,2,main
+2016-05-18,law,c-262-16,codigo-civil,1,main
+2016-05-18,law,c-263-16,asociaciones-publico-privadas,1,main
+2016-05-20,law,ley-1781-2016,ley-estatutaria-de-la-administracion-de-justicia,1,main
+2016-05-25,law,c-273-16,codigo-de-minas,1,main
+2016-06-01,law,c-285-16,constitucion,5,main
+2016-06-08,law,c-297-16,codigo-penal feminicidio,0,main
+2016-06-08,law,c-299-16,codigo-penitenciario-y-carcelario,1,main
+2016-06-22,law,c-328-16,codigo-penitenciario-y-carcelario reforma-del-codigo-penitenciario-2014,0,main
+2016-06-22,law,c-329-16,codigo-electoral,1,main
+2016-06-23,law,c-330-16,ley-de-victimas-y-restitucion-de-tierras,0,main
+2016-07-01,law,ley-1786-2016,codigo-de-procedimiento-penal,2,main
+2016-07-06,law,ley-1787-2016,codigo-penal,3,main
+2016-07-07,law,ley-1788-2016,codigo-sustantivo-del-trabajo,1,main
+2016-07-07,law,al-1-2016,constitucion,4,main
+2016-07-13,start,ley-1797-2016,operacion-del-sistema-de-salud,28,main
+2016-07-13,start,ley-1796-2016,vivienda-segura,37,main
+2016-07-13,law,c-372-16,codigo-penal-militar,2,main
+2016-07-13,law,c-373-16,constitucion,3,main
+2016-07-13,law,ley-1796-2016,ley-de-desarrollo-territorial desarrollo-urbano-y-vivienda ejercicio-de-la-ingenieria construcciones-sismo-resistentes,11,main
+2016-07-27,law,c-389-16,codigo-de-minas,0,main
+2016-08-02,start,ley-1804-2016,cero-a-siempre,29,main
+2016-08-04,start,ley-1805-2016,donacion-de-componentes-anatomicos,22,main
+2016-08-04,law,ley-1805-2016,codigo-sanitario-nacional,1,main
+2016-08-17,law,c-439-16,ley-1150-2007,1,main
+2016-08-19,law,fe-de-erratas-2016-08-19,codigo-de-procedimiento-penal,1,main
+2016-08-24,law,c-451-16,codigo-civil,1,main
+2016-08-31,law,c-470-16,trata-de-personas,1,main
+2016-08-31,law,c-471-16,codigo-de-procedimiento-penal,0,main
+2016-09-14,law,c-492-16,codigo-procesal-del-trabajo-1948,1,main
+2016-09-14,law,c-497-16,ley-general-de-educacion,0,main
+2016-10-19,law,c-569-16,codigo-penitenciario-y-carcelario reforma-del-codigo-penitenciario-2014,2,main
+2016-10-21,law,ley-1811-2016,codigo-nacional-de-transito seguridad-vial,6,main
+2016-10-26,law,c-586-16,codigo-sustantivo-del-trabajo,1,main
+2016-11-02,law,c-602-16,codigo-nacional-de-policia-1970,1,main
+2016-11-02,law,c-603-16,codigo-de-procedimiento-penal estatuto-anticorrupcion,0,main
+2016-11-16,law,c-634-16,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2016-11-16,law,c-636-16,codigo-sustantivo-del-trabajo,0,main
+2016-11-28,law,c-658-16,sistema-de-seguridad-social-integral,0,main
+2016-11-30,law,c-664-16,servicio-nacional-de-aprendizaje,2,main
+2016-12-19,law,ce-2016-12-19,codigo-general-del-proceso,6,main
+2016-12-29,start,ley-1819-2016,reforma-tributaria-estructural-2016,377,main
+2016-12-29,law,ley-1819-2016,codigo-penal sistema-de-seguridad-social-integral estatuto-tributario ley-789-2002 ley-de-formalizacion-y-generacion-de-empleo cartera-publica arrendamiento-de-vivienda-urbana codigo-de-regimen-municipal racionalizacion-de-tramites-2005 rentas-para-la-salud,364,main
+2016-12-31,start,ley-1820-2016,amnistia-indulto-y-tratamientos-penales-especiales,62,main
+2017-01-04,start,ley-1822-2017,primera-infancia-licencia-de-maternidad,3,main
+2017-01-04,law,ley-1822-2017,codigo-sustantivo-del-trabajo,2,main
+2017-01-18,law,c-005-17,codigo-sustantivo-del-trabajo,0,main
+2017-01-23,start,ley-1828-2017,codigo-de-etica-y-disciplinario-del-congresista,69,main
+2017-01-23,law,ley-1828-2017,reglamento-del-congreso,1,main
+2017-01-25,law,c-031-17,inspeccion-de-la-educacion-superior,1,main
+2017-01-29,start,ley-1801-2016,codigo-nacional-de-seguridad-y-convivencia-ciudadana,244,main
+2017-01-29,law,ley-1801-2016,ley-de-desarrollo-territorial prevencion-del-consumo-de-tabaco codigo-nacional-de-policia-1970,315,main
+2017-02-01,law,c-043-17,personas-con-discapacidad-mental,0,main
+2017-02-01,law,c-046-17,codigo-civil,2,main
+2017-02-08,law,c-077-17,zidres,3,main
+2017-02-14,law,res-cne-169-2017,estatuto-basico-de-los-partidos,1,main
+2017-02-15,law,c-091-17,codigo-penal,1,main
+2017-02-19,law,ley-1816-2016,codigo-de-regimen-departamental,9,main
+2017-02-22,law,c-113-17,codigo-de-la-infancia-y-la-adolescencia,0,main
+2017-02-28,law,dec-2200-2016,estatuto-tributario,1,main
+2017-03-06,law,ley-1830-2017,reglamento-del-congreso,1,main
+2017-03-08,law,c-147-17,sistema-nacional-de-discapacidad,1,main
+2017-03-08,law,c-166-17,ley-de-victimas-y-restitucion-de-tierras,0,main
+2017-03-30,law,dec-555-2017,codigo-nacional-de-seguridad-y-convivencia-ciudadana,16,main
+2017-04-04,law,al-1-2017,constitucion,31,main
+2017-04-05,law,c-211-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2017-04-05,law,c-212-16,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2017-04-20,law,c-223-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2017-04-20,law,c-225-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2017-04-25,law,dec-671-2017,ley-de-victimas-y-restitucion-de-tierras,1,main
+2017-05-03,law,c-281-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2017-05-03,law,c-283-17,cpaca,1,main
+2017-05-03,law,c-285-17,vivienda-segura,1,main
+2017-05-03,law,c-286-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2017-05-04,law,ley-1833-2017,reglamento-del-congreso,7,main
+2017-05-11,law,al-2-2017,constitucion,3,main
+2017-05-17,law,c-308-17,estatuto-tributario,0,main
+2017-05-17,law,c-332-17,constitucion,1,main
+2017-05-17,law,c-334-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2017-05-23,start,ley-1834-2017,economia-creativa,15,main
+2017-05-23,law,al-3-2017,constitucion,3,main
+2017-05-23,law,dec-902-2017,reforma-agraria,25,main
+2017-05-24,law,c-344-17,codigo-penal,0,main
+2017-05-24,law,c-346-17,asociaciones-publico-privadas,1,main
+2017-05-25,law,c-349-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2017-05-26,law,dec-883-2017,reforma-tributaria-estructural-2016,2,main
+2017-05-28,law,dec-891-2017,ley-de-victimas-y-restitucion-de-tierras,1,main
+2017-05-28,law,dec-894-2017,empleo-publico-y-carrera-administrativa,2,main
+2017-05-29,law,dec-900-2017,orden-publico,1,main
+2017-06-14,law,c-383-17,codigo-civil,1,main
+2017-06-14,law,c-390-17,codigo-civil,1,main
+2017-07-12,law,ley-1826-2017,codigo-de-procedimiento-penal,38,main
+2017-07-12,law,c-433-17,ley-de-victimas-y-restitucion-de-tierras,0,main
+2017-07-13,law,ley-1796-2016,ley-de-desarrollo-territorial,1,main
+2017-07-14,law,ley-1843-2017,codigo-nacional-de-transito,2,main
+2017-07-18,law,ley-1846-2017,codigo-sustantivo-del-trabajo,2,main
+2017-07-19,law,ley-1849-2017,codigo-de-extincion-de-dominio justicia-y-paz,54,main
+2017-07-19,law,ley-1850-2017,codigo-penal adultos-mayores,7,main
+2017-07-19,law,ley-1851-2017,codigo-de-procedimiento-penal,1,main
+2017-07-26,law,ley-1857-2017,proteccion-integral-a-la-familia,4,main
+2017-07-28,law,dec-890-2017,financiacion-de-vivienda desarrollo-urbano-y-vivienda,6,main
+2017-08-03,law,dec-1303-2017,codigo-de-etica-y-disciplinario-del-congresista,6,main
+2017-08-04,start,ley-1861-2017,servicio-de-reclutamiento,82,main
+2017-08-04,law,ley-1861-2017,ley-general-ambiental ley-del-deporte orden-publico empleo-y-emprendimiento-juvenil,4,main
+2017-08-05,law,dec-939-2017,estatuto-tributario reforma-tributaria-estructural-2016,15,main
+2017-08-10,law,c-516-17,reforma-tributaria-estructural-2016,0,main
+2017-08-14,law,c-527-17,empleo-publico-y-carrera-administrativa,1,main
+2017-08-17,law,ley-1864-2017,codigo-penal,16,main
+2017-09-08,law,al-4-2017,constitucion,1,main
+2017-09-21,start,ley-1870-2017,conglomerados-financieros,13,main
+2017-11-11,law,dec-1499-2017,organizacion-de-la-administracion-publica,0,main
+2017-11-14,law,c-674-17,constitucion,7,main
+2017-11-21,law,ley-1870-2017,estatuto-organico-del-sistema-financiero,4,main
+2017-11-29,law,al-5-2017,constitucion,1,main
+2017-12-20,law,ley-1873-2017,operacion-del-sistema-de-salud,1,main
+2017-12-27,law,ley-1874-2017,ley-general-de-educacion,6,main
+2017-12-29,law,ley-1876-2017,desarrollo-agropecuario-y-pesquero,1,main
+2018-01-15,start,ley-1882-2018,reforma-de-la-contratacion-publica-2018,21,main
+2018-01-15,law,ley-1882-2018,estatuto-general-de-contratacion ley-1150-2007 asociaciones-publico-privadas infraestructura-de-transporte fajas-de-retiro-de-carreteras,16,main
+2018-01-18,law,al-1-2018,constitucion,3,main
+2018-01-24,law,c-001-18,codigo-civil,1,main
+2018-02-04,start,ley-1862-2017,codigo-disciplinario-militar,253,main
+2018-03-01,law,c-007-18,amnistia-indulto-y-tratamientos-penales-especiales,8,main
+2018-03-01,law,ley-1885-2018,estatuto-de-ciudadania-juvenil,21,main
+2018-03-07,law,c-009-18,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2018-03-09,law,ley-1878-2018,codigo-de-la-infancia-y-la-adolescencia,12,main
+2018-03-09,law,dec-461-2018,reglamento-del-congreso,4,main
+2018-04-27,law,res-cne-116-2018,estatuto-basico-de-los-partidos,1,main
+2018-05-02,law,c-029-18,constitucion,5,main
+2018-05-02,law,c-031-18,codigo-de-procedimiento-penal,0,main
+2018-05-16,law,c-042-18,codigo-de-procedimiento-penal,0,main
+2018-05-16,law,c-043-18,codigo-civil,1,main
+2018-05-24,law,ley-1893-2018,codigo-civil,1,main
+2018-06-06,law,ce-2018-06-06,estatuto-organico-de-bogota,5,main
+2018-06-07,law,c-059-18,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2018-06-07,law,c-060-18,estatuto-tributario reforma-tributaria-estructural-2016,3,main
+2018-06-18,law,ley-1900-2018,reforma-agraria,3,main
+2018-06-27,law,ley-1904-2018,reglamento-del-congreso,1,main
+2018-07-09,law,ley-1908-2018,codigo-penal codigo-de-procedimiento-penal,22,main
+2018-07-09,law,ley-1911-2018,codigo-sustantivo-del-trabajo reforma-pensional-2003,2,main
+2018-07-12,start,ley-1915-2018,derecho-de-autor-2018,38,main
+2018-07-12,law,ley-1915-2018,codigo-penal derecho-de-autor-1993,5,main
+2018-07-12,law,ley-1917-2018,operacion-del-sistema-de-salud,1,main
+2018-07-12,law,ley-1918-2018,codigo-penal,1,main
+2018-07-17,law,al-2-2018,constitucion,1,main
+2018-07-18,start,ley-1922-2018,procedimiento-de-la-jep,83,main
+2018-07-20,start,ley-1909-2018,estatuto-de-la-oposicion,33,main
+2018-07-27,start,ley-1931-2018,cambio-climatico,37,main
+2018-07-27,law,ley-1930-2018,ley-general-ambiental reforma-tributaria-estructural-2016,3,main
+2018-08-03,law,ley-1935-2018,estatuto-del-consumidor,1,main
+2018-08-22,law,ley-1902-2018,libranza,11,main
+2018-08-29,law,c-083-18,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2018-09-09,law,ley-1909-2018,estatuto-basico-de-los-partidos,5,main
+2018-09-21,law,ley-1938-2018,ley-general-ambiental,1,main
+2018-09-26,law,c-089-18,operacion-del-sistema-de-salud,0,main
+2018-10-03,law,c-092-18,servicios-publicos-domiciliarios,1,main
+2018-10-31,law,c-107-18,codigo-penal,1,main
+2018-11-07,law,c-110-18,personas-con-discapacidad-mental,0,main
+2018-11-14,law,c-119-18,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2018-11-14,law,c-120-18,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2018-11-21,law,c-126-18,regimen-municipal,1,main
+2018-11-26,law,ley-1940-2018,operacion-del-sistema-de-salud,0,main
+2018-11-28,law,c-131-18,codigo-civil,0,main
+2018-12-05,law,c-145-18,garantias-mobiliarias,0,main
+2018-12-12,law,c-149-18,codigo-de-la-infancia-y-la-adolescencia ley-general-de-educacion integracion-social-de-personas-con-limitacion,0,main
+2018-12-28,start,ley-1943-2018,ley-de-financiamiento-2018,122,main
+2018-12-28,law,ley-1943-2018,codigo-penal estatuto-tributario codigo-de-extincion-de-dominio reforma-tributaria-estructural-2016,161,main
+2018-12-28,law,ley-1944-2018,codigo-penal codigo-de-procedimiento-penal,5,main
+2019-01-01,law,ley-1934-2018,codigo-civil,24,main
+2019-01-04,law,ley-1946-2019,ley-del-deporte,2,main
+2019-01-08,law,ley-1949-2019,reforma-del-sistema-de-salud-2011 reforma-del-sistema-de-salud-2007 contabilidad-e-informacion-financiera,9,main
+2019-01-24,start,ley-1951-2019,ministerio-de-ciencia,5,main
+2019-01-28,start,ley-1952-2019,codigo-general-disciplinario,266,main
+2019-02-05,law,res-cne-252-2019,estatuto-basico-de-los-partidos,1,main
+2019-02-13,law,c-053-19,regimen-municipal,1,main
+2019-02-18,law,ley-1941-2018,orden-publico,5,main
+2019-02-27,law,c-084-19,reforma-tributaria-estructural-2016,1,main
+2019-02-27,law,c-087-19,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2019-03-06,law,c-095-19,codigo-civil,1,main
+2019-03-06,law,c-098-19,distritos-especiales,1,main
+2019-03-13,law,c-112-19,codigo-de-procedimiento-penal procedimiento-de-la-jep,2,main
+2019-03-27,law,c-137-19,codigo-de-procedimiento-penal,1,main
+2019-04-10,law,c-163-19,codigo-de-procedimiento-penal,0,main
+2019-04-10,law,c-164-19,codigo-penal violencia-contra-las-mujeres,0,main
+2019-04-10,law,c-165-19,estatuto-del-consumidor soborno-transnacional,0,main
+2019-05-08,law,c-183-19,empleo-publico-y-carrera-administrativa,0,main
+2019-05-08,law,c-189-19,ley-617-2000,0,main
+2019-05-15,law,c-200-19,codigo-sustantivo-del-trabajo,0,main
+2019-05-15,law,c-203-19,codigo-civil,1,main
+2019-05-15,law,c-204-19,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2019-05-16,law,c-207-19,asociaciones-publico-privadas reforma-de-la-contratacion-publica-2018,2,main
+2019-05-25,start,ley-1955-2019,plan-nacional-de-desarrollo-2018-2022,337,main
+2019-05-25,law,ley-1955-2019,codigo-de-la-infancia-y-la-adolescencia codigo-nacional-de-seguridad-y-convivencia-ciudadana sistema-de-seguridad-social-integral codigo-general-disciplinario estatuto-tributario codigo-nacional-de-transito estatuto-organico-del-sistema-financiero codigo-de-minas servicios-publicos-domiciliarios ley-1150-2007 estatuto-anticorrupcion ley-de-formalizacion-y-generacion-de-empleo ley-general-de-educacion regimen-municipal codigo-de-extincion-de-dominio ley-617-2000 sistema-general-de-participaciones proteccion-de-la-competencia tecnologias-de-la-informacion-y-las-comunicaciones reforma-del-sistema-de-salud-2011 riesgos-laborales asociaciones-publico-privadas ley-general-de-cultura ley-general-de-turismo financiacion-de-vivienda desarrollo-urbano-y-vivienda ley-electrica energias-renovables codigo-de-regimen-municipal salud-mental ministerio-de-ciencia servicios-postales distritos-especiales responsabilidad-fiscal-y-transparencia sistema-general-de-riesgos-profesionales sistema-general-de-participaciones-2007 racionalizacion-de-tramites-2005 operacion-del-sistema-de-salud rentas-para-la-salud reforma-de-la-contratacion-publica-2018 reforma-tributaria-estructural-2016 ley-de-financiamiento-2018,82,main
+2019-05-29,law,c-234-19,codigo-de-comercio,0,main
+2019-05-29,law,c-235-19,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2019-06-05,law,c-248-19,codigo-penal,1,main
+2019-06-06,start,ley-1957-2019,estatutaria-de-la-jep,160,main
+2019-06-06,law,c-253-19,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2019-06-06,law,ley-1957-2019,estatuto-organico-del-presupuesto,2,main
+2019-06-19,law,c-277-19,servicio-de-reclutamiento,0,main
+2019-06-19,law,c-278-19,reforma-tributaria-estructural-2016,1,main
+2019-06-20,law,c-223-17,codigo-nacional-de-seguridad-y-convivencia-ciudadana,30,main
+2019-06-20,law,ley-1959-2019,codigo-penal codigo-de-procedimiento-penal,5,main
+2019-06-26,law,c-294-19,codigo-sanitario-nacional donacion-de-componentes-anatomicos,2,main
+2019-06-26,law,dec-1144-2019,reforma-tributaria-estructural-2016,11,main
+2019-06-27,law,ley-1960-2019,empleo-publico-y-carrera-administrativa,3,main
+2019-06-28,law,ley-1962-2019,ley-organica-de-ordenamiento-territorial,3,main
+2019-07-01,law,ley-1943-2018,reforma-tributaria-estructural-2016 ley-de-financiamiento-2018,2,main
+2019-07-11,law,al-1-2019,constitucion,1,main
+2019-07-12,law,ley-1971-2019,reforma-del-sistema-de-salud-2011,1,main
+2019-07-15,law,al-2-2019,constitucion,1,main
+2019-07-24,law,c-327-19,financiacion-de-vivienda,0,main
+2019-07-24,law,c-329-19,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2019-07-24,law,ley-1977-2019,sistema-general-de-participaciones-2007,4,main
+2019-07-25,law,ley-1978-2019,tecnologias-de-la-informacion-y-las-comunicaciones servicios-postales television,62,main
+2019-07-25,law,al-3-2019,constitucion,1,main
+2019-07-26,law,ley-1981-2019,regimen-municipal estatuto-organico-de-bogota codigo-de-regimen-departamental,3,main
+2019-07-30,law,ley-1985-2019,estatuto-organico-del-presupuesto,2,main
+2019-07-31,law,c-345-19,derecho-de-autor-2018,0,main
+2019-07-31,law,c-346-19,codigo-general-del-proceso,0,main
+2019-08-02,law,ley-1989-2019,accion-comunal-2002,2,main
+2019-08-14,law,c-372-19,donacion-de-componentes-anatomicos,0,main
+2019-08-14,law,ley-1993-2019,areas-metropolitanas,1,main
+2019-08-21,law,c-382-19,codigo-procesal-del-trabajo-1948,0,main
+2019-08-26,start,ley-1996-2019,capacidad-legal-de-las-personas-con-discapacidad,64,main
+2019-08-26,law,ley-1996-2019,codigo-civil codigo-general-del-proceso codigo-de-la-infancia-y-la-adolescencia personas-con-discapacidad-mental,64,main
+2019-08-28,law,c-395-19,codigo-de-procedimiento-penal,1,main
+2019-09-17,law,c-428-19,codigo-nacional-de-transito,1,main
+2019-09-18,law,al-4-2019,constitucion,5,main
+2019-09-25,law,c-443-19,codigo-general-del-proceso,1,main
+2019-10-03,law,c-481-19,estatuto-tributario reforma-tributaria-estructural-2016,18,main
+2019-10-09,law,c-473-19,proteccion-al-cesante empleo-y-emprendimiento-juvenil,5,main
+2019-10-22,law,c-489-19,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2019-10-22,law,c-495-19,codigo-general-disciplinario,1,main
+2019-10-29,law,c-510-19,ley-de-financiamiento-2018,1,main
+2019-10-29,law,c-514-19,estatuto-tributario ley-de-financiamiento-2018,1,main
+2019-11-05,law,c-520-19,estatuto-tributario ley-de-financiamiento-2018,0,main
+2019-11-14,law,ley-2000-2019,codigo-nacional-de-seguridad-y-convivencia-ciudadana,2,main
+2019-11-19,law,c-552-19,codigo-civil,1,main
+2019-11-19,law,ley-2003-2019,reglamento-del-congreso codigo-de-etica-y-disciplinario-del-congresista,5,main
+2019-11-20,law,c-559-19,codigo-de-procedimiento-penal,0,main
+2019-11-20,law,c-560-19,codigo-general-disciplinario,2,main
+2019-11-22,law,dec-2106-2019,sistema-de-seguridad-social-integral estatuto-tributario codigo-nacional-de-transito estatuto-organico-del-sistema-financiero estatuto-anticorrupcion ley-789-2002 ley-de-desarrollo-territorial regimen-municipal reforma-del-sistema-de-salud-2011 ley-general-de-cultura ley-general-de-turismo estatuto-de-registro-de-instrumentos-publicos desarrollo-urbano-y-vivienda energias-renovables codigo-sanitario-nacional zidres espectaculos-publicos-de-las-artes-escenicas donacion-de-componentes-anatomicos talento-humano-en-salud control-interno seguridad-vial codigo-nacional-de-navegacion-fluvial sistema-general-de-riesgos-profesionales racionalizacion-de-tramites-2005 ley-antitramites,67,main
+2019-11-27,law,c-567-19,codigo-de-procedimiento-penal,1,main
+2019-11-27,law,c-570-19,codigo-general-disciplinario codigo-disciplinario-militar,1,main
+2019-12-05,law,c-588-19,ley-de-victimas-y-restitucion-de-tierras,1,main
+2019-12-05,law,c-590-19,procedimiento-de-la-jep,2,main
+2019-12-05,law,c-593-19,estatuto-tributario ley-de-financiamiento-2018,2,main
+2019-12-26,law,al-5-2019,constitucion,1,main
+2019-12-27,start,ley-2010-2019,ley-de-crecimiento-economico,161,main
+2019-12-27,law,ley-2008-2019,operacion-del-sistema-de-salud,1,main
+2019-12-27,law,ley-2010-2019,codigo-penal sistema-de-seguridad-social-integral estatuto-tributario codigo-de-extincion-de-dominio reforma-del-sistema-de-salud-2011 plan-nacional-de-desarrollo-2018-2022 reforma-tributaria-estructural-2016,124,main
+2019-12-30,start,ley-2014-2019,sanciones-por-corrupcion,10,main
+2019-12-30,law,ley-2014-2019,codigo-penal estatuto-general-de-contratacion codigo-penitenciario-y-carcelario,6,main
+2019-12-31,law,ley-1955-2019,reforma-del-sistema-de-salud-2011 operacion-del-sistema-de-salud,2,main
+2020-01-01,law,ley-1955-2019,ley-general-de-educacion inspeccion-de-la-educacion-superior,3,main
+2020-01-01,law,c-481-19,ley-de-financiamiento-2018,121,main
+2020-01-24,law,dec-71-2020,reforma-tributaria-estructural-2016,11,main
+2020-01-29,law,c-022-20,estatuto-tributario reforma-tributaria-estructural-2016,2,main
+2020-01-29,law,c-026-20,plan-nacional-de-desarrollo-2018-2022,2,main
+2020-01-29,law,c-028-20,codigo-civil,1,main
+2020-01-29,law,c-029-20,codigo-civil,3,main
+2020-01-31,start,ley-2015-2020,historia-clinica-electronica,17,main
+2020-01-31,law,res-cne-108-2020,estatuto-basico-de-los-partidos,1,main
+2020-02-06,law,c-034-20,sistema-de-seguridad-social-integral reforma-pensional-2003,0,main
+2020-02-06,law,c-036-20,codigo-sustantivo-del-trabajo,1,main
+2020-02-06,law,c-040-20,orden-publico,0,main
+2020-02-12,law,c-048-20,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2020-02-26,law,c-082-20,ley-general-de-cultura plan-nacional-de-desarrollo-2018-2022,0,main
+2020-03-03,law,c-094-20,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2020-03-16,start,dec-403-2020,control-fiscal-2020,108,main
+2020-03-16,law,dec-403-2020,cpaca estatuto-anticorrupcion regimen-municipal responsabilidad-fiscal ley-617-2000 control-fiscal estatuto-organico-de-bogota veedurias-ciudadanas control-interno,81,main
+2020-03-23,law,dec-468-2020,estatuto-organico-del-sistema-financiero,0,main
+2020-03-26,law,dec-475-2020,ley-general-de-cultura,1,main
+2020-04-04,law,dec-516-2020,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2020-04-12,law,dec-538-2020,ley-1581-2012 reforma-del-sistema-de-salud-2011 cartera-publica operacion-del-sistema-de-salud plan-nacional-de-desarrollo-2018-2022,5,main
+2020-04-13,law,dec-541-2020,servicio-de-reclutamiento,1,main
+2020-04-15,law,dec-575-2020,estatuto-tributario codigo-nacional-de-transito ley-de-transporte estatuto-nacional-de-transporte superintendencia-de-industria-y-comercio-1992,7,main
+2020-04-15,law,dec-576-2020,rentas-para-la-salud,1,main
+2020-04-16,law,dec-554-2020,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2020-05-13,law,c-142-20,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2020-05-13,law,dec-658-2020,tecnologias-de-la-informacion-y-las-comunicaciones television,2,main
+2020-05-13,law,dec-660-2020,ley-general-de-educacion,1,main
+2020-06-03,law,dec-770-2020,proteccion-al-cesante,1,main
+2020-06-04,law,dec-798-2020,reforma-tributaria-estructural-2016,1,main
+2020-06-04,law,dec-799-2020,estatuto-tributario,1,main
+2020-06-04,law,dec-800-2020,sistema-general-de-participaciones operacion-del-sistema-de-salud plan-nacional-de-desarrollo-2018-2022,4,main
+2020-06-04,law,dec-807-2020,estatuto-tributario,1,main
+2020-06-04,law,dec-819-2020,servicios-publicos-domiciliarios,1,main
+2020-06-12,law,dec-537-2020,estatuto-general-de-contratacion ley-1150-2007 estatuto-anticorrupcion,3,main
+2020-06-17,law,c-184-20,television,1,main
+2020-06-21,law,c-568-19,vivienda-segura,2,main
+2020-07-15,law,c-247-20,television,1,main
+2020-07-22,law,dec-690-2020,plan-nacional-de-desarrollo-2018-2022 ley-de-crecimiento-economico,2,main
+2020-07-22,law,al-1-2020,constitucion,1,main
+2020-07-22,law,al-2-2020,constitucion,1,main
+2020-07-27,law,ley-2030-2020,codigo-general-del-proceso codigo-nacional-de-seguridad-y-convivencia-ciudadana,3,main
+2020-07-27,law,ley-2037-2020,ley-de-desarrollo-territorial,1,main
+2020-07-27,law,ley-2040-2020,ley-1150-2007 adultos-mayores,3,main
+2020-08-05,law,c-294-20,superintendencia-de-industria-y-comercio-1992,1,main
+2020-08-10,law,ley-2048-2020,sistema-general-de-participaciones-2007,1,main
+2020-08-12,law,ley-2050-2020,codigo-nacional-de-transito seguridad-vial,3,main
+2020-08-19,law,c-327-20,codigo-de-extincion-de-dominio,0,main
+2020-08-21,law,c-045-19,codigo-de-recursos-naturales,3,main
+2020-08-25,start,ley-2052-2020,racionalizacion-de-tramites,32,main
+2020-09-02,law,c-379-20,estatuto-tributario ley-de-crecimiento-economico,0,main
+2020-09-03,law,c-383-20,sistema-general-de-participaciones operacion-del-sistema-de-salud,0,main
+2020-09-03,law,ley-2054-2020,codigo-nacional-de-seguridad-y-convivencia-ciudadana,11,main
+2020-09-16,law,c-407-20,codigo-penal,1,main
+2020-10-08,law,c-440-20,codigo-nacional-de-transito,1,main
+2020-10-15,law,c-452-20,codigo-general-disciplinario codigo-disciplinario-militar,2,main
+2020-10-21,law,c-456-20,codigo-civil,0,main
+2020-10-28,law,c-464-20,servicios-publicos-domiciliarios plan-nacional-de-desarrollo-2018-2022,2,main
+2020-10-29,law,c-466-20,codigo-de-minas,1,main
+2020-11-19,law,c-484-20,plan-nacional-de-desarrollo-2018-2022,1,main
+2020-11-26,law,c-493-20,plan-nacional-de-desarrollo-2018-2022,1,main
+2020-12-03,law,c-504-20,plan-nacional-de-desarrollo-2018-2022,1,main
+2020-12-03,law,c-507-20,ley-de-crecimiento-economico,1,main
+2020-12-09,law,ley-2064-2020,estatuto-tributario,1,main
+2020-12-31,start,ley-2069-2020,ley-de-emprendimiento,85,main
+2020-12-31,law,ley-2068-2020,estatuto-tributario ley-general-de-turismo,19,main
+2020-12-31,law,ley-2069-2020,codigo-de-comercio estatuto-tributario estatuto-organico-del-sistema-financiero ley-1150-2007 sociedad-por-acciones-simplificada mipymes cultura-del-emprendimiento contabilidad-e-informacion-financiera proteccion-al-cesante plan-nacional-de-desarrollo-2018-2022,31,main
+2020-12-31,law,ley-2071-2020,estatuto-organico-del-sistema-financiero,1,main
+2021-01-01,start,ley-2056-2020,sistema-general-de-regalias,212,main
+2021-01-08,law,ley-2075-2021,regimen-municipal modernizacion-de-los-municipios,2,main
+2021-01-08,law,ley-2078-2021,ley-de-victimas-y-restitucion-de-tierras,1,main
+2021-01-14,start,ley-2079-2021,vivienda-y-habitat,60,main
+2021-01-14,law,ley-2079-2021,ley-de-desarrollo-territorial propiedad-horizontal financiacion-de-vivienda,14,main
+2021-01-25,start,ley-2080-2021,reforma-del-cpaca-2021,85,main
+2021-01-25,law,ley-2080-2021,codigo-general-del-proceso cpaca codigo-de-minas ley-1150-2007,93,main
+2021-01-26,law,res-cne-140-2021,estatuto-basico-de-los-partidos,1,main
+2021-02-03,law,ley-2081-2021,codigo-penal,1,main
+2021-02-10,law,c-029-21,codigo-general-disciplinario,0,main
+2021-02-11,law,c-030-21,servicios-publicos-domiciliarios plan-nacional-de-desarrollo-2018-2022,2,main
+2021-02-18,law,ley-2082-2021,areas-metropolitanas distritos-especiales,3,main
+2021-02-18,law,ley-2083-2021,codigo-penal,1,main
+2021-02-24,law,c-037-21,estatuto-general-de-contratacion sanciones-por-corrupcion,2,main
+2021-02-24,law,c-038-21,codigo-sustantivo-del-trabajo,1,main
+2021-02-25,law,c-040-21,estatuto-tributario ley-de-crecimiento-economico,0,main
+2021-02-25,law,c-043-21,codigo-procesal-del-trabajo-1948,0,main
+2021-02-28,law,ley-2070-2020,estatuto-tributario ley-general-de-cultura espectaculos-publicos-de-las-artes-escenicas,5,main
+2021-03-04,law,c-047-21,plan-nacional-de-desarrollo-2018-2022,2,main
+2021-03-04,law,ley-2086-2021,regimen-municipal,3,main
+2021-03-16,law,c-061-21,estatuto-tributario ley-de-crecimiento-economico,0,main
+2021-03-17,law,c-062-21,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2021-04-15,law,c-093-21,codigo-penal,1,main
+2021-04-15,law,c-094-21,ley-anticontrabando,0,main
+2021-04-15,law,c-095-21,plan-nacional-de-desarrollo-2018-2022,2,main
+2021-04-21,law,c-102-21,estatuto-tributario reforma-tributaria-estructural-2016,0,main
+2021-04-21,law,c-103-21,teletrabajo,1,main
+2021-04-29,law,c-117-21,codigo-civil,0,main
+2021-04-30,law,c-120-21,codigo-general-disciplinario codigo-disciplinario-unico,2,main
+2021-05-12,start,ley-2088-2021,trabajo-en-casa,16,main
+2021-05-13,law,c-133-21,plan-nacional-de-desarrollo-2018-2022,1,main
+2021-05-14,law,ley-2089-2021,codigo-civil codigo-de-la-infancia-y-la-adolescencia,2,main
+2021-05-20,law,c-147-21,plan-nacional-de-desarrollo-2018-2022,1,main
+2021-05-25,law,ley-1955-2019,estatuto-organico-del-sistema-financiero,8,main
+2021-05-25,law,dec-296-2021,ley-de-emprendimiento,5,main
+2021-05-27,law,c-161-21,estatuto-tributario ley-de-crecimiento-economico,2,main
+2021-05-27,law,c-163-21,codigo-penal,0,main
+2021-06-29,law,ley-2094-2021,codigo-general-disciplinario,1,main
+2021-07-02,start,ley-2097-2021,registro-de-deudores-alimentarios-morosos,11,main
+2021-07-06,law,ley-2098-2021,codigo-penal codigo-de-procedimiento-penal codigo-penitenciario-y-carcelario,27,main
+2021-07-10,law,ley-2099-2021,servicios-publicos-domiciliarios codigo-de-recursos-naturales ley-electrica energias-renovables ley-de-emprendimiento plan-nacional-de-desarrollo-2018-2022,28,main
+2021-07-14,law,al-1-2021,constitucion,1,main
+2021-07-15,start,ley-2101-2021,reduccion-de-la-jornada-laboral,8,main
+2021-07-15,law,ley-2101-2021,codigo-sustantivo-del-trabajo,1,main
+2021-07-22,law,c-233-21,codigo-penal,0,main
+2021-07-29,start,ley-2114-2021,licencia-de-paternidad-y-parental,6,main
+2021-07-29,law,ley-2108-2021,tecnologias-de-la-informacion-y-las-comunicaciones,6,main
+2021-07-29,law,ley-2110-2021,codigo-penal,1,main
+2021-07-29,law,ley-2111-2021,codigo-penal codigo-de-procedimiento-penal,25,main
+2021-07-29,law,ley-2112-2021,sistema-de-seguridad-social-integral,1,main
+2021-07-29,law,ley-2113-2021,codigo-general-del-proceso,1,main
+2021-07-29,law,ley-2114-2021,codigo-sustantivo-del-trabajo,2,main
+2021-07-29,law,ley-2115-2021,mujer-cabeza-de-familia,4,main
+2021-07-29,law,ley-2116-2021,estatuto-organico-de-bogota,16,main
+2021-07-29,law,ley-2117-2021,ley-de-formalizacion-y-generacion-de-empleo igualdad-de-oportunidades-para-las-mujeres,2,main
+2021-07-30,law,ley-2119-2021,empleo-y-emprendimiento-juvenil,1,main
+2021-08-03,start,ley-2121-2021,trabajo-remoto,27,main
+2021-08-04,start,ley-2126-2021,comisarias-de-familia,49,main
+2021-08-04,start,ley-2136-2021,politica-integral-migratoria,92,main
+2021-08-04,law,ley-2126-2021,codigo-de-la-infancia-y-la-adolescencia violencia-intrafamiliar orden-publico,12,main
+2021-08-04,law,ley-2130-2021,estatuto-tributario,1,main
+2021-08-04,law,ley-2133-2021,estatuto-tributario,2,main
+2021-08-04,law,ley-2136-2021,violencia-contra-las-mujeres trata-de-personas racionalizacion-de-tramites-2005 ley-antitramites sistema-nacional-de-migraciones,13,main
+2021-08-04,law,ley-2137-2021,violencia-sexual-contra-ninos,2,main
+2021-08-10,law,ley-2140-2021,modernizacion-de-los-municipios,1,main
+2021-08-10,law,ley-2141-2021,codigo-sustantivo-del-trabajo,2,main
+2021-08-11,law,c-269-21,plan-nacional-de-desarrollo-2018-2022 reforma-de-la-contratacion-publica-2018,2,main
+2021-08-24,law,ley-2148-2021,estatuto-organico-de-bogota modernizacion-de-los-municipios codigo-de-regimen-departamental,3,main
+2021-08-25,law,ley-2152-2021,estatuto-tributario,2,main
+2021-08-25,law,al-2-2021,constitucion,11,main
+2021-09-02,law,c-294-21,constitucion,1,main
+2021-09-09,law,c-302-21,reglamento-del-congreso,1,main
+2021-09-14,start,ley-2155-2021,ley-de-inversion-social,66,main
+2021-09-14,law,ley-2155-2021,estatuto-tributario codigo-nacional-de-transito codigo-de-extincion-de-dominio racionalizacion-de-tramites endeudamiento-territorial,21,main
+2021-09-16,law,c-315-21,plan-nacional-de-desarrollo-2018-2022,0,main
+2021-09-23,law,c-324-21,codigo-de-la-infancia-y-la-adolescencia,1,main
+2021-10-15,law,c-353a-21,distritos-especiales,2,main
+2021-10-27,law,c-370-21,codigo-disciplinario-militar,1,main
+2021-10-29,law,ley-2157-2021,habeas-data,9,main
+2021-11-12,law,c-389-21,racionalizacion-de-tramites,1,main
+2021-11-25,law,ley-2160-2021,estatuto-general-de-contratacion,3,main
+2021-11-26,law,ley-2161-2021,sistema-de-seguridad-social-integral codigo-nacional-de-transito,5,main
+2021-12-06,law,ley-2162-2021,ciencia-tecnologia-e-innovacion,14,main
+2021-12-07,law,c-433-21,servicio-de-reclutamiento,0,main
+2021-12-18,start,ley-2166-2021,accion-comunal,110,main
+2021-12-18,law,ley-2166-2021,accion-comunal-2002,79,main
+2021-12-22,start,ley-2169-2021,carbono-neutralidad,39,main
+2021-12-22,law,ley-2168-2021,codigo-penal,1,main
+2021-12-22,law,ley-2169-2021,cambio-climatico plan-nacional-de-desarrollo-2018-2022 reforma-tributaria-estructural-2016,3,main
+2021-12-29,law,ley-2172-2021,desarrollo-urbano-y-vivienda,1,main
+2021-12-30,law,ley-2174-2021,codigo-sustantivo-del-trabajo,1,main
+2022-01-03,law,ley-2182-2022,educacion-tecnica-y-tecnologica,1,main
+2022-01-06,start,ley-2191-2022,desconexion-laboral,8,main
+2022-01-06,law,ley-2186-2022,estatuto-organico-del-sistema-financiero,1,main
+2022-01-06,law,ley-2194-2022,atencion-integral-del-cancer,3,main
+2022-01-18,start,ley-2195-2022,transparencia-y-lucha-contra-la-corrupcion,70,main
+2022-01-18,law,ley-2195-2022,codigo-de-comercio cpaca estatuto-general-de-contratacion ley-1150-2007 estatuto-anticorrupcion ley-de-transparencia acciones-populares-y-de-grupo codigo-de-extincion-de-dominio proteccion-de-la-competencia soborno-transnacional superintendencia-de-industria-y-comercio-1992,31,main
+2022-01-25,start,ley-2197-2022,seguridad-ciudadana,70,main
+2022-01-25,law,ley-2197-2022,codigo-penal codigo-de-procedimiento-penal codigo-nacional-de-seguridad-y-convivencia-ciudadana codigo-nacional-de-transito codigo-penitenciario-y-carcelario codigo-de-extincion-de-dominio violencia-intrafamiliar orden-publico comisarias-de-familia,42,main
+2022-01-25,law,ley-2198-2022,ley-de-transporte estatuto-nacional-de-transporte,5,main
+2022-01-27,law,res-cne-696-2022,estatuto-basico-de-los-partidos,1,main
+2022-02-08,start,ley-2200-2022,regimen-departamental,155,main
+2022-02-08,law,ley-2199-2022,ley-general-ambiental,1,main
+2022-02-08,law,ley-2200-2022,regimen-municipal ley-617-2000 codigo-de-regimen-departamental,116,main
+2022-02-08,law,dec-207-2022,codigo-nacional-de-seguridad-y-convivencia-ciudadana codigo-de-extincion-de-dominio seguridad-ciudadana,32,main
+2022-02-16,law,c-047-22,regimen-municipal ley-617-2000,0,main
+2022-02-16,law,c-049-22,riesgos-laborales plan-nacional-de-desarrollo-2018-2022,2,main
+2022-02-21,law,c-055-22,codigo-penal,0,main
+2022-03-03,law,c-075-22,regimen-municipal modernizacion-de-los-municipios,2,main
+2022-03-09,law,c-084-22,plan-nacional-de-desarrollo-2018-2022,1,main
+2022-03-10,law,c-090-22,estatuto-anticorrupcion responsabilidad-fiscal,20,main
+2022-03-10,law,c-091-22,cpaca,2,main
+2022-03-16,law,c-098-22,codigo-civil,1,main
+2022-03-24,law,c-111-22,codigo-general-del-proceso,0,main
+2022-03-24,law,c-112-22,estatuto-tributario,1,main
+2022-03-24,law,c-113-22,control-fiscal,10,main
+2022-03-29,law,ley-1952-2019,estatuto-anticorrupcion codigo-disciplinario-unico,243,main
+2022-03-29,law,ley-2094-2021,codigo-general-disciplinario codigo-disciplinario-del-abogado,83,main
+2022-04-08,law,dec-207-2022,codigo-de-procedimiento-penal,2,main
+2022-05-05,law,c-154-22,codigo-civil,1,main
+2022-05-05,law,c-155-22,codigo-penal codigo-de-procedimiento-penal codigo-penitenciario-y-carcelario,24,main
+2022-05-05,law,c-156-22,codigo-civil,0,main
+2022-05-05,unexplained,,codigo-de-procedimiento-penal,1,main
+2022-05-10,law,ley-2205-2022,codigo-de-procedimiento-penal,2,main
+2022-05-11,law,c-161-22,plan-nacional-de-desarrollo-2018-2022,1,main
+2022-05-11,law,c-164-22,codigo-penal,0,main
+2022-05-23,law,ley-2209-2022,acoso-laboral,1,main
+2022-06-01,law,c-188-22,ley-de-emprendimiento,1,main
+2022-06-02,law,c-190-22,plan-nacional-de-desarrollo-2018-2022,1,main
+2022-06-13,start,ley-2213-2022,tic-en-las-actuaciones-judiciales,15,main
+2022-06-23,law,c-222-22,codigo-penal,0,main
+2022-06-30,law,c-237-22,control-fiscal,12,main
+2022-06-30,law,ley-2222-2022,codigo-nacional-de-transito agencia-nacional-de-seguridad-vial,3,main
+2022-06-30,law,ley-2225-2022,ley-789-2002 reforma-financiera-2009 proteccion-al-cesante,12,main
+2022-07-01,law,dec-537-2020,estatuto-general-de-contratacion ley-1150-2007,2,main
+2022-07-01,law,ley-2229-2022,codigo-civil codigo-de-la-infancia-y-la-adolescencia,2,main
+2022-07-08,law,ley-2234-2022,cultura-del-emprendimiento,1,main
+2022-07-08,law,ley-2241-2022,cuidados-paliativos,1,main
+2022-07-14,law,ley-2251-2022,codigo-nacional-de-transito,10,main
+2022-07-14,law,ley-2252-2022,codigo-nacional-de-transito,1,main
+2022-07-21,law,c-068-20,plan-nacional-de-desarrollo-2018-2022,1,main
+2022-07-27,law,c-268-22,estatuto-organico-de-bogota,0,main
+2022-09-01,law,c-305-22,estatuto-tributario ley-de-inversion-social,0,main
+2022-10-03,law,dec-1463-2022,transparencia-y-lucha-contra-la-corrupcion,1,main
+2022-10-20,law,c-367-22,codigo-penal,0,main
+2022-10-26,law,c-376-22,regimen-departamental,0,main
+2022-11-02,law,c-383-22,codigo-penal,1,main
+2022-11-03,law,c-386-22,codigo-nacional-de-seguridad-y-convivencia-ciudadana seguridad-ciudadana,2,main
+2022-11-04,law,ley-2272-2022,codigo-penal orden-publico,9,main
+2022-11-09,law,c-395-22,codigo-nacional-de-transito,1,main
+2022-11-17,law,c-406-22,codigo-nacional-de-seguridad-y-convivencia-ciudadana seguridad-ciudadana,2,main
+2022-11-23,law,c-411-22,codigo-penal,2,main
+2022-11-23,law,c-414-22,cpaca reforma-del-cpaca-2021,0,main
+2022-11-23,law,c-415-22,codigo-sustantivo-del-trabajo licencia-de-paternidad-y-parental,0,main
+2022-11-23,law,c-416-22,codigo-civil,0,main
+2022-11-23,unexplained,,codigo-penal,1,main
+2022-11-30,law,c-438-22,transparencia-y-lucha-contra-la-corrupcion,1,main
+2022-12-13,start,ley-2277-2022,reforma-tributaria-2022,97,main
+2022-12-13,law,ley-2277-2022,codigo-penal estatuto-tributario regimen-de-insolvencia plan-nacional-de-desarrollo-2018-2022 ley-de-inversion-social ley-de-crecimiento-economico reforma-tributaria-estructural-2016,108,main
+2022-12-30,start,ley-2220-2022,estatuto-de-conciliacion,147,main
+2022-12-30,law,ley-2220-2022,codigo-general-del-proceso cpaca codigo-nacional-de-seguridad-y-convivencia-ciudadana estatuto-de-registro-de-instrumentos-publicos,11,main
+2023-01-01,law,res-cne-1-2023,estatuto-basico-de-los-partidos,1,main
+2023-01-04,law,ley-2281-2023,obesidad,1,main
+2023-01-05,law,ley-2283-2023,codigo-nacional-de-transito,5,main
+2023-02-02,law,c-014-23,codigo-penal codigo-de-procedimiento-penal seguridad-ciudadana,10,main
+2023-02-16,law,c-030-23,codigo-general-disciplinario,3,main
+2023-02-23,law,c-036-23,regimen-departamental,2,main
+2023-02-23,law,c-037-23,seguridad-ciudadana,1,main
+2023-03-01,law,c-043-23,codigo-penal seguridad-ciudadana,2,main
+2023-03-08,law,c-053-23,estatuto-tributario ley-de-crecimiento-economico,0,main
+2023-03-08,law,c-054-23,regimen-municipal regimen-departamental,3,main
+2023-03-09,law,ley-2292-2023,codigo-penal codigo-de-procedimiento-penal,11,main
+2023-03-16,law,c-069-23,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2023-03-22,law,c-078-23,codigo-sustantivo-del-trabajo,1,main
+2023-03-23,law,c-080-23,proteccion-de-la-competencia transparencia-y-lucha-contra-la-corrupcion superintendencia-de-industria-y-comercio-1992,5,main
+2023-03-23,law,c-081-23,codigo-nacional-de-seguridad-y-convivencia-ciudadana seguridad-ciudadana,0,main
+2023-04-19,law,c-108-23,integracion-social-de-personas-con-limitacion,1,main
+2023-04-19,law,c-110-23,codigo-civil,0,main
+2023-04-20,law,c-111-23,procedimiento-de-la-jep,1,main
+2023-04-20,law,c-112-23,regimen-departamental,1,main
+2023-04-20,law,c-113-23,codigo-electoral,1,main
+2023-05-19,start,ley-2294-2023,plan-nacional-de-desarrollo-2022-2026,372,main
+2023-05-19,law,ley-2294-2023,codigo-de-comercio sistema-de-seguridad-social-integral estatuto-tributario estatuto-general-de-contratacion codigo-nacional-de-transito estatuto-organico-del-sistema-financiero ley-1150-2007 ley-general-ambiental ley-de-desarrollo-territorial ley-de-victimas-y-restitucion-de-tierras ley-general-de-educacion sociedad-por-acciones-simplificada codigo-de-extincion-de-dominio sistema-general-de-participaciones estatuto-organico-del-presupuesto tecnologias-de-la-informacion-y-las-comunicaciones reforma-agraria ley-general-de-cultura ley-general-de-turismo desarrollo-urbano-y-vivienda ley-electrica energias-renovables cambio-climatico mipymes ley-de-emprendimiento sistema-general-de-regalias mercado-de-valores evaluacion-de-la-calidad-de-la-educacion ciencia-tecnologia-e-innovacion obesidad talento-humano-en-salud vivienda-y-habitat comisarias-de-familia servicios-postales accion-comunal responsabilidad-fiscal-y-transparencia carbono-neutralidad agencia-nacional-de-seguridad-vial politica-integral-migratoria servicio-de-reclutamiento operacion-del-sistema-de-salud plan-nacional-de-desarrollo-2018-2022 ley-de-inversion-social ley-de-crecimiento-economico reforma-tributaria-estructural-2016,103,main
+2023-05-31,law,c-192-23,codigo-penal violencia-contra-las-mujeres,0,main
+2023-06-01,law,c-197-23,sistema-de-seguridad-social-integral reforma-pensional-2003,2,main
+2023-06-07,law,c-209-23,control-fiscal,7,main
+2023-06-20,law,c-276-21,plan-nacional-de-desarrollo-2018-2022,1,main
+2023-06-28,law,ley-2297-2023,cultura-del-emprendimiento,1,main
+2023-07-04,law,ley-2298-2023,regimen-departamental,1,main
+2023-07-05,law,al-1-2023,constitucion,1,main
+2023-07-06,law,al-2-2023,constitucion,2,main
+2023-07-12,law,c-260-23,codigo-civil,0,main
+2023-07-19,law,c-270-23,sistema-de-seguridad-social-integral ley-antitramites,0,main
+2023-07-24,law,al-3-2023,constitucion,3,main
+2023-07-31,law,dec-1276-2023,servicios-publicos-domiciliarios ley-electrica,6,main
+2023-07-31,law,dec-1277-2023,ley-general-ambiental ley-de-desarrollo-territorial,4,main
+2023-07-31,law,ley-2306-2023,codigo-sustantivo-del-trabajo,1,main
+2023-08-15,law,c-315-23,codigo-de-comercio,0,main
+2023-08-15,law,c-318-23,codigo-general-del-proceso,1,main
+2023-08-17,law,ley-2316-2023,codigo-penal,1,main
+2023-08-24,law,c-324-23,codigo-sustantivo-del-trabajo licencia-de-paternidad-y-parental,0,main
+2023-08-25,law,ley-2318-2023,codigo-nacional-de-seguridad-y-convivencia-ciudadana,4,main
+2023-08-29,law,c-331-23,desconexion-laboral,0,main
+2023-08-29,law,ley-2319-2023,ley-general-de-cultura,1,main
+2023-08-29,law,ley-2320-2023,ley-general-ambiental,1,main
+2023-09-05,law,ley-2322-2023,ley-organica-del-plan-de-desarrollo,1,main
+2023-09-21,law,ley-2329-2023,proteccion-integral-a-la-familia,3,main
+2023-09-25,start,ley-2332-2023,nacionalidad,56,main
+2023-09-25,law,ley-2333-2023,reforma-del-sistema-de-salud-2011,1,main
+2023-09-26,law,c-380-23,codigo-nacional-de-seguridad-y-convivencia-ciudadana seguridad-ciudadana,0,main
+2023-10-04,law,c-390-23,reforma-tributaria-2022,1,main
+2023-10-04,law,c-391-23,reforma-tributaria-2022,1,main
+2023-10-12,law,ley-2337-2023,ley-de-emprendimiento,2,main
+2023-10-25,law,c-437-23,estatuto-general-de-contratacion,0,main
+2023-11-02,law,c-462-23,estatuto-general-de-contratacion,0,main
+2023-11-02,law,c-463-23,servicios-publicos-domiciliarios ley-electrica,6,main
+2023-11-08,law,c-470-23,codigo-nacional-de-transito,1,main
+2023-11-15,law,dec-1962-2023,estatuto-organico-del-sistema-financiero,4,main
+2023-11-16,law,c-489-23,estatuto-tributario reforma-tributaria-2022,2,main
+2023-11-21,law,c-504-23,codigo-de-extincion-de-dominio,0,main
+2023-11-22,law,c-506-23,reforma-tributaria-2022,1,main
+2023-11-22,law,c-507-23,codigo-sustantivo-del-trabajo reduccion-de-la-jornada-laboral,0,main
+2023-11-24,law,ley-2341-2023,servicio-de-reclutamiento,1,main
+2023-11-28,law,c-520-23,racionalizacion-de-tramites-2005,0,main
+2023-11-29,law,c-525-23,orden-publico,1,main
+2023-12-05,law,c-537-23,plan-nacional-de-desarrollo-2022-2026,1,main
+2023-12-05,law,c-539-23,ley-general-ambiental ley-de-desarrollo-territorial,3,main
+2023-12-05,law,c-540-23,estatuto-tributario,2,main
+2023-12-29,law,ley-1952-2019,codigo-disciplinario-unico,1,main
+2023-12-29,law,ley-2094-2021,codigo-general-disciplinario,1,main
+2023-12-29,law,ley-2343-2023,ley-de-victimas-y-restitucion-de-tierras,2,main
+2024-01-01,law,ley-2294-2023,plan-nacional-de-desarrollo-2018-2022,1,main
+2024-01-10,law,ley-2346-2024,codigo-penitenciario-y-carcelario,1,main
+2024-02-08,law,c-028-24,codigo-de-la-infancia-y-la-adolescencia,1,main
+2024-02-15,law,c-037-24,plan-nacional-de-desarrollo-2022-2026,1,main
+2024-02-22,law,c-052-24,agencia-nacional-de-seguridad-vial,1,main
+2024-02-22,law,c-053-24,codigo-de-procedimiento-penal,0,main
+2024-03-13,law,res-cne-40-2024,estatuto-basico-de-los-partidos,1,main
+2024-03-21,law,c-090-24,codigo-nacional-de-seguridad-y-convivencia-ciudadana,0,main
+2024-04-03,law,c-096-24,codigo-civil,0,main
+2024-04-11,law,c-117-24,plan-nacional-de-desarrollo-2022-2026,2,main
+2024-04-17,law,c-126-24,transparencia-y-lucha-contra-la-corrupcion,1,main
+2024-05-02,law,c-148-24,codigo-de-procedimiento-penal,0,main
+2024-05-09,law,ley-2354-2024,prevencion-del-consumo-de-tabaco,1,main
+2024-05-28,law,ley-2356-2024,codigo-penal codigo-de-procedimiento-penal,3,main
+2024-06-14,law,ley-2360-2024,atencion-integral-del-cancer,2,main
+2024-06-18,law,ley-2364-2024,codigo-penal,1,main
+2024-06-20,start,ley-2365-2024,acoso-sexual-laboral-y-educacion-superior,25,main
+2024-06-20,law,ley-2365-2024,codigo-general-disciplinario acoso-laboral,3,main
+2024-07-11,law,c-280-24,ley-general-ambiental,0,main
+2024-07-12,law,ley-2375-2024,codigo-penal codigo-de-procedimiento-penal,2,main
+2024-07-15,law,ley-2379-2024,regimen-municipal,1,main
+2024-07-15,law,ley-2380-2024,estatuto-tributario,2,main
+2024-07-16,start,ley-2381-2024,reforma-pensional-2024,4,main
+2024-07-16,law,al-1-2024,constitucion,1,main
+2024-07-17,law,c-288-24,codigo-sustantivo-del-trabajo,0,main
+2024-07-18,law,c-292-24,ley-general-de-educacion,0,main
+2024-07-19,law,ley-2383-2024,convivencia-escolar,1,main
+2024-07-19,law,ley-2384-2024,servicio-de-reclutamiento,10,main
+2024-07-25,law,ley-2387-2024,procedimiento-sancionatorio-ambiental,20,main
+2024-07-26,law,ley-2388-2024,codigo-civil codigo-general-del-proceso codigo-sustantivo-del-trabajo sistema-de-seguridad-social-integral,5,main
+2024-07-26,law,ley-2390-2024,reglamento-del-congreso,13,main
+2024-07-26,law,ley-2393-2024,codigo-nacional-de-transito,1,main
+2024-08-02,law,ley-2405-2024,reglamento-del-congreso,9,main
+2024-08-08,law,ley-2411-2024,estatuto-tributario,1,main
+2024-08-09,law,ley-2416-2024,tecnologias-de-la-informacion-y-las-comunicaciones,2,main
+2024-08-09,law,ley-2418-2024,empleo-publico-y-carrera-administrativa,4,main
+2024-08-22,law,ley-2421-2024,ley-de-victimas-y-restitucion-de-tierras,57,main
+2024-09-05,law,c-370-24,plan-nacional-de-desarrollo-2022-2026,1,main
+2024-09-06,law,ley-2422-2024,regimen-municipal ley-617-2000,2,main
+2024-09-06,law,ley-2423-2024,regimen-municipal,1,main
+2024-09-06,law,ley-2424-2024,partidos-y-procesos-electorales ley-de-cuotas,3,main
+2024-09-09,law,ley-2427-2024,ley-general-de-educacion,1,main
+2024-09-19,law,c-397-24,estatuto-anticorrupcion transparencia-y-lucha-contra-la-corrupcion,2,main
+2024-09-19,law,c-400-24,trabajo-remoto,1,main
+2024-09-25,law,c-408-24,codigo-general-del-proceso,0,main
+2024-10-02,law,c-539-23,ley-general-ambiental,2,main
+2024-10-03,law,c-416-24,orden-publico,1,main
+2024-10-09,law,c-426-24,codigo-general-del-proceso,0,main
+2024-10-09,law,ley-2430-2024,ley-estatutaria-de-la-administracion-de-justicia,106,main
+2024-10-10,law,c-430-24,plan-nacional-de-desarrollo-2022-2026,1,main
+2024-10-16,law,c-438-24,plan-nacional-de-desarrollo-2022-2026,1,main
+2024-10-28,law,ley-2409-2024,ley-de-emprendimiento,1,main
+2024-11-08,law,ley-2434-2024,financiacion-de-vivienda,2,main
+2024-11-12,law,ley-2435-2024,codigo-nacional-de-transito,1,main
+2024-11-14,law,c-479-24,ley-antitramites,1,main
+2024-11-21,law,c-489-24,plan-nacional-de-desarrollo-2022-2026,1,main
+2024-12-05,law,c-517-24,codigo-sustantivo-del-trabajo,1,main
+2024-12-09,law,ley-2436-2024,reglamento-del-congreso,1,main
+2024-12-12,law,ley-2437-2024,regimen-de-insolvencia,2,main
+2024-12-19,law,ley-2439-2024,estatuto-del-consumidor,5,main
+2024-12-27,law,ley-2442-2024,codigo-civil,4,main
+2024-12-27,law,al-3-2024,constitucion,2,main
+2025-01-17,law,res-cne-20-2025,estatuto-basico-de-los-partidos,1,main
+2025-02-05,law,c-038-25,sociedad-por-acciones-simplificada,1,main
+2025-02-05,law,c-039-25,codigo-civil personas-con-discapacidad-mental,2,main
+2025-02-06,law,al-1-2025,constitucion,1,main
+2025-02-10,law,ley-2444-2025,estatuto-del-consumidor,1,main
+2025-02-11,law,ley-2446-2025,codigo-penal,1,main
+2025-02-11,law,ley-2445-2025,codigo-general-del-proceso,42,main
+2025-02-12,law,c-052-25,codigo-civil,0,main
+2025-02-13,law,ley-2447-2025,codigo-civil personas-con-discapacidad-mental,16,main
+2025-02-27,law,c-071-25,codigo-sustantivo-del-trabajo,0,main
+2025-03-05,law,ley-2450-2025,codigo-nacional-de-seguridad-y-convivencia-ciudadana,4,main
+2025-03-20,law,c-098-25,codigo-civil,0,main
+2025-03-20,law,c-099-25,reforma-tributaria-2022,1,main
+2025-04-02,law,c-119-25,politica-integral-migratoria,1,main
+2025-04-02,law,ley-2453-2025,partidos-y-procesos-electorales,2,main
+2025-04-22,law,ley-2454-2025,codigo-nacional-de-transito,2,main
+2025-04-22,law,ley-2455-2025,codigo-penal codigo-nacional-de-seguridad-y-convivencia-ciudadana,8,main
+2025-04-23,law,c-138-25,ley-1150-2007 plan-nacional-de-desarrollo-2018-2022,0,main
+2025-04-24,law,c-142-25,vivienda-y-habitat plan-nacional-de-desarrollo-2022-2026,5,main
+2025-05-14,law,c-183-25,codigo-de-procedimiento-penal,1,main
+2025-05-22,law,c-198-25,codigo-penal,1,main
+2025-05-29,law,c-208-25,regimen-municipal modernizacion-de-los-municipios,2,main
+2025-06-11,law,c-244-25,plan-nacional-de-desarrollo-2022-2026 reforma-tributaria-estructural-2016,2,main
+2025-06-18,law,ley-2460-2025,salud-mental,17,main
+2025-06-18,law,ley-2461-2025,regimen-municipal modernizacion-de-los-municipios,2,main
+2025-06-18,law,ley-2462-2025,reforma-agraria desarrollo-agropecuario-y-pesquero mujeres-rurales,23,main
+2025-06-21,unexplained,,plan-nacional-de-desarrollo-2022-2026,1,main
+2025-06-25,start,ley-2466-2025,reforma-laboral-2025,64,main
+2025-06-25,law,ley-2466-2025,codigo-sustantivo-del-trabajo ley-789-2002 teletrabajo igualdad-salarial,27,main
+2025-06-26,law,c-276-25,ley-de-formalizacion-y-generacion-de-empleo,0,main
+2025-06-26,law,c-278-25,codigo-de-procedimiento-penal,0,main
+2025-07-09,law,ley-2471-2025,ley-general-de-educacion,1,main
+2025-07-09,law,ley-2473-2025,codigo-civil codigo-general-del-proceso,2,main
+2025-07-09,law,ley-2474-2025,gestion-del-riesgo-de-desastres,11,main
+2025-07-11,law,ley-2477-2025,codigo-penal codigo-de-procedimiento-penal financiacion-del-terrorismo,12,main
+2025-07-11,law,ley-2478-2025,reforma-tributaria-estructural-2016,1,main
+2025-07-16,law,ley-2479-2025,codigo-de-la-infancia-y-la-adolescencia ley-de-formalizacion-y-generacion-de-empleo ley-de-emprendimiento,5,main
+2025-07-16,law,ley-2481-2025,ley-general-de-educacion,1,main
+2025-07-16,law,ley-2485-2025,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2025-07-16,law,ley-2486-2025,codigo-nacional-de-transito,4,main
+2025-07-18,law,ley-2489-2025,tecnologias-de-la-informacion-y-las-comunicaciones,1,main
+2025-07-23,law,ley-2492-2025,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2025-07-24,law,c-136-25,regimen-municipal,1,main
+2025-07-31,law,ley-2498-2025,reglamento-del-congreso,8,main
+2025-07-31,law,ley-2501-2025,codigo-de-recursos-naturales,3,main
+2025-07-31,law,ley-2503-2025,convivencia-escolar,1,main
+2025-08-02,law,ley-2507-2025,ley-del-deporte,1,main
+2025-08-06,law,ley-2524-2025,codigo-general-del-proceso codigo-de-la-infancia-y-la-adolescencia,4,main
+2025-08-08,law,ley-2530-2025,codigo-de-la-infancia-y-la-adolescencia,1,main
+2025-08-21,law,ley-2538-2025,sistema-general-de-participaciones-2007,1,main
+2025-08-28,law,ley-2539-2025,reforma-agraria,4,main
+2025-08-28,law,ley-2541-2025,codigo-general-del-proceso,3,main
+2025-09-03,law,c-364-25,plan-nacional-de-desarrollo-2018-2022,0,main
+2025-10-02,law,c-411-25,codigo-civil,0,main
+2025-10-02,law,c-412-25,codigo-civil,0,main
+2025-10-15,law,c-428-25,codigo-civil,0,main
+2025-10-27,law,dec-1136-2025,codigo-general-del-proceso,10,main
+2025-10-29,law,c-443-25,codigo-de-procedimiento-penal,0,main
+2025-10-30,law,c-447-25,ley-general-de-turismo,1,main
+2025-12-11,law,c-504-25,codigo-penal seguridad-ciudadana,2,main
+2025-12-30,law,dec-1474-2025,estatuto-tributario,2,main
+2026-01-08,law,ley-2564-2026,salud-mental,3,main
+2026-01-23,law,res-cne-244-2026,estatuto-basico-de-los-partidos,1,main
+2026-01-29,law,c-007-26,procedimiento-de-la-jep,1,main
+2026-02-04,law,c-017-26,codigo-sustantivo-del-trabajo,0,main
+2026-02-11,law,dec-150-2026,uso-eficiente-del-agua plan-nacional-de-desarrollo-2018-2022,2,main
+2026-02-19,law,c-027-26,codigo-procesal-del-trabajo-1948,0,main
+2026-02-19,law,ley-2568-2026,educacion-superior,5,main
+2026-02-24,law,dec-176-2026,sistema-general-de-participaciones-2007,1,main
+2026-02-24,law,dec-177-2026,ley-general-ambiental,1,main
+2026-02-25,law,dec-173-2026,estatuto-tributario,3,main
+2026-02-25,law,c-033-26,plan-nacional-de-desarrollo-2022-2026,2,main
+2026-02-25,law,c-034-26,codigo-penal,1,main
+2026-02-25,law,c-035-26,codigo-penal,1,main
+2026-02-26,law,c-039-26,plan-nacional-de-desarrollo-2022-2026,0,main
+2026-03-06,law,dec-228-2026,sistema-general-de-participaciones-2007,2,main
+2026-03-13,law,dec-240-2026,estatuto-tributario,4,main
+2026-03-13,law,c-049-26,plan-nacional-de-desarrollo-2022-2026,1,main
+2026-03-26,law,c-062-26,ley-789-2002,1,main
+2026-03-26,law,c-067-26,codigo-penal violencia-contra-las-mujeres seguridad-ciudadana,0,main
+2026-03-30,law,ley-2570-2026,ley-estatutaria-de-la-administracion-de-justicia,13,main
+2026-04-02,start,ley-2452-2025,codigo-procesal-del-trabajo,332,main
+2026-04-02,law,ley-2452-2025,codigo-general-del-proceso codigo-sustantivo-del-trabajo codigo-procesal-del-trabajo-1948,129,main
+2026-04-15,law,c-079-26,estatuto-tributario,2,main
+2026-04-15,law,c-080-26,regimen-municipal reglamento-del-congreso,2,main
+2026-04-15,law,c-081-26,codigo-sustantivo-del-trabajo reforma-laboral-2025,2,main
+2026-05-06,law,c-116-26,estatuto-organico-del-presupuesto,0,main
+2026-06-04,law,ley-2585-2026,plan-nacional-de-desarrollo-2018-2022,1,main
+2026-06-19,law,ley-2586-2026,ley-anticontrabando,1,main
+2026-06-21,law,c-072-25,reforma-tributaria-2022,1,main
+2026-07-09,law,ley-2475-2025,codigo-de-comercio,1,main
+2026-07-09,law,ley-2590-2026,codigo-penal,2,main
+2026-07-10,law,ley-2603-2026,codigo-sanitario-nacional,1,main
+2026-07-28,law,ley-2608-2026,codigo-penal trata-de-personas,17,main
+2026-07-29,law,ley-2613-2026,tecnologias-de-la-informacion-y-las-comunicaciones ciencia-tecnologia-e-innovacion,2,main
+2026-07-29,law,ley-2615-2026,estatuto-tributario,1,main
+2026-07-31,law,ley-2502-2025,codigo-penal,1,main
+2026-07-31,law,ley-2620-2026,codigo-sanitario-nacional donacion-de-componentes-anatomicos,5,main
+2026-08-12,law,ley-2621-2026,ley-general-de-cultura espectaculos-publicos-de-las-artes-escenicas,2,main
+2026-08-25,law,ley-2625-2026,codigo-de-comercio,1,main
+2026-08-25,law,ley-2627-2026,codigo-penal,2,main
+2026-08-27,law,ley-2630-2026,educacion-superior,5,main
+2026-08-28,law,ley-2631-2026,codigo-de-etica-y-disciplinario-del-congresista,1,main
+2026-09-09,law,dec-1386-2026,ley-general-de-educacion,1,main
+2026-09-09,law,dec-1387-2026,sistema-general-de-participaciones,1,main
+2026-09-09,law,dec-1388-2026,ley-general-de-educacion,1,main
+2026-09-15,law,ley-2633-2026,codigo-nacional-de-seguridad-y-convivencia-ciudadana,1,main
+2026-09-17,law,dec-1419-2026,estatuto-tributario,1,main
+2026-09-18,law,dec-1422-2026,ley-de-desarrollo-territorial vivienda-y-habitat,3,main
+2026-09-22,law,ley-2635-2026,codigo-nacional-de-transito,1,main
+2026-11-20,law,ley-2573-2026,habeas-data,1,futuro
+2027-01-01,law,dec-228-2026,sistema-general-de-participaciones-2007,2,futuro
+2027-01-01,law,c-116-26,estatuto-organico-del-presupuesto plan-nacional-de-desarrollo-2022-2026,4,futuro
+2027-01-09,law,ley-2592-2026,codigo-de-procedimiento-penal,1,futuro
+2027-04-01,law,ley-2381-2024,reforma-pensional-2024,92,futuro

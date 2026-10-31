@@ -1,0 +1,10 @@
+{
+  "path": "co",
+  "code": "CO",
+  "name": "Colombia",
+  "level": "country",
+  "repo": "https://github.com/lexifina/colombia-law",
+  "build": "built: 260 acts, 3,097 versions: the Constitución Política 1991 with its Actos Legislativos and Constitutional Court rulings, the codes and the statutes listed in README.md, each from its entry into force (repealed codes to their repeal)",
+  "register": "https://claude.ai/artifact/DdS9F6yqpPZtV2i7FGQhYZ",
+  "register_date": "2026-10-28"
+}

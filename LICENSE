@@ -1,0 +1,21 @@
+The legal texts are official texts of the Republic of Colombia, as compiled and published by the Secretaría General
+del Senado de la República in its "basedoc" collection:
+
+  Fuente: Secretaría General del Senado de la República, http://www.secretariasenado.gov.co/senado/basedoc/,
+  retrieved 28 October 2026.
+
+Under Ley 23 de 1982, art. 41, the Constitution, laws, decrees and judicial decisions may be reproduced freely,
+provided the official text is reproduced faithfully. The basedoc compilation is prepared by Avance Jurídico Casa
+Editorial, whose editorial notes, concordances and commentary are not reproduced here: only the official text and
+the facts its notes state (which act or ruling changed a provision, Diario Oficial numbers and dates, ruling
+numbers and dates) are used.
+
+Changes made by Lexifina: each version was converted to one Markdown file per provision, one paragraph per line;
+spacing, quotes and dashes were normalised; editorial markers were removed from the text and used only to date and
+credit each change; earlier versions were rebuilt from the earlier texts the source gives; and the versions were
+arranged as git commits credited to the acts and rulings that made each change. The wording of the law was not
+changed. Neither the Senate nor Avance Jurídico endorses this repository.
+
+Lexifina's own contributions (the arrangement of the history, the commit messages, the tables and the tools) are
+dedicated to the public domain under CC0 1.0 Universal:
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
