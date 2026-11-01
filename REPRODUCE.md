@@ -137,6 +137,7 @@ This file is written by the build on 2026-11-01, the day the source data was ret
 | Secretaría General del Senado, basedoc: Programa Familias en Acción (Ley 1532 de 2012), Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021), Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017), Beneficios a las personas adultas mayores (Ley 1171 de 2007), Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019), Costos de los servicios financieros (Ley 1793 de 2016), Atención integral de la primera infancia (Ley 1295 de 2009) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
+| Secretaría General del Senado, basedoc: Vigencias futuras excepcionales de las entidades territoriales (Ley 1483 de 2011), Atención en salud mental en casos de duelo por pérdida gestacional o perinatal (Ley 2310 de 2023), Lesiones personales con sustancias modelantes no permitidas: biopolímeros (Ley 2316 de 2023) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 
 Every word of law in this repository comes from these sources. Lexifina reads them and records each act's dated versions, and the laws that made each change, in one corpus file. This repository is built from that file.
 
@@ -576,20 +577,23 @@ Every word of law in this repository comes from these sources. Lexifina reads th
 | `sustancias-psicoactivas-presencia-de-menores` | Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019) | 1 | 2019-11-14 to 2019-11-14 |
 | `costos-de-los-servicios-financieros` | Costos de los servicios financieros (Ley 1793 de 2016) | 1 | 2016-07-07 to 2016-07-07 |
 | `atencion-integral-primera-infancia-2009` | Atención integral de la primera infancia (Ley 1295 de 2009) | 2 | 2009-10-06 to 2016-08-02 |
+| `vigencias-futuras-entidades-territoriales` | Vigencias futuras excepcionales de las entidades territoriales (Ley 1483 de 2011) | 1 | 2011-12-09 to 2011-12-09 |
+| `duelo-gestacional-y-perinatal` | Atención en salud mental en casos de duelo por pérdida gestacional o perinatal (Ley 2310 de 2023) | 1 | 2023-08-02 to 2023-08-02 |
+| `lesiones-con-biopolimeros` | Lesiones personales con sustancias modelantes no permitidas: biopolímeros (Ley 2316 de 2023) | 1 | 2023-08-17 to 2023-08-17 |
 
-The build made 2982 commits:
+The build made 2985 commits:
 
 | Commits | Kind |
 | ---: | --- |
-| 432 | first version of an act |
+| 435 | first version of an act |
 | 2547 | one law on its in-force day |
 | 3 | changes no amendment note explains, credited to the publisher |
 
 Other counts:
 - 6 commits on the branch `futuro`: laws not yet in force on 2026-11-01.
 - 47 commits dated 1 January 1970: in force before 1970, with the real day in their `In-force` trailer.
-- 2690 laws in the record.
-- 6987 tags.
+- 2692 laws in the record.
+- 6992 tags.
 
 ## Dates
 
@@ -601,13 +605,13 @@ When a law gives no date of its own, the default rule applies: Ley 4 de 1913 (C�
 
 `tools/build.py` turns the corpus into this history in one pass: one commit per law, on the day it took effect. The same corpus always gives the same commit hashes. `tools/check_repo.py` reads every version back from git and compares it with the corpus. `tools/on.py` shows the law as it stood on any date. The corpus format is described in `tools/SCHEMA.md`.
 
-- Corpus: sha256 `7d04837594903a93c38081b5880bfa20febbd9b42cc6c87cf0c1c4b052d876d9` (92794114 bytes).
+- Corpus: sha256 `58208c81e712c4de989017ab2ce3682b267799ff585861eb2536b971c5460df1` (92828721 bytes).
 - Builder blob hashes (`git hash-object`): `build.py` `a4faa25af85facb64b956b372f6b528aafdd7ec1`, `check.py` `3d00541d258745461ab52b1b0cb4e1716a27a95d`, `on.py` `644a6c0857fbcc72562032b58d57aa113fee0641`.
 - Python 3.12.10; git version 2.46.0.windows.1.
 
 ## Checks
 
-4206 versions of 432 acts read back from git on the day each took effect and on the day before: 0 mismatches. Trailers: 0 commits whose trailers git cannot parse. Health: 0 merge commits on main, 0 commit dates that go backwards, 0 commits dated after the build.
+4209 versions of 435 acts read back from git on the day each took effect and on the day before: 0 mismatches. Trailers: 0 commits whose trailers git cannot parse. Health: 0 merge commits on main, 0 commit dates that go backwards, 0 commits dated after the build.
 
 No second build of this corpus has been compared yet.
 
@@ -5111,6 +5115,18 @@ words read 'patrono(s)', from it 'empleador(es)', credited to Ley 50 de 1990 (as
 - In force 2016-07-07: Ley 1793 de 2016 (Ley 1793 de 2016, art. 4: 'La presente ley rige a partir de su promulgación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2016-07-07, Diario Oficial of 2016-07-07)).
 - In force 2016-08-02: Ley 1804 de 2016 (Ley 1804 de 2016: 'ARTÍCULO 28. VIGENCIA. La presente ley rige desde su promulgación y deroga la Ley 1295 de 2009, y las demás normas que le sean contrarias.').
 - In force 2019-11-14: Ley 2000 de 2019 (Ley 2000 de 2019, art. 7: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2019-11-14, Diario Oficial of 2019-11-14)).
+- Vigencias futuras excepcionales de las entidades territoriales (Ley 1483 de 2011), Atención en salud mental en casos de duelo por pérdida gestacional o perinatal (Ley 2310 de 2023), Lesiones personales con sustancias modelantes no permitidas: biopolímeros (Ley 2316 de 2023): versions are rebuilt per article from the basedoc's earlier texts, inline amendment markers and Notas de Vigencia, as for the Constitution and the Código Civil. Where the source names an act but gives no text after it, the article reads '[La fuente no da el texto vigente en esta fecha.]' for that period.
+- Constitutional Court rulings that struck text are laws of kind 'court', dated by the ruling's day as the source gives it; rulings that upheld text on a condition are court laws with a note and change no words.
+- In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives applies to that provision. The list below gives the day and the rule for each act.
+- Dates come only from the act itself: the Diario Oficial day on the act's own page wins over a day the code's notes give; a note's Diario Oficial day is not given to an act named only inside another act's quoted title; and an act whose vigencia clause has a general rule and exceptions is dated by the rule that covers the changed provision (Ley 890 de 2004: arts. 7 to 13 immediately, the rest from 1 January 2005; Ley 2502 de 2025: art. 296 of the Código Penal one year after promulgation; Ley 2080 de 2021: from publication).
+- The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text differs from today's only by that or by a change no note names, today's text is used from the latest named act's day. Articles where that happened: none.
+- Vigencias futuras excepcionales de las entidades territoriales (Ley 1483 de 2011): first version from 2011-12-09: Ley 1483 de 2011, art. 2: 'La presente ley rige a partir de la fecha de su publicación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2011-12-09, Diario Oficial of 2011-12-09)
+- Atención en salud mental en casos de duelo por pérdida gestacional o perinatal (Ley 2310 de 2023): first version from 2023-08-02: Ley 2310 de 2023, art. 8: 'La presente ley rige a partir de su promulgación y deroga disposiciones que le sean contrarias.' (sanctioned 2023-08-02, Diario Oficial of 2023-08-02)
+- Lesiones personales con sustancias modelantes no permitidas: biopolímeros (Ley 2316 de 2023): first version from 2023-08-17: Ley 2316 de 2023, art. 11: 'La presente ley rige a partir de su promulgación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2023-08-17, Diario Oficial of 2023-08-17)
+- Vigencias futuras excepcionales de las entidades territoriales (Ley 1483 de 2011) and the other acts of batch 125: the signature blocks printed after the last article ('La Presidenta del honorable Senado de la República, ...') are not part of the text: lesiones-con-biopolimeros art-0011.
+- In force 2011-12-09: Ley 1483 de 2011 (Ley 1483 de 2011, art. 2: 'La presente ley rige a partir de la fecha de su publicación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2011-12-09, Diario Oficial of 2011-12-09)).
+- In force 2023-08-02: Ley 2310 de 2023 (Ley 2310 de 2023, art. 8: 'La presente ley rige a partir de su promulgación y deroga disposiciones que le sean contrarias.' (sanctioned 2023-08-02, Diario Oficial of 2023-08-02)).
+- In force 2023-08-17: Ley 2316 de 2023 (Ley 2316 de 2023, art. 11: 'La presente ley rige a partir de su promulgación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2023-08-17, Diario Oficial of 2023-08-17)).
 
 ## What AI did and did not do
 
@@ -5129,6 +5145,7 @@ Model use at data-build time:
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
+- None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
