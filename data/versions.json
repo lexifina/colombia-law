@@ -28644,6 +28644,54 @@
      "sha256": "7162e641c8479f28a18fa7a50bd3babfd735ed8fe7980c1fa70b8e443f9739e3"
     }
    ]
+  },
+  {
+   "slug": "sustancias-psicoactivas-presencia-de-menores",
+   "short": "SPAM19",
+   "title": "Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2000_2019.html",
+   "versions": [
+    {
+     "from": "2019-11-14",
+     "units": 8,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2000_2019.html",
+     "sha256": "40c3d2194c49901760ac02862cb9da9a5a6ee892e517a63b6abc1d2491bd7c23"
+    }
+   ]
+  },
+  {
+   "slug": "costos-de-los-servicios-financieros",
+   "short": "CSFi16",
+   "title": "Costos de los servicios financieros (Ley 1793 de 2016)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1793_2016.html",
+   "versions": [
+    {
+     "from": "2016-07-07",
+     "units": 4,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1793_2016.html",
+     "sha256": "81fa487d7aed70bb3e801a8b6042f43c51fa96777c0e686936658d0ee00b47c9"
+    }
+   ]
+  },
+  {
+   "slug": "atencion-integral-primera-infancia-2009",
+   "short": "AIPI09",
+   "title": "Atención integral de la primera infancia (Ley 1295 de 2009)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1295_2009.html",
+   "versions": [
+    {
+     "from": "2009-10-06",
+     "units": 19,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1295_2009.html",
+     "sha256": "a002b1998f8b90391ef15f87ce2a66dc11fa099be8ab6ff88f71ab7294e49e95"
+    },
+    {
+     "from": "2016-08-02",
+     "units": 0,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1295_2009.html",
+     "sha256": "a002b1998f8b90391ef15f87ce2a66dc11fa099be8ab6ff88f71ab7294e49e95"
+    }
+   ]
   }
  ]
 }

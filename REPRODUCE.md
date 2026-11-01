@@ -136,6 +136,7 @@ This file is written by the build on 2026-11-01, the day the source data was ret
 | Secretaría General del Senado, basedoc: Condiciones mínimas de los centros de protección, centros de día e instituciones de atención de adultos mayores (Ley 1315 de 2009), Protección de las víctimas de crímenes con ácido (Ley 1639 de 2013), Sistema Nacional de Alertas Tempranas para la Prevención de la Violencia Sexual contra Niños, Niñas y Adolescentes (Ley 2137 de 2021) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Programa Familias en Acción (Ley 1532 de 2012), Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021), Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017), Beneficios a las personas adultas mayores (Ley 1171 de 2007), Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
+| Secretaría General del Senado, basedoc: Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019), Costos de los servicios financieros (Ley 1793 de 2016), Atención integral de la primera infancia (Ley 1295 de 2009) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 
 Every word of law in this repository comes from these sources. Lexifina reads them and records each act's dated versions, and the laws that made each change, in one corpus file. This repository is built from that file.
 
@@ -572,20 +573,23 @@ Every word of law in this repository comes from these sources. Lexifina reads th
 | `proteccion-al-adulto-mayor-2017` | Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017) | 2 | 2017-07-19 to 2026-03-26 |
 | `beneficios-personas-adultas-mayores` | Beneficios a las personas adultas mayores (Ley 1171 de 2007) | 1 | 2007-12-07 to 2007-12-07 |
 | `cuidadores-personas-con-discapacidad` | Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023) | 2 | 2023-06-28 to 2025-06-25 |
+| `sustancias-psicoactivas-presencia-de-menores` | Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019) | 1 | 2019-11-14 to 2019-11-14 |
+| `costos-de-los-servicios-financieros` | Costos de los servicios financieros (Ley 1793 de 2016) | 1 | 2016-07-07 to 2016-07-07 |
+| `atencion-integral-primera-infancia-2009` | Atención integral de la primera infancia (Ley 1295 de 2009) | 2 | 2009-10-06 to 2016-08-02 |
 
-The build made 2978 commits:
+The build made 2982 commits:
 
 | Commits | Kind |
 | ---: | --- |
-| 429 | first version of an act |
-| 2546 | one law on its in-force day |
+| 432 | first version of an act |
+| 2547 | one law on its in-force day |
 | 3 | changes no amendment note explains, credited to the publisher |
 
 Other counts:
 - 6 commits on the branch `futuro`: laws not yet in force on 2026-11-01.
 - 47 commits dated 1 January 1970: in force before 1970, with the real day in their `In-force` trailer.
-- 2688 laws in the record.
-- 6981 tags.
+- 2690 laws in the record.
+- 6987 tags.
 
 ## Dates
 
@@ -597,13 +601,13 @@ When a law gives no date of its own, the default rule applies: Ley 4 de 1913 (C�
 
 `tools/build.py` turns the corpus into this history in one pass: one commit per law, on the day it took effect. The same corpus always gives the same commit hashes. `tools/check_repo.py` reads every version back from git and compares it with the corpus. `tools/on.py` shows the law as it stood on any date. The corpus format is described in `tools/SCHEMA.md`.
 
-- Corpus: sha256 `446d542b8a2bdd4adcaae2bc7377e4dc3318908ec6ad37ce02c8003f0f94878e` (92759181 bytes).
+- Corpus: sha256 `7d04837594903a93c38081b5880bfa20febbd9b42cc6c87cf0c1c4b052d876d9` (92794114 bytes).
 - Builder blob hashes (`git hash-object`): `build.py` `a4faa25af85facb64b956b372f6b528aafdd7ec1`, `check.py` `3d00541d258745461ab52b1b0cb4e1716a27a95d`, `on.py` `644a6c0857fbcc72562032b58d57aa113fee0641`.
 - Python 3.12.10; git version 2.46.0.windows.1.
 
 ## Checks
 
-4202 versions of 429 acts read back from git on the day each took effect and on the day before: 0 mismatches. Trailers: 0 commits whose trailers git cannot parse. Health: 0 merge commits on main, 0 commit dates that go backwards, 0 commits dated after the build.
+4206 versions of 432 acts read back from git on the day each took effect and on the day before: 0 mismatches. Trailers: 0 commits whose trailers git cannot parse. Health: 0 merge commits on main, 0 commit dates that go backwards, 0 commits dated after the build.
 
 No second build of this corpus has been compared yet.
 
@@ -5093,6 +5097,20 @@ words read 'patrono(s)', from it 'empleador(es)', credited to Ley 50 de 1990 (as
 - In force 2017-07-19: Ley 1850 de 2017 (Ley 1850 de 2017, art. 18: 'La presente ley rige a partir de su promulgación y deroga las que le sean contrarias.' (sanctioned 2017-07-19, Diario Oficial of 2017-07-19)).
 - In force 2023-06-28: Ley 2297 de 2023 (Ley 2297 de 2023, art. 19: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2023-06-28, Diario Oficial of 2023-06-28)).
 - In force 2025-06-25: Ley 2466 de 2025 (Ley 2466 de 2025: 'ARTÍCULO 70. VIGENCIA Y DEROGATORIAS. La presente ley rige a partir de su promulgación y deroga o modifica todas las que le sean contrarias o incompatibles. Se deroga el literal b) del artículo 162 del Código Sustantivo del Trabajo.').
+- Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019), Costos de los servicios financieros (Ley 1793 de 2016), Atención integral de la primera infancia (Ley 1295 de 2009): versions are rebuilt per article from the basedoc's earlier texts, inline amendment markers and Notas de Vigencia, as for the Constitution and the Código Civil. Where the source names an act but gives no text after it, the article reads '[La fuente no da el texto vigente en esta fecha.]' for that period.
+- Constitutional Court rulings that struck text are laws of kind 'court', dated by the ruling's day as the source gives it; rulings that upheld text on a condition are court laws with a note and change no words.
+- In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives applies to that provision. The list below gives the day and the rule for each act.
+- Dates come only from the act itself: the Diario Oficial day on the act's own page wins over a day the code's notes give; a note's Diario Oficial day is not given to an act named only inside another act's quoted title; and an act whose vigencia clause has a general rule and exceptions is dated by the rule that covers the changed provision (Ley 890 de 2004: arts. 7 to 13 immediately, the rest from 1 January 2005; Ley 2502 de 2025: art. 296 of the Código Penal one year after promulgation; Ley 2080 de 2021: from publication).
+- The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text differs from today's only by that or by a change no note names, today's text is used from the latest named act's day. Articles where that happened: none.
+- Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019): first version from 2019-11-14: Ley 2000 de 2019, art. 7: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2019-11-14, Diario Oficial of 2019-11-14)
+- Costos de los servicios financieros (Ley 1793 de 2016): first version from 2016-07-07: Ley 1793 de 2016, art. 4: 'La presente ley rige a partir de su promulgación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2016-07-07, Diario Oficial of 2016-07-07)
+- Atención integral de la primera infancia (Ley 1295 de 2009): first version from 2009-10-06: Ley 1295 de 2009, art. 18: 'Esta ley entra en vigencia a los seis (6) meses de su promulgación una vez el Gobierno Nacional, de acuerdo con lo establecido en el artículo 3o, haga la planeación del proyecto y fije las metas para lograr el cubrimiento total e integral de los niños de la primera infancia de los niveles 1, 2 y 3 del Sisbén, durante la gestación y desde el nacimiento hasta los seis años.' (six months after promulgation in the Diario Oficial of 2009-04-06)
+- Atención integral de la primera infancia (Ley 1295 de 2009): Ley 1804 de 2016 (política de Estado para el Desarrollo Integral de la Primera Infancia de Cero a Siempre), art. 28 ('La presente ley rige desde su promulgación y deroga la Ley 1295 de 2009'), repealed Ley 1295 de 2009 from its promulgation, 2 August 2016 (the page marks each article '<Ley derogada por el artículo 28 de la Ley 1804 de 2016>'). The page prints every article's last text under the marker naming the repeal (18 articles); the marker is not part of the text. The last version, on 2016-08-02, holds no provisions; the version before it is checked against the text the page prints.
+- Consumo, porte y distribución de sustancias psicoactivas en lugares con presencia de menores de edad (Ley 2000 de 2019) and the other acts of batch 124: the signature blocks printed after the last article ('La Presidenta del honorable Senado de la República, ...') are not part of the text: sustancias-psicoactivas-presencia-de-menores art-0007.
+- In force 2009-10-06: Ley 1295 de 2009 (Ley 1295 de 2009, art. 18: 'Esta ley entra en vigencia a los seis (6) meses de su promulgación una vez el Gobierno Nacional, de acuerdo con lo establecido en el artículo 3o, haga la planeación del proyecto y fije las metas para lograr el cubrimiento total e integral de los niños de la primera infancia de los niveles 1, 2 y 3 del Sisbén, durante la gestación y desde el nacimiento hasta los seis años.' (six months after promulgation in the Diario Oficial of 2009-04-06)).
+- In force 2016-07-07: Ley 1793 de 2016 (Ley 1793 de 2016, art. 4: 'La presente ley rige a partir de su promulgación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2016-07-07, Diario Oficial of 2016-07-07)).
+- In force 2016-08-02: Ley 1804 de 2016 (Ley 1804 de 2016: 'ARTÍCULO 28. VIGENCIA. La presente ley rige desde su promulgación y deroga la Ley 1295 de 2009, y las demás normas que le sean contrarias.').
+- In force 2019-11-14: Ley 2000 de 2019 (Ley 2000 de 2019, art. 7: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2019-11-14, Diario Oficial of 2019-11-14)).
 
 ## What AI did and did not do
 
@@ -5111,6 +5129,7 @@ Model use at data-build time:
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
+- None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
