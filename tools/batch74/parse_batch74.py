@@ -1,0 +1,1350 @@
+"""Build corpus.d/99zzn-batch74.json for Colombia: Leyes 1608 de 2013 (liquidez del sector salud), 1949 de 2019 (reforma de
+las Leyes 1122 de 2007 y 1438 de 2011) and 1966 de 2019 (gestión y transparencia en el Sistema de Seguridad Social en Salud).
+SPEC_ALL keeps the specs of batches 50 to 62 (published there; their page
+repairs stay keyed by page).
+
+Reads only the source pages the batch fetchers saved; no network; deterministic. Uses batch 46's driver pattern.
+
+Usage:  python -X utf8 batch74/parse_batch74.py [--report] [--out-dir DIR] [--only slug,...]
+"""
+from __future__ import annotations
+
+import os
+import re
+import sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+COUNTRY = os.path.dirname(HERE)
+for _d in ("batch31", "batch30", "batch29", "batch27", "batch26", "batch25", "batch24", "batch23", "batch22", "batch21", "batch20",
+           "batch19", "batch18", "batch17", "batch16", "batch15", "batch14", "batch13", "batch12", "batch11", "batch10",
+           "batch8", "batch7", "batch6", "batch5", "batch4", "batch3", "phase2"):
+    sys.path.insert(0, os.path.join(COUNTRY, _d))
+import parse_batch30 as B30  # noqa: E402
+import parse_batch10 as B10  # noqa: E402
+
+B29, B27 = B30.B29, B30.B27
+B24 = B27.B24
+B23, B15, B13, B7, B4, P, E = B29.B23, B29.B15, B29.B13, B29.B7, B29.B4, B29.P, B29.E
+PART = "99zzn-batch74.json"
+BATCH = "batch 74"
+E.RETRIEVED = "2026-10-31"
+
+
+def on_publication(page, key, label, art, must, what="promulgation"):
+    """batch 7's start function, with a vigencia clause longer than 600 characters cut at its last full sentence
+    within them (batch 7 cut it mid-word: Ley 2466 de 2025 art. 70 ends in a long parágrafo)."""
+    def start(units, enacted, pub):
+        a = B7._clause(units, art, must, key, enacted, pub)
+        if len(a) > 600:
+            cut = a.rfind(". ", 0, 600)
+            cut = cut + 1 if cut > 0 else max(a.rfind(", ", 0, 600), a.rfind("; ", 0, 600))
+            a = re.sub(r"\s*PAR[ÁA]GRAFO(?: \w+)?\.$", "", a[:cut]) + " [...]"
+        day = enacted if what == "issue" else pub
+        return (day, f"{label}, art. {art}: '{a}' (sanctioned {enacted}, Diario Oficial of {pub})",
+                f"The act as promulgated ({label}, sanctioned {enacted}, Diario Oficial of {pub}), in force from {day} "
+                f"under its art. {art}: '{a}'")
+    return start
+# (batch 59: also a title that starts 'Sobre', as Ley 4 de 1913's 'Sobre régimen político y municipal')
+TITLE = re.compile(r"^Sobre\b|\b(por (medio de )?(la|el) cual|mediante la cual|por medio de las cuales|por medio del cual)\b", re.I)
+
+
+def page_title(page: str) -> str:
+    """The act's own title (batch 22's reading, also 'Por el cual' / 'Por medio del cual', within the first 30
+    paragraphs, after a 'FE DE ERRATAS'). A title the page breaks over two paragraphs (Ley 31 de 1992: '... el Banco de
+    la' / 'República para ...') is joined."""
+    ps = E.page_paras(page)[:30]
+    k = next(i for i, x in enumerate(ps) if TITLE.search(x))
+    t = ps[k]
+    if not t.rstrip().endswith(".") and k + 1 < len(ps) and ps[k + 1][:1].isupper() and ps[k + 1].rstrip().endswith(".") \
+            and not ps[k + 1].isupper():
+        t = t.rstrip() + " " + ps[k + 1]
+    return t.rstrip(". ")
+
+
+L550, L222 = "ley_0550_1999", "ley_0222_1995"
+L1450, L1753 = "ley_1450_2011", "ley_1753_2015"
+L1978, L1607, L2068 = "ley_1978_2019", "ley_1607_2012", "ley_2068_2020"
+L2157, L1395, L446 = "ley_2157_2021", "ley_1395_2010", "ley_0446_1998"
+L1930, L1561, D902 = "ley_1930_2018", "ley_1561_2012", "decreto_0902_2017"
+L2099, L2044 = "ley_2099_2021", "ley_2044_2020"
+L200, L4, L454 = "ley_0200_1995", "ley_0004_1913", "ley_0454_1998"
+FIRST_550 = "1999-12-30"
+
+
+def start_550(units, enacted, pub):
+    """Ley 550 de 1999: art. 79, in force for five years from its publication in the Diario Oficial. First published in
+    Diario Oficial No. 43.836 of 30 December 1999; the page prints the text republished in Diario Oficial No. 43.940 of
+    19 March 2000 to correct transcription errors (editor's note on the page). Dated from the first publication."""
+    a = B7._clause(units, "79", "Esta ley regirá durante cinco (5) años, contados a partir la fecha de su publicación en el "
+                   "Diario Oficial", "Ley 550", enacted, pub)
+    head = " ".join(E.plain(it[1]) for u in units[:1] for it in u["items"] if it[0] == "p")
+    B23._need("originalmente publicada en el Diario Oficial No. 43.836 de fecha 30 de diciembre de 1999" in head
+              and "publicada nuevamente para corregir errores de transcripción" in head, "Ley 550 first publication")
+    day = FIRST_550
+    return (day, f"Ley 550 de 1999, art. 79: '{a}' First published in Diario Oficial No. 43.836 of {day}; republished to "
+                 f"correct transcription errors in Diario Oficial No. 43.940 of {pub}, whose text is the one given here.",
+            f"The act as promulgated (Ley 550 de 1999, sanctioned {enacted}, first published in Diario Oficial No. 43.836 of "
+            f"{day}; text as republished in Diario Oficial No. 43.940 of {pub}), in force from publication under its art. "
+            f"79: '{a}'")
+
+
+SPEC_ALL = [
+    ("reestructuracion-empresarial-1999", L550, "ley-550-1999", "LRE99",
+     "Reestructuración empresarial (Ley 550 de 1999)", start_550),
+    ("regimen-de-sociedades-1995", L222, "ley-222-1995", "LSoc95", "Régimen de sociedades (Ley 222 de 1995)",
+     B10.after_months(L222, "Ley 222", "Ley 222 de 1995", "237", "Esta ley empezará a regir al vencimiento de los seis "
+                      "meses contados a partir de su promulgación", 6, "six months")),
+    ("plan-nacional-de-desarrollo-2010-2014", L1450, "ley-1450-2011", "PND10",
+     "Plan Nacional de Desarrollo 2010-2014 (Ley 1450 de 2011)",
+     on_publication(L1450, "Ley 1450", "Ley 1450 de 2011", "276", "La presente ley rige a partir de la fecha de su publicación")),
+    ("plan-nacional-de-desarrollo-2014-2018", L1753, "ley-1753-2015", "PND14",
+     "Plan Nacional de Desarrollo 2014-2018 (Ley 1753 de 2015)",
+     on_publication(L1753, "Ley 1753", "Ley 1753 de 2015", "267", "La presente ley rige a partir de su publicación")),
+    ("modernizacion-sector-tic-2019", L1978, "ley-1978-2019", "LTIC19",
+     "Modernización del sector de las Tecnologías de la Información y las Comunicaciones (Ley 1978 de 2019)",
+     on_publication(L1978, "Ley 1978", "Ley 1978 de 2019", "51", "La presente ley rige a partir de su promulgación")),
+    ("reforma-tributaria-2012", L1607, "ley-1607-2012", "RT12", "Reforma tributaria (Ley 1607 de 2012)",
+     on_publication(L1607, "Ley 1607", "Ley 1607 de 2012", "198", "La presente ley rige a partir de su promulgación")),
+    ("ley-general-de-turismo-2020", L2068, "ley-2068-2020", "LTur20", "Ley General de Turismo (Ley 2068 de 2020)",
+     on_publication(L2068, "Ley 2068", "Ley 2068 de 2020", "55", "La presente ley rige a partir de su sanción y publicación "
+                    "en el Diario Oficial")),
+    ("habeas-data-financiero-2021", L2157, "ley-2157-2021", "LHDF21",
+     "Habeas data financiero (Ley 2157 de 2021)",
+     on_publication(L2157, "Ley 2157", "Ley 2157 de 2021", "15", "Esta ley rige a partir de la fecha de publicación")),
+    ("descongestion-judicial-2010", L1395, "ley-1395-2010", "LDJ10", "Descongestión judicial (Ley 1395 de 2010)",
+     on_publication(L1395, "Ley 1395", "Ley 1395 de 2010", "122", "Esta ley rige a partir de su promulgación")),
+    ("descongestion-y-acceso-a-la-justicia-1998", L446, "ley-446-1998", "LDAJ98",
+     "Descongestión, eficiencia y acceso a la justicia (Ley 446 de 1998)",
+     on_publication(L446, "Ley 446", "Ley 446 de 1998", "163", "Esta ley rige desde su publicación")),
+    ("gestion-integral-de-los-paramos", L1930, "ley-1930-2018", "LPar18",
+     "Gestión integral de los páramos (Ley 1930 de 2018)",
+     on_publication(L1930, "Ley 1930", "Ley 1930 de 2018", "33", "La presente ley rige a partir de la fecha de su promulgación")),
+    ("titulacion-de-la-posesion", L1561, "ley-1561-2012", "LTit12",
+     "Titulación de la posesión y saneamiento de la falsa tradición (Ley 1561 de 2012)",
+     B10.after_months(L1561, "Ley 1561", "Ley 1561 de 2012", "27", "Esta ley empezará a regir seis (6) meses después de su "
+                      "promulgación", 6, "six months")),
+    ("reforma-rural-integral-tierras", D902, "dec-902-2017", "DRRI17",
+     "Reforma Rural Integral en materia de tierras (Decreto Ley 902 de 2017)",
+     on_publication(D902, "Decreto 902", "Decreto Ley 902 de 2017", "82", "El presente decreto ley rige a partir de su "
+                    "expedición", what="issue")),
+    ("transicion-energetica", L2099, "ley-2099-2021", "LTE21", "Transición energética (Ley 2099 de 2021)",
+     on_publication(L2099, "Ley 2099", "Ley 2099 de 2021", "58", "La presente ley rige a partir de la fecha de su promulgación")),
+    ("saneamiento-de-asentamientos-humanos", L2044, "ley-2044-2020", "LSAH20",
+     "Saneamiento de predios ocupados por asentamientos humanos ilegales (Ley 2044 de 2020)",
+     on_publication(L2044, "Ley 2044", "Ley 2044 de 2020", "33", "La presente ley rige a partir de su promulgación")),
+]
+
+
+def after_days(page, key, label, art, must, days, words, base="sanction"):
+    """A start function for an act in force a number of calendar days after its sanction (or promulgation)."""
+    import datetime
+
+    def start(units, enacted, pub):
+        a = B7._clause(units, art, must, key, enacted, pub)
+        frm = enacted if base == "sanction" else pub
+        day = (datetime.date.fromisoformat(frm) + datetime.timedelta(days=days)).isoformat()
+        return (day, f"{label}, art. {art}: '{a[:600]}' ({words} after its {base} on {frm}, counted in calendar days)",
+                f"The act as sanctioned ({label}, sanctioned {enacted}, Diario Oficial of {pub}), in force {words} after "
+                f"its {base} ({day}, counted in calendar days) under its art. {art}: '{a[:600]}'")
+    return start
+
+
+def default_rule(page, label):
+    """No vigencia clause: in force two months after promulgation (Ley 4 de 1913, arts. 52-53, the corpus's default
+    rule; for Ley 4 de 1913 itself, the rule it states)."""
+    def start(units, enacted, pub):
+        day = E.add_months(pub, 2)
+        return (day, f"{label}: no article fixes its start; Ley 4 de 1913, art. 52 ('La ley no obliga sino en virtud de "
+                     f"su promulgación, y su observancia principia dos meses después de promulgada'): promulgated in the "
+                     f"Diario Oficial of {pub}, in force {day}",
+                f"The act as promulgated ({label}, sanctioned {enacted}, Diario Oficial of {pub}), in force two months "
+                f"after its promulgation ({day}) under the general rule of Ley 4 de 1913, art. 52")
+    return start
+
+
+SPEC_ALL += [
+    ("codigo-disciplinario-unico-1995", L200, "ley-200-1995", "CDU95", "Código Disciplinario Único (Ley 200 de 1995)",
+     after_days(L200, "Ley 200", "Ley 200 de 1995", "177", "Esta Ley regirá cuarenta y cinco (45) días después de su sanción",
+                45, "forty-five days")),
+    ("regimen-politico-y-municipal", L4, "ley-4-1913", "CRPM", "Código de Régimen Político y Municipal (Ley 4 de 1913)",
+     default_rule(L4, "Ley 4 de 1913")),
+    ("economia-solidaria", L454, "ley-454-1998", "LES98", "Economía solidaria (Ley 454 de 1998)",
+     on_publication(L454, "Ley 454", "Ley 454 de 1998", "67", "La presente ley empezará a regir a partir de su promulgación")),
+]
+D4633, D4634, D4635 = "decreto_4633_2011", "decreto_4634_2011", "decreto_4635_2011"
+ORIG_VIG = ("El presente decreto rige a partir de su promulgación, tendrá una vigencia de 10 años y deroga todas las "
+            "disposiciones que le sean contrarias.")
+
+
+def from_box_original(page, label, art):
+    """The ethnic victims' decree-laws of 2011: their vigencia article as issued ('El presente decreto rige a partir de su
+    promulgación, tendrá una vigencia de 10 años ...', the article's 'Texto original' box; Ley 2078 de 2021 later
+    replaced the article to extend the term to 9 December 2031). In force from promulgation."""
+    def start(units, enacted, pub):
+        u = next(x for x in units if (x["name"] or "") == art)
+        box = [E.plain(E.html.unescape(it[2])) for it in u["items"] if it[0] == "box" and it[1] == "Legislación Anterior"]
+        B23._need(len(box) == 1 and "Texto original del " + label.replace("Decreto Ley", "Decreto") in box[0]
+                  and ORIG_VIG in box[0] and pub, f"{page} art. {art}: original vigencia")
+        a = ORIG_VIG
+        return (pub, f"{label}, art. {art} as issued: '{a}' (issued {enacted}, Diario Oficial of {pub})",
+                f"The act as promulgated ({label}, issued {enacted}, Diario Oficial of {pub}), in force from {pub} under "
+                f"its art. {art} as issued: '{a}'")
+    return start
+
+
+SPEC_ALL += [
+    ("victimas-pueblos-indigenas", D4633, "dec-4633-2011", "DLVInd",
+     "Víctimas pertenecientes a pueblos y comunidades indígenas (Decreto Ley 4633 de 2011)",
+     from_box_original(D4633, "Decreto Ley 4633 de 2011", "194")),
+    ("victimas-pueblo-rrom", D4634, "dec-4634-2011", "DLVRrom",
+     "Víctimas pertenecientes al pueblo Rrom o Gitano (Decreto Ley 4634 de 2011)",
+     from_box_original(D4634, "Decreto Ley 4634 de 2011", "123")),
+    ("victimas-comunidades-negras", D4635, "dec-4635-2011", "DLVAfro",
+     "Víctimas pertenecientes a comunidades negras, afrocolombianas, raizales y palenqueras (Decreto Ley 4635 de 2011)",
+     from_box_original(D4635, "Decreto Ley 4635 de 2011", "156")),
+]
+L1610, L1816, L1719 = "ley_1610_2013", "ley_1816_2016", "ley_1719_2014"
+
+
+def start_1816(units, enacted, pub):
+    """Ley 1816 de 2016: in force from 1 January 2017 under its art. 42."""
+    a = B7._clause(units, "42", "La presente ley entra a regir el 1o de enero del año 2017", "Ley 1816", enacted, pub)
+    day = "2017-01-01"
+    return (day, f"Ley 1816 de 2016, art. 42: '{a[:600]}' (sanctioned {enacted}, Diario Oficial of {pub})",
+            f"The act as promulgated (Ley 1816 de 2016, sanctioned {enacted}, Diario Oficial of {pub}), in force from {day} "
+            f"under its art. 42: '{a[:600]}'")
+
+
+SPEC_ALL += [
+    ("inspeccion-del-trabajo", L1610, "ley-1610-2013", "LIT13",
+     "Inspección del trabajo y acuerdos de formalización laboral (Ley 1610 de 2013)",
+     on_publication(L1610, "Ley 1610", "Ley 1610 de 2013", "18", "La presente ley rige a partir de su promulgación")),
+    ("monopolio-de-licores", L1816, "ley-1816-2016", "LMLic16",
+     "Monopolio rentístico de licores destilados (Ley 1816 de 2016)", start_1816),
+    ("violencia-sexual-conflicto-armado", L1719, "ley-1719-2014", "LVSex14",
+     "Acceso a la justicia de las víctimas de violencia sexual, en especial con ocasión del conflicto armado (Ley 1719 de 2014)",
+     on_publication(L1719, "Ley 1719", "Ley 1719 de 2014", "35", "La presente ley rige a partir de su promulgación")),
+]
+L1826, L1111, L1430 = "ley_1826_2017", "ley_1111_2006", "ley_1430_2010"
+SPEC_ALL += [
+    ("procedimiento-penal-abreviado", L1826, "ley-1826-2017", "LPPA17",
+     "Procedimiento penal especial abreviado y acusador privado (Ley 1826 de 2017)",
+     B10.after_months(L1826, "Ley 1826", "Ley 1826 de 2017", "44", "La presente ley entrará a regir seis (6) meses después "
+                      "de la fecha de su promulgación", 6, "six months")),
+    ("reforma-tributaria-2006", L1111, "ley-1111-2006", "RT06", "Reforma tributaria (Ley 1111 de 2006)",
+     on_publication(L1111, "Ley 1111", "Ley 1111 de 2006", "78", "La presente Ley rige a partir de su promulgación")),
+    ("reforma-tributaria-2010", L1430, "ley-1430-2010", "RT10",
+     "Control tributario y competitividad, reforma tributaria (Ley 1430 de 2010)",
+     on_publication(L1430, "Ley 1430", "Ley 1430 de 2010", "67", "La presente ley rige a partir de su promulgación")),
+]
+L1739, L788, L863 = "ley_1739_2014", "ley_0788_2002", "ley_0863_2003"
+SPEC_ALL += [
+    ("reforma-tributaria-2014", L1739, "ley-1739-2014", "RT14", "Reforma tributaria (Ley 1739 de 2014)",
+     on_publication(L1739, "Ley 1739", "Ley 1739 de 2014", "77", "La presente ley rige a partir de su promulgación")),
+    ("reforma-tributaria-2002", L788, "ley-788-2002", "RT02", "Reforma tributaria (Ley 788 de 2002)",
+     on_publication(L788, "Ley 788", "Ley 788 de 2002", "118", "La presente ley rige a partir de su promulgación")),
+    ("reforma-tributaria-2003", L863, "ley-863-2003", "RT03", "Reforma tributaria (Ley 863 de 2003)",
+     on_publication(L863, "Ley 863", "Ley 863 de 2003", "69", "La presente ley rige a partir de la fecha de su publicación")),
+]
+L2300, L1876, L2232 = "ley_2300_2023", "ley_1876_2017", "ley_2232_2022"
+SPEC_ALL += [
+    ("intimidad-de-los-consumidores-cobranza", L2300, "ley-2300-2023", "LIntC23",
+     "Medidas que protegen el derecho a la intimidad de los consumidores (Ley 2300 de 2023)",
+     B10.after_months(L2300, "Ley 2300", "Ley 2300 de 2023", "10", "La presente ley entrará en vigor en un plazo de tres (3) "
+                      "meses contados a partir de su promulgación", 3, "three months")),
+    ("sistema-nacional-de-innovacion-agropecuaria", L1876, "ley-1876-2017", "SNIA17",
+     "Sistema Nacional de Innovación Agropecuaria (Ley 1876 de 2017)",
+     on_publication(L1876, "Ley 1876", "Ley 1876 de 2017", "47", "La presente ley rige a partir de la fecha de su publicación")),
+    ("plasticos-de-un-solo-uso", L2232, "ley-2232-2022", "LPlas22",
+     "Reducción gradual de la producción y consumo de ciertos productos plásticos de un solo uso (Ley 2232 de 2022)",
+     on_publication(L2232, "Ley 2232", "Ley 2232 de 2022", "35", "La presente ley rige a partir de la fecha de su promulgación")),
+]
+L2272, L1530 = "ley_2272_2022", "ley_1530_2012"
+VIG_2272 = ("Los artículos 3o, 4o, 5o, 6o, 7o, 8o, 9o y 15 de la presente ley tendrán una vigencia de cuatro (4) años, a partir "
+            "de su promulgación")
+
+
+def start_1530(units, enacted, pub):
+    """Ley 1530 de 2012: art. 160, second paragraph: in force from its publication."""
+    t = B3.article_text(units, "160")
+    w = "La presente ley rige a partir de la fecha de su publicación"
+    B23._need(w in t and pub, "Ley 1530 art. 160")
+    a = t[t.index(w):]
+    a = a[:a.index(".") + 1]
+    return (pub, f"Ley 1530 de 2012, art. 160: '{a}' (sanctioned {enacted}, Diario Oficial of {pub})",
+            f"The act as promulgated (Ley 1530 de 2012, sanctioned {enacted}, Diario Oficial of {pub}), in force from {pub} "
+            f"under its art. 160: '{a}'")
+
+
+def start_2272(units, enacted, pub):
+    """Ley 2272 de 2022: art. 20, every provision from promulgation; arts. 3 to 9 and 15 (art. 19, second paragraph) also
+    from promulgation, for a term of four years."""
+    a = B7._clause(units, "20", "Con excepción de los artículos 3o, 4o, 5o, 6o, 7o, 8o, 9o y 15 cuya vigencia se establece "
+                   "en el artículo anterior, las demás disposiciones de esta ley rigen a partir de su promulgación", "Ley 2272",
+                   enacted, pub)
+    b = B3.article_text(units, "19")
+    B23._need(VIG_2272 in b, "Ley 2272 art. 19 term")
+    b = b[b.index(VIG_2272):]
+    b = b[:b.index(".") + 1]
+    return (pub, f"Ley 2272 de 2022, art. 20: '{a}'; art. 19: '{b}' (sanctioned {enacted}, Diario Oficial of {pub})",
+            f"The act as promulgated (Ley 2272 de 2022, sanctioned {enacted}, Diario Oficial of {pub}), in force from {pub} "
+            f"under its art. 20: '{a}' and its art. 19: '{b}'")
+
+
+SPEC_ALL += [
+    ("paz-total", L2272, "ley-2272-2022", "LPazT22",
+     "Política de paz de Estado y prórroga de la Ley 418 de 1997 (Ley 2272 de 2022)",
+     lambda u, e, p: start_2272(u, e, p)),
+    ("sistema-general-de-regalias-2012", L1530, "ley-1530-2012", "SGR12",
+     "Sistema General de Regalías (Ley 1530 de 2012)",
+     lambda u, e, p: start_1530(u, e, p)),
+]
+L2108, L1680 = "ley_2108_2021", "ley_1680_2013"
+SPEC_ALL += [
+    ("internet-servicio-publico-esencial", L2108, "ley-2108-2021", "LInt21",
+     "Internet como servicio público esencial y universal (Ley 2108 de 2021)",
+     on_publication(L2108, "Ley 2108", "Ley 2108 de 2021", "12", "La presente ley rige a partir de su promulgación")),
+    ("acceso-tic-personas-ciegas", L1680, "ley-1680-2013", "LCieg13",
+     "Acceso de las personas ciegas y con baja visión a la información, las comunicaciones y las TIC (Ley 1680 de 2013)",
+     on_publication(L1680, "Ley 1680", "Ley 1680 de 2013", "15", "La presente ley rige a partir de su publicación")),
+]
+D262, D267 = "decreto_0262_2000", "decreto_0267_2000"
+SPEC_ALL += [
+    ("procuraduria-general-de-la-nacion", D262, "dec-262-2000", "DLPGN00",
+     "Estructura y organización de la Procuraduría General de la Nación (Decreto Ley 262 de 2000)",
+     after_days(D262, "Decreto 262", "Decreto Ley 262 de 2000", "262",
+                "Este decreto regirá a los diez (10) días calendario contados a partir de la fecha de su publicación",
+                10, "ten days", base="publication")),
+    ("contraloria-general-de-la-republica", D267, "dec-267-2000", "DLCGR00",
+     "Organización y funcionamiento de la Contraloría General de la República (Decreto Ley 267 de 2000)",
+     on_publication(D267, "Decreto 267", "Decreto Ley 267 de 2000", "87",
+                    "El presente decreto rige a partir de la fecha de su publicación")),
+]
+L35, L1004, L795 = "ley_0035_1993", "ley_1004_2005", "ley_0795_2003"
+VIG_795 = "La presente ley rige a partir de la fecha de su promulgación."
+
+
+def start_795(units, enacted, pub):
+    """Ley 795 de 2003: in force from its promulgation under the last sentence of its art. 114 (the article's first
+    sentences list repeals)."""
+    a = B7._clause(units, "114", "Derogatorias y vigencia. La presente ley deroga", "Ley 795", enacted, pub)
+    B23._need(a.endswith(VIG_795), "Ley 795 art. 114")
+    return (pub, f"Ley 795 de 2003, art. 114: '{VIG_795}' (sanctioned {enacted}, Diario Oficial of {pub})",
+            f"The act as promulgated (Ley 795 de 2003, sanctioned {enacted}, Diario Oficial of {pub}), in force from {pub} "
+            f"under its art. 114: '{VIG_795}'")
+
+
+SPEC_ALL += [
+    ("marco-del-sector-financiero", L35, "ley-35-1993", "LMSF93",
+     "Ley marco de las actividades financiera, bursátil y aseguradora (Ley 35 de 1993)",
+     on_publication(L35, "Ley 35", "Ley 35 de 1993", "40", "La presente Ley rige desde la fecha de su publicación")),
+    ("zonas-francas", L1004, "ley-1004-2005", "LZF05", "Régimen de zonas francas (Ley 1004 de 2005)",
+     on_publication(L1004, "Ley 1004", "Ley 1004 de 2005", "13", "La presente ley rige a partir de la fecha de su publicación")),
+    ("ajustes-estatuto-organico-sistema-financiero", L795, "ley-795-2003", "LEOSF03",
+     "Ajustes al Estatuto Orgánico del Sistema Financiero (Ley 795 de 2003)", lambda u, e, p: start_795(u, e, p)),
+]
+D760, D785, D1567 = "decreto_0760_2005", "decreto_0785_2005", "decreto_1567_1998"
+SPEC_ALL += [
+    ("procedimiento-comision-nacional-del-servicio-civil", D760, "dec-760-2005", "DLCNSC05",
+     "Procedimiento ante y por la Comisión Nacional del Servicio Civil (Decreto Ley 760 de 2005)",
+     on_publication(D760, "Decreto 760", "Decreto Ley 760 de 2005", "49",
+                    "El presente decreto rige a partir de la fecha de su publicación")),
+    ("nomenclatura-de-empleos-territoriales", D785, "dec-785-2005", "DLNET05",
+     "Nomenclatura, clasificación, funciones y requisitos de los empleos de las entidades territoriales (Decreto Ley 785 de "
+     "2005)",
+     on_publication(D785, "Decreto 785", "Decreto Ley 785 de 2005", "34",
+                    "El presente decreto rige a partir de la fecha de su publicación")),
+    ("capacitacion-y-estimulos-de-empleados-del-estado", D1567, "dec-1567-1998", "DLCap98",
+     "Sistema Nacional de Capacitación y sistema de estímulos para los empleados del Estado (Decreto Ley 1567 de 1998)",
+     on_publication(D1567, "Decreto 1567", "Decreto Ley 1567 de 1998", "40", "El presente decreto rige a partir de su publicación")),
+]
+L223 = "ley_0223_1995"
+SPEC_ALL += [
+    ("reforma-tributaria-1995", L223, "ley-223-1995", "RT95", "Racionalización tributaria (Ley 223 de 1995)",
+     on_publication(L223, "Ley 223", "Ley 223 de 1995", "285", "La presente Ley rige a partir de la fecha de su publicación")),
+]
+L335, L680, L1273 = "ley_0335_1996", "ley_0680_2001", "ley_1273_2009"
+SPEC_ALL += [
+    ("television-privada-1996", L335, "ley-335-1996", "LTVP96",
+     "Modificación de las Leyes 14 de 1991 y 182 de 1995 y televisión privada (Ley 335 de 1996)",
+     on_publication(L335, "Ley 335", "Ley 335 de 1996", "29", "La presente Ley regirá a partir de la fecha de su sanción y promulgación")),
+    ("reforma-de-la-television-2001", L680, "ley-680-2001", "LTV01",
+     "Reforma de las Leyes 14 de 1991, 182 de 1995 y 335 de 1996 en materia de televisión (Ley 680 de 2001)",
+     on_publication(L680, "Ley 680", "Ley 680 de 2001", "15", "Esta ley rige a partir de la fecha de su promulgación")),
+    ("delitos-informaticos", L1273, "ley-1273-2009", "LDI09",
+     "Protección de la información y de los datos, delitos informáticos (Ley 1273 de 2009)",
+     on_publication(L1273, "Ley 1273", "Ley 1273 de 2009", "4", "La presente ley rige a partir de su promulgación")),
+]
+L310, L1383, L1696 = "ley_0310_1996", "ley_1383_2010", "ley_1696_2013"
+SPEC_ALL += [
+    ("transporte-masivo-1996", L310, "ley-310-1996", "LTM96",
+     "Sistemas de servicio público urbano de transporte masivo de pasajeros, modificación de la Ley 86 de 1989 (Ley 310 de 1996)",
+     on_publication(L310, "Ley 310", "Ley 310 de 1996", "8", "La presente Ley rige a partir de la fecha de su promulgación")),
+    ("reforma-codigo-de-transito-2010", L1383, "ley-1383-2010", "LRCT10",
+     "Reforma del Código Nacional de Tránsito (Ley 1383 de 2010)",
+     on_publication(L1383, "Ley 1383", "Ley 1383 de 2010", "28", "La presente ley rige a partir de su promulgación")),
+    ("conduccion-bajo-el-influjo-del-alcohol", L1696, "ley-1696-2013", "LAlc13",
+     "Sanciones por conducción bajo el influjo del alcohol u otras sustancias psicoactivas (Ley 1696 de 2013)",
+     on_publication(L1696, "Ley 1696", "Ley 1696 de 2013", "10", "La presente ley rige a partir de su promulgación")),
+]
+L1811, L1964, L2251 = "ley_1811_2016", "ley_1964_2019", "ley_2251_2022"
+SPEC_ALL += [
+    ("uso-de-la-bicicleta", L1811, "ley-1811-2016", "LBici16",
+     "Incentivos al uso de la bicicleta y reforma del Código Nacional de Tránsito (Ley 1811 de 2016)",
+     on_publication(L1811, "Ley 1811", "Ley 1811 de 2016", "19", "La presente ley rige a partir de su promulgación")),
+    ("vehiculos-electricos", L1964, "ley-1964-2019", "LVE19",
+     "Promoción del uso de vehículos eléctricos (Ley 1964 de 2019)",
+     on_publication(L1964, "Ley 1964", "Ley 1964 de 2019", "12", "La presente Ley rige a partir de su promulgación")),
+    ("ley-julian-esteban", L2251, "ley-2251-2022", "LJE22",
+     "Diseño e implementación de la política de seguridad vial con enfoque de sistema seguro, Ley Julián Esteban (Ley 2251 de 2022)",
+     on_publication(L2251, "Ley 2251", "Ley 2251 de 2022", "24", "La presente ley rige a partir de su promulgación")),
+]
+L1608, L1949, L1966 = "ley_1608_2013", "ley_1949_2019", "ley_1966_2019"
+SPEC_ALL += [
+    ("liquidez-sector-salud", L1608, "ley-1608-2013", "LLiqS13",
+     "Medidas para mejorar la liquidez y el uso de algunos recursos del sector salud (Ley 1608 de 2013)",
+     on_publication(L1608, "Ley 1608", "Ley 1608 de 2013", "13", "La presente ley rige a partir de su publicación", "publication")),
+    ("reforma-leyes-1122-y-1438", L1949, "ley-1949-2019", "LSal19",
+     "Adición y modificación de las Leyes 1122 de 2007 y 1438 de 2011 (Ley 1949 de 2019)",
+     on_publication(L1949, "Ley 1949", "Ley 1949 de 2019", "12", "La presente ley rige a partir de la fecha de su promulgación")),
+    ("transparencia-sistema-de-salud", L1966, "ley-1966-2019", "LTSal19",
+     "Gestión y transparencia en el Sistema de Seguridad Social en Salud (Ley 1966 de 2019)",
+     on_publication(L1966, "Ley 1966", "Ley 1966 de 2019", "19", "La presente ley rige desde el momento de su promulgación")),
+]
+SPEC = [x for x in SPEC_ALL if x[1] in (L1608, L1949, L1966)]
+
+# ---- page repair: a heading with struck words whose '<Apartes tachados INEXEQUIBLES>' marker the page prints in the
+# paragraph after a blank one (Ley 1450 de 2011 art. 38): batch 5's struck-heading reader wants the marker in the
+# article's first paragraph, so the blank paragraph is dropped. HEAD_BLANK: page -> article names; a page that differs
+# stops the parse.
+import parse_batch5 as B5  # noqa: E402
+
+HEAD_BLANK = {L1450: ["38"]}
+_units_b5 = B5._units_et
+
+
+def units_head_blank(name: str) -> list[dict]:
+    units = _units_b5(name)
+    if name not in HEAD_BLANK:
+        return units
+    done = []
+    for u in units:
+        ps = [k for k, it in enumerate(u["items"]) if it[0] == "p"]
+        if (len(ps) > 1 and not E.plain(u["items"][ps[0]][1]).strip() and "<S>" in (u.get("raw_label") or u["label"] or "")
+                or u["name"] in HEAD_BLANK[name]) and len(ps) > 1 and not E.plain(u["items"][ps[0]][1]).strip() \
+                and any(re.search(r"tachad\w*\s+(derogad|INEXEQUIBLE)", x, re.I) for x in E.markers(u["items"][ps[1]][1])):
+            u["items"] = [it for k, it in enumerate(u["items"]) if k != ps[0]]
+            done.append(u["name"])
+    B23._need(done == HEAD_BLANK[name], f"{name}: blank paragraph before a struck-heading marker {done}")
+    return units
+
+
+B5._units_et = units_head_blank
+
+
+ACTS = [(s, pg, k, sh, t, page_title(pg), st) for s, pg, k, sh, t, st in SPEC]
+PAGES = {pg for _, pg, *_ in SPEC}
+HEADING_FIXES_58: list = [  # (batches 61, 62, 64 and 70's heading fixes, JV fixes and hand rules are published in
+]                            # 99zza/99zzb/99zzd/99zzj)
+_PUBLISHED_64 = [
+    ("ley_1876_2017", "Texto original de la Ley 160 de 1994", "Texto original de la Ley 1876 de 2017",
+     "arts. 30 and 31: their earlier-text boxes are headed 'Texto original de la Ley 160 de 1994' but give this act's own "
+     "original articles (Ley 160 de 1994 has no such articles on extension services); read as the act's own original text"),
+]
+B4.HEADING_FIXES.extend(HEADING_FIXES_58)
+B23.subst.install(E, PAGES)
+B30.C458_PAGES.clear()
+B30.C458_PAGES.update(PAGES)
+B27.NOTE_PAGES.clear()
+B27.NOTE_PAGES.update(PAGES)
+B24.PAGES.clear()
+B24.PAGES.update(PAGES)
+B24.BATCH_LABEL = BATCH
+B24.KEY_FIXES_USED = {}
+B24.HAND_FIXES.clear()
+B24.TAIL.clear()
+B24.REPEALS.clear()
+B29.HAND_FIXES.clear()
+B29.HAND_DONE.clear()
+B29.SIGNED.clear()
+B29.BATCH = BATCH
+B30.BATCH = BATCH
+# Printed repeals (batch 10's REPEAL_MARK) also when the marker names a decree with 'del' and no link to the article
+# (Decreto 2153 de 1992: '<Artículo derogado por el artículo 19 del Decreto 3523 de 2009>' + the words until then), and
+# when the link is on the act's number instead (Ley 550 de 1999 art. 60: 'de la Ley <A ...>1673</A> de 2013').
+B13.B10.REPEAL_MARK = re.compile(r'^\s*(?:<span class="b_aj">)?&lt;Art&iacute;culo derogado por el art&iacute;culo '
+                                 r'(?:<A [^>]*>)?\d+(?:</A>)? (?:de la|del) (Ley|Decreto) (?:<A [^>]*>)?(\d+)(?:</A>)? de (\d{4})&gt;\s*'
+                                 r'(?:</span>)?\s*')
+
+
+def write_part(acts, out, names):
+    """The part's own decision lines; each starts with the act's title (phase2's write_part keeps only those)."""
+    title = {pg: t for _, pg, _, _, t, _, _ in ACTS}
+    both = names[0] + " and the other acts of " + BATCH
+    import stray as _stray  # the page is read more than once: each stray block is listed once
+    for _k in _stray.DONE:
+        _stray.DONE[_k] = list(dict.fromkeys(_stray.DONE[_k]))
+    P.DECISIONS.extend(B24.REPEAL_DONE)
+    P.DECISIONS.extend(f"{title[page]}: {why}." for page, _, _, why in B4.JV_FIXES if page in PAGES)
+    P.DECISIONS.extend(WHOLE_DONE)
+    P.DECISIONS.extend(PARTIAL_DONE)
+    if any(pg == L2272 for _, pg, *_ in ACTS):
+        B23._need(VIG_2272 in B3.article_text(P.doc_units(L2272), "19"), "Ley 2272 art. 19 term")
+        P.DECISIONS.append(
+            "Política de paz de Estado y prórroga de la Ley 418 de 1997 (Ley 2272 de 2022): art. 19 gives arts. 3 to 9 and 15 "
+            "'una vigencia de cuatro (4) años, a partir de su promulgación' (to 4 November 2026, after the retrieval day). No "
+            "version takes them out: the term has not run on the retrieval day, the source gives no later act on it, and the "
+            "four-year terms of Ley 418 de 1997 and its extending acts are likewise no version in this record.")
+    P.DECISIONS.extend(QUOTED_ART_DONE)
+    P.DECISIONS.extend(QUOTED_ET_DONE)
+    P.DECISIONS.extend(list(dict.fromkeys(QUOTED_HEADS_DONE)))
+    P.DECISIONS.extend(sorted(set(PARA_JOIN_DONE)))
+    P.DECISIONS.extend(sorted(set(DROP_EMPTY_DONE)))
+    P.DECISIONS.extend(list(dict.fromkeys(PAGE59_DONE)))
+    if any(pg == L4 for _, pg, *_ in ACTS):
+        head = " ".join(E.plain(it[1]) for it in P.doc_units(L4)[0]["items"] if it[0] == "p")
+        B23._need("Esta Ley no incluye análisis de vigencia completo" in head, "Ley 4 de 1913: head note")
+        P.DECISIONS.append(L4_VIGENCIA)
+    P.DECISIONS.extend(BOX_SPILL_DONE)
+    P.DECISIONS.extend(list(dict.fromkeys(BOX_TAIL_DONE)))
+    P.DECISIONS.extend(list(dict.fromkeys(EMPTY_ANCHOR_DONE)))
+    P.DECISIONS.extend(f"{title[pg]}: art(s). {', '.join(d)}: the quoted heading and words the page prints after the article "
+                       "under a heading anchor of their own are read as the article's quoted text, not as the act's headings."
+                       for pg, d in sorted(QUOTED_DONE.items()) if d and pg in title and pg not in QUOTED_HEADS)
+    P.DECISIONS.extend(UNANCHORED_DONE)
+    P.DECISIONS.extend(B26.STAGE_DONE)
+    P.DECISIONS.extend(TITLE_GONE_DONE)
+    if any(pg == L550 for _, pg, *_ in ACTS):
+        P.DECISIONS.append(
+            "Reestructuración empresarial (Ley 550 de 1999): art. 79 made the act a five-year law from its publication; "
+            "Ley 922 de 2004 art. 1 extended it two years from 31 December 2004 and Ley 1116 de 2006 art. 126 a further "
+            "six months from its promulgation, after which it applies permanently only to the territorial entities, "
+            "their decentralised bodies and the state universities of Ley 922 de 2004 (Ley 1116 arts. 125-126; the page "
+            "prints that scope before every article and in the vigencia notes). These extensions and the narrower scope "
+            "change no words of the act, so they are no version here; the text stays in the record. Ley 1116 art. 125's "
+            "transfer of the promotion of the universities' agreements to the Ministerio de Educación likewise changes "
+            "no printed words (art. 1 still names the Ministerio de Hacienda y Crédito Público, as the page prints it).")
+    for _, pg, _, _, t, _, _ in ACTS:
+        if pg in (D4633, D4634, D4635):
+            P.DECISIONS.append(
+                f"{t}: Sentencia C-588-19 (press release of 5 December 2019) struck the words 'tendrá una vigencia de diez "
+                "(10) años' of the vigencia article with effect deferred to 10 June 2021; Ley 2078 de 2021 (Diario Oficial "
+                "No. 51.551 of 8 January 2021) replaced the article before that day, extending the decree's term to 9 "
+                "December 2031, so the ruling never took effect on the printed words: the words as issued stand until 8 "
+                "January 2021 and the ruling is no version here.")
+    if any(pg == L1111 for _, pg, *_ in ACTS):
+        u38 = " ".join(E.plain(b) for b in B23._boxes(B23._unit(L1111, "38"), "Notas de Vigencia"))
+        B23._need("Numeral corregido por el artículo 1 del Decreto 4651 de 2006, publicado en el Diario Oficial No. 46.494 de "
+                  "27 de diciembre de 2006" in u38, "Ley 1111 art. 38 note")
+        P.DECISIONS.append(
+            "Reforma tributaria (Ley 1111 de 2006): art. 38, numeral 13 reads 'Las comisiones pagadas ...' from the act's "
+            "first day: Decreto 4651 de 2006 art. 1 corrected the printed 'Las emisiones pagadas ...' in Diario Oficial No. "
+            "46.494 of 27 December 2006, the same issue that promulgated the act, so the corrected words are the ones in "
+            "force from that day.")
+    if struck.DONE:
+        P.DECISIONS.append(f"{both}: earlier-text blocks of amendments by Decretos 1122 de 1999 and 266 de 2000 (both struck "
+                           "as a whole: Sentencias C-923-99 of 18 November 1999 and C-1316-00 of 26 September 2000) are "
+                           "read as wording in force from the decree's day to the ruling's, when the text before it returns, "
+                           "credited to the ruling on its day (C-1316-00 gave its ruling effect from the decree's "
+                           "promulgation; the decree's wording is still shown for the months it was applied); page "
+                           "variants read the same way: " + "; ".join(struck.DONE) + ".")
+    if SPLIT_DONE:
+        P.DECISIONS.append("Heading anchors that hold only the letter 'A' of 'ARTÍCULO' (the rest of the heading starts the "
+                           "article's first paragraph) were rebuilt from that paragraph: "
+                           + ", ".join(sorted(set(SPLIT_DONE))) + ".")
+    return B30.write_part(acts, out, names)
+
+
+
+# ---- page repair: heading anchors that hold only the 'A' of 'ARTÍCULO' (Ley 82 de 1993 arts. 5, 7, 8: label 'A', the
+# paragraph 'RTÍCULO 5o. <epigraph in bold>. <marker> ...'): the heading is rebuilt from the paragraph.
+SPLIT_HEAD = re.compile(r'\s*RT&Iacute;CULO (\d+)o?\.\s*(?:<span class="i_aj"><B>((?:(?!</B>).)+)</B></span><B>\.</B>)?\s*')
+SPLIT_DONE: list[str] = []
+_units_b48 = P.doc_units
+
+
+_markers_b48 = E.markers
+EXPR_DEROG = re.compile(r"^Expresi[oó]n .{1,80}? derogada por el art[ií]culo \d+ de la Ley \d+ de \d{4}$")
+
+
+def _markers_heading(h: str) -> list[str]:
+    """Batch 5's struck-heading check wants a 'tachad... derogad' marker; Ley 1955 de 2019 art. 118 marks its struck
+    heading words '<Expresión "Colombia rural" derogada por el artículo 372 de la Ley 2294 de 2023>' (a marker naming the
+    struck expression). Used only while the units are read."""
+    ms = _markers_b48(h)
+    return ms + ["texto tachado derogado"] if any(EXPR_DEROG.match(m) for m in ms) else ms
+
+
+def doc_units_split(name: str) -> list[dict]:
+    if name in PAGES:
+        E.markers = _markers_heading
+    try:
+        units = _units_b48(name)
+    finally:
+        E.markers = _markers_b48
+    if name not in PAGES:
+        return units
+    for u in units[1:]:
+        ps = [k for k, it in enumerate(u["items"]) if it[0] == "p"]
+        if (u["label"] or "").strip() != "A" or not ps:
+            continue
+        it = u["items"][ps[0]]
+        m = SPLIT_HEAD.match(it[1])
+        B23._need(m, f"{name} split heading {it[1][:60]}")
+        epi = E.tidy(E.plain(m.group(2) or ""))
+        u["label"] = f"ARTÍCULO {m.group(1)}o." + (f" {epi}." if epi else "")
+        u["items"][ps[0]] = ("p", it[1][m.end():]) + tuple(it[2:])
+        if f"{name} {m.group(1)}" not in SPLIT_DONE:
+            SPLIT_DONE.append(f"{name} {m.group(1)}")
+    return units
+
+
+P.doc_units = doc_units_split
+E.doc_units = doc_units_split
+
+
+# ---- page repair: amending articles that quote whole books, titles or chapters of another code (as Ley 1819 de 2016,
+# batch 44). The page gives the quoted text after a book/title/chapter heading its own heading anchor ('Nivel-N-tail'),
+# or keeps a quoted 'LIBRO ...' line inside the article, where the engine's split_libro cuts it off; either way those
+# words went into titulos.md. Here each tail goes back to its article (the heading as a line of the text) and the
+# articles quoting a book keep it (an article with a rejoined tail is never cut at a 'LIBRO' line). QUOTED_TAILS: page -> article names whose tail follows them; QUOTED_BOOKS: page ->
+# articles with a quoted 'LIBRO' line. A page whose tails differ from the list stops the parse.
+QUOTED_TAILS: dict[str, list[str]] = {L1395: ["23"], L1607: ["10", "11", "98"], L1826: ["8", "9", "12", "26"]}
+QUOTED_TAILS["ley_0795_2003"] = ["48"]  # Ley 795 de 2003 art. 48 quotes the EOSF chapter on the Fondo Nacional de Garantías  # Ley 1395 art. 23 quotes CPC headings (Título XXII, Capítulo II)
+QUOTED_BOOKS: dict[str, list[str]] = {}
+QUOTED_DONE: dict[str, list[str]] = {}
+_units_quoted = P.doc_units
+_split_libro_q = E.split_libro
+
+
+def doc_units_quoted(name: str) -> list[dict]:
+    units = _units_quoted(name)
+    if name not in QUOTED_TAILS and name not in QUOTED_BOOKS:
+        return units
+    out, done = [], []
+    for u in units:
+        m = re.fullmatch(r"Nivel-(\d+)-tail", u["name"] or "")
+        if m and out and out[-1]["name"] == m.group(1):
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + [("p", u["label"])] + list(u["items"]), nosplit=True)
+            done.append(m.group(1))
+            continue
+        if u["name"] in QUOTED_BOOKS.get(name, []):
+            u = dict(u, nosplit=True)
+        out.append(u)
+    B23._need(done == QUOTED_TAILS.get(name, []), f"{name}: quoted tails {done}")
+    QUOTED_DONE[name] = done
+    return out
+
+
+def split_libro_quoted(u: dict):
+    return (u, []) if u.get("nosplit") else _split_libro_q(u)
+
+
+P.doc_units = doc_units_quoted
+E.doc_units = doc_units_quoted
+E.split_libro = split_libro_quoted
+
+
+
+
+
+
+# ---- page repair: Ley 222 de 1995 prints art. 128 and the heading 'SECCION IX. AUDIENCIAS' with no anchors of their own,
+# as the last paragraphs of art. 127; they become an article unit and a heading unit. UNANCHORED: page -> [(unit,
+# article label start)]; a page that differs stops the parse.
+UNANCHORED = {L222: [("127", "ARTICULO 128. ")]}
+UNANCHORED_DONE: list[str] = []
+_units_un = P.doc_units
+
+
+def doc_units_unanchored(name: str) -> list[dict]:
+    units = _units_un(name)
+    if name not in UNANCHORED:
+        return units
+    out = []
+    for u in units:
+        want = [lab for n, lab in UNANCHORED[name] if n == u["name"]]
+        if not want:
+            out.append(u)
+            continue
+        items = list(u["items"])
+        k = next((i for i, it in enumerate(items) if it[0] == "p" and E.tidy(E.plain(it[1])).startswith(want[0])), None)
+        B23._need(k is not None, f"{name} {u['name']}: no '{want[0]}'")
+        t = E.tidy(E.plain(items[k][1]))
+        m = re.match(r"(ARTICULO (\d+)\. (?:[A-ZÁÉÍÓÚÑ ,]+\.)?)\s*(.*)", t)
+        B23._need(m, f"{name} {u['name']}: label {t[:60]}")
+        rest = items[k + 1:]
+        sec = [i for i, it in enumerate(rest) if it[0] == "p" and re.fullmatch(r"SECCI[ÓO]N [IVX]+\.", E.tidy(E.plain(it[1])))]
+        B23._need(len(sec) == 1 and len(rest) == sec[0] + 2, f"{name} {u['name']}: section heading {sec}")
+        j = sec[0]
+        out.append(dict(u, items=items[:k]))
+        for marked in B26.STAGE_UNITS.get(name, {}).values():  # the staged-repeal reader ran on the page's units
+            if u["name"] in marked and re.search(r"Ley 1116 de 2006", E.plain(items[k][1])) is None:
+                marked.add(m.group(2))
+        body = E.html.escape(m.group(3), quote=False)
+        out.append({"name": m.group(2), "label": m.group(1), "items": [("p", body)] + rest[:j], "page": u.get("page", name)})
+        out.append({"name": f"Nivel-{m.group(2)}-tail", "label": E.tidy(E.plain(rest[j][1])),
+                    "items": [("p", ""), ("p", f'<span class="b_aj">{E.html.escape(E.tidy(E.plain(rest[j + 1][1])), quote=False)}</span>')],
+                    "page": u.get("page", name)})
+        if not UNANCHORED_DONE:
+            UNANCHORED_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]}: the page prints art. "
+                                   f"{m.group(2)} and the heading '{E.tidy(E.plain(rest[j][1]))} "
+                                   f"{E.tidy(E.plain(rest[j + 1][1]))}' as the last paragraphs of art. {u['name']}, with no "
+                                   "anchors of their own; they are read as an article and a heading")
+    return out
+
+
+P.doc_units = doc_units_unanchored
+E.doc_units = doc_units_unanchored
+
+
+# ---- page repair: an earlier-text box that stops at its heading ('Texto original de la Ley 1753 de 2015: ARTÍCULO .')
+# while the earlier text itself is printed as paragraphs after the article's last box (Ley 1753 de 2015 art. 59): those
+# paragraphs go back into the box, after its heading line. BOX_SPILL: page -> article names; a page that differs stops.
+BOX_SPILL = {L1753: ["59"]}
+BOX_SPILL_DONE: list[str] = []
+_units_spill = P.doc_units
+SPILL_END = "<p>ART&Iacute;CULO .</p> </td></tr></tbody>"
+
+
+def doc_units_spill(name: str) -> list[dict]:
+    units = _units_spill(name)
+    if name not in BOX_SPILL:
+        return units
+    done = []
+    for u in units:
+        its = u["items"]
+        boxes = [i for i, it in enumerate(its) if it[0] == "box"]
+        if not boxes or not its[boxes[-1]][2].endswith(SPILL_END):
+            continue
+        k = boxes[-1]
+        tail = its[k + 1:]
+        B23._need(tail and all(it[0] == "p" for it in tail), f"{name} {u['name']}: spilled earlier text")
+        paras = [E.tidy(E.plain(it[1])) for it in tail]
+        paras = [x for x in paras if x]
+        B23._need(re.match(r"A?RT[ÍI]CULO " + re.escape(u["name"]) + r"\.", paras[0].replace("A RT", "ART")) is not None
+                  or paras[0].startswith("ARTÍCULO " + u["name"] + "."), f"{name} {u['name']}: spill starts {paras[0][:40]}")
+        html_ = "".join(f"<p>{E.html.escape(x, quote=False)}</p>" for x in paras)
+        box = its[k][2][: -len(SPILL_END)] + html_ + " </td></tr></tbody>"
+        u["items"] = its[:k] + [its[k][:2] + (box,) + tuple(its[k][3:])]
+        done.append(u["name"])
+    B23._need(done == BOX_SPILL[name], f"{name}: spilled boxes {done}")
+    if not BOX_SPILL_DONE:
+        BOX_SPILL_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]}: art(s). {', '.join(done)}: the page "
+                              "ends the earlier-text box 'Texto original' at its heading ('ARTÍCULO .') and prints the "
+                              "original text as paragraphs after the article's notes; they are read as that box's text, "
+                              "not as words of today's article")
+    return units
+
+
+P.doc_units = doc_units_spill
+E.doc_units = doc_units_spill
+
+
+# ---- page repair: an earlier-text box that stops after its first lines ('... así: Puntos'), the page printing the rest of
+# the original text (a points table, an inciso, the parágrafo's first inciso) as paragraphs after the box (Ley 335 de 1996
+# art. 25). BOX_TAIL: page -> {article: number of trailing paragraphs that belong to its last earlier-text box}; each
+# must follow that box directly. A page that differs stops the parse.
+BOX_TAIL: dict = {}  # (Ley 335 de 1996 art. 25: published in 99zzk-batch71)
+BOX_TAIL_DONE: list[str] = []
+_units_box_tail = P.doc_units
+_TBODY = " </td></tr></tbody>"
+
+
+def doc_units_box_tail(name: str) -> list[dict]:
+    units = _units_box_tail(name)
+    if name not in BOX_TAIL:
+        return units
+    done = []
+    for u in units:
+        n = BOX_TAIL[name].get(u["name"])
+        if not n:
+            continue
+        its = u["items"]
+        k = len(its) - n - 1
+        B23._need(k >= 0 and its[k][0] == "box" and its[k][1] == "Legislación Anterior" and its[k][2].endswith(_TBODY)
+                  and all(it[0] == "p" for it in its[k + 1:]), f"{name} {u['name']}: box tail")
+        box = its[k][2][: -len(_TBODY)] + "".join(f"<p>{it[1]}</p>" for it in its[k + 1:]) + _TBODY
+        u["items"] = its[:k] + [its[k][:2] + (box,) + tuple(its[k][3:])]
+        done.append(u["name"])
+    B23._need(done == list(BOX_TAIL[name]), f"{name}: box tails {done}")
+    t = dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]
+    BOX_TAIL_DONE.append(f"{t}: art(s). {', '.join(done)}: the page ends the earlier-text box of the original text after "
+                         "its first lines and prints the rest of that text (the points table, the next inciso and the "
+                         "parágrafo's first inciso) as paragraphs after the box; they are read as that box's text, not as "
+                         "words of today's article")
+    return units
+
+
+P.doc_units = doc_units_box_tail
+E.doc_units = doc_units_box_tail
+
+
+# ---- page repair: empty anchors inside an article ('<p><A name="1"></A></p>' before each paragraph of Ley 310 de 1996
+# art. 2 as Ley 2294 de 2023 rewrote it), which the engine read as units of their own named '1' (with no heading). Such
+# units go back, in order, into the article they follow. EMPTY_ANCHOR_UNITS: page -> {article: number of units}; a page
+# that differs stops the parse.
+EMPTY_ANCHOR_UNITS: dict = {}  # (Ley 310 de 1996 art. 2: published in 99zzl-batch72)
+EMPTY_ANCHOR_DONE: list[str] = []
+_units_empty_anchor = P.doc_units
+
+
+def doc_units_empty_anchor(name: str) -> list[dict]:
+    units = _units_empty_anchor(name)
+    if name not in EMPTY_ANCHOR_UNITS:
+        return units
+    out, joined = [], {}
+    for u in units:
+        if out and out[-1]["name"] in EMPTY_ANCHOR_UNITS[name] and not (u.get("label") or "").strip()                 and re.fullmatch(r"\d+", u["name"] or "") and u["name"] != out[-1]["name"]:
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + list(u["items"]))
+            joined[out[-1]["name"]] = joined.get(out[-1]["name"], 0) + 1
+            continue
+        out.append(u)
+    B23._need(set(joined) == set(EMPTY_ANCHOR_UNITS[name]), f"{name}: empty anchors {joined}")
+    t = dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]
+    EMPTY_ANCHOR_DONE.append(f"{t}: art(s). {', '.join(joined)}: the page puts an empty anchor before each paragraph of "
+                             "the article's current text; those paragraphs are read as the article's, not as units of "
+                             "their own")
+    return out
+
+
+P.doc_units = doc_units_empty_anchor
+E.doc_units = doc_units_empty_anchor
+
+
+# ---- page repair: amending articles that quote a whole article of another code ('El artículo 100 del Código de
+# Comercio quedará así:') where the page gives the quoted article its own heading anchor ('ARTICULO 100.'), so the
+# engine read it as an article of this act (Ley 222 de 1995 arts. 1, 2, 18, 24, 26, 27, 31, 32, 69). Each quoted unit
+# goes back into the quoting article: its heading becomes a line of that article's text, its paragraphs and note boxes
+# follow. QUOTED_ARTS: page -> [(quoting article, quoted unit)]; a page whose quoted units differ stops the parse.
+QUOTED_ARTS: dict[str, list[tuple[str, str]]] = {
+    L222: [("1", "100"), ("2", "103"), ("18", "184"), ("24", "200"), ("26", "260"), ("27", "261"), ("31", "265"),
+           ("32", "262"), ("69", "429")],
+}
+QUOTED_ART_DONE: list[str] = []
+QUOTES = re.compile(r"quedar[áa]n? as[íi]:\s*$")
+_units_qa = P.doc_units
+
+
+def doc_units_qa(name: str) -> list[dict]:
+    units = _units_qa(name)
+    if name not in QUOTED_ARTS:
+        return units
+    out, done, own = [], [], None
+    for u in units:
+        n = u["name"] or ""
+        if own and re.fullmatch(r"\d+", n) and int(n) != int(own) + 1:
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + [("p", E.html.escape(u["label"].strip(), quote=False))]
+                           + list(u["items"]))
+            done.append((own, n))
+            continue
+        out.append(u)
+        own = None
+        if re.fullmatch(r"\d+", n):
+            ps = [E.tidy(E.plain(it[1])) for it in u["items"] if it[0] == "p" and E.tidy(E.plain(it[1]))]
+            own = n if ps and QUOTES.search(ps[-1]) else None
+    B23._need(done == QUOTED_ARTS[name], f"{name}: quoted articles {done}")
+    if done and not any(x.startswith(name) for x in QUOTED_ART_DONE):
+        QUOTED_ART_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]}: articles that rewrite a whole article of the Código de Comercio print the "
+                               "quoted article under its own heading; it is read as part of the quoting article (art. "
+                               + ", ".join(f"{a} quotes art. {q}" for a, q in done) + ")")
+    return out
+
+
+P.doc_units = doc_units_qa
+E.doc_units = doc_units_qa
+
+
+# ---- Ley 1607 de 2012 arts. 10 and 11 add Chapters I and II to Título V of Libro I of the Estatuto Tributario; the page
+# gives each quoted ET article (329 to 341) and each quoted chapter/section heading its own anchor ('ET_329',
+# 'Nivel-ET_330-tail', ...; the chapter headings right after arts. 10 and 11 are QUOTED_TAILS), each with the ET's later notes. Coordinator decision (2026-10-31): the quoted articles are the
+# text of arts. 10 and 11 as enacted; they stay inside arts. 10 and 11 as quoted text, with no separate units and none of
+# the ET's later notes. So: each quoted unit is joined to its article, its heading a line of the text; its markers and note
+# boxes are dropped; ET art. 334 reads its 'Texto original de la Ley 1607 de 2012' box (the page prints Ley 1739 de
+# 2014's rewrite) and ET art. 336 drops the parágrafo 3o. Ley 1739 de 2014 added. QUOTED_ET: page -> {article: units}.
+QUOTED_ET = {L1607: {"10": ["ET_329", "ET_330", "Nivel-ET_330-tail", "ET_331", "ET_332", "ET_333",
+                            "Nivel-ET_333-tail", "ET_334", "ET_335"],
+                     "11": ["ET_336", "ET_337", "ET_338", "ET_339", "ET_340", "ET_341"]}}
+QUOTED_ET_DONE: list[str] = []
+MARK = re.compile(r"(?:<span class=\"b_aj\">\s*)?&lt;(?:(?!&gt;).)*&gt;(?:\s*</span>)?\s*", re.S)
+_units_et_q = P.doc_units
+
+
+def doc_units_quoted_et(name: str) -> list[dict]:
+    units = _units_et_q(name)
+    if name not in QUOTED_ET:
+        return units
+    out, cur, seen = [], None, {}
+    for u in units:
+        n = u["name"] or ""
+        if n in QUOTED_ET[name]:
+            cur = n
+            seen[n] = []
+            out.append(u)
+            continue
+        if cur and (n.startswith("ET_") or (n.startswith("Nivel-") and n.endswith("-tail"))):
+            ps = [it for it in u["items"] if it[0] == "p"]
+            if n == "ET_334":
+                box = B23._boxes(u, "Legislación Anterior")[0]
+                ls = B23._box_lines(box, "Texto original de la Ley 1607 de 2012")
+                ls[0] = re.sub(r"^ARTÍCULO 334\.\s*", "", ls[0])
+                ps = [("p", E.html.escape(x, quote=False)) for x in ls if x]
+            if n == "ET_336":
+                k = [i for i, it in enumerate(ps) if "Parágrafo adicionado por el artículo 34 de la Ley 1739 de 2014" in E.plain(it[1])]
+                B23._need(len(k) == 1 and len(ps) - k[0] == 6, f"{name} ET_336 parágrafo 3")
+                ps = ps[:k[0]]  # the parágrafo 3o. and its five following paragraphs (numerals 1-4, closing inciso)
+            lines = [("p", E.html.escape(u["label"].strip(), quote=False))]
+            lines += [("p", MARK.sub("", it[1])) for it in ps]
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + lines, nosplit=True)
+            seen[cur].append(n)
+            continue
+        cur = None
+        out.append(u)
+    B23._need(seen == QUOTED_ET[name], f"{name}: quoted ET units {seen}")
+    if not QUOTED_ET_DONE:
+        QUOTED_ET_DONE.append("Reforma tributaria (Ley 1607 de 2012): arts. 10 and 11 add Chapters I and II to Título V of "
+                              "Libro I of the Estatuto Tributario (ET arts. 329 to 341). The page gives each quoted ET "
+                              "article and heading its own anchor with the ET's later notes (Ley 1739 de 2014, Ley 1819 de "
+                              "2016 art. 1, rulings). Coordinator decision: the quoted articles are the text of arts. 10 and "
+                              "11 as enacted; they are read inside those articles as quoted text (headings as lines), with "
+                              "no separate units and none of the ET's later notes; ET art. 334 reads its 'Texto original de "
+                              "la Ley 1607 de 2012' box (its table, like every table, is left out) and ET art. 336 leaves "
+                              "out the parágrafo 3o. that Ley 1739 de 2014 added. Their later fate is the Estatuto "
+                              "Tributario's history.")
+    return out
+
+
+P.doc_units = doc_units_quoted_et
+E.doc_units = doc_units_quoted_et
+
+
+# ---- page repair: parágrafos the page gives their own heading anchors ('PARÁGRAFO 1o') after their article (Decreto Ley
+# 902 de 2017 art. 4: parágrafos 1o to 4o, the last one holding the article's note boxes and earlier texts); the engine
+# skipped those anchors, so the article lost them and its history. Each goes back into its article: the anchor's label
+# starts its first paragraph, its paragraphs and boxes follow. PARA_JOIN: page -> {article: anchor names}; a page that
+# differs stops the parse.
+PARA_JOIN = {D902: {"4": ["PARÁGRAFO 1o", "PARÁGRAFO 2o", "PARÁGRAFO 3o", "PARÁGRAFO 4o"]}}
+PARA_JOIN_DONE: list[str] = []
+_units_pj = P.doc_units
+
+
+def doc_units_para_join(name: str) -> list[dict]:
+    units = _units_pj(name)
+    if name not in PARA_JOIN:
+        return units
+    out, seen, cur = [], {}, None
+    for u in units:
+        n = u["name"] or ""
+        if n in PARA_JOIN[name]:
+            cur = n
+            seen[n] = []
+            out.append(u)
+            continue
+        if cur and re.fullmatch(r"PAR(?:Á|&Aacute;)GRAFO \d+o", n):
+            items = list(u["items"])
+            k = next(i for i, it in enumerate(items) if it[0] == "p")
+            items[k] = ("p", E.html.escape(u["label"].strip(), quote=False) + " " + items[k][1]) + tuple(items[k][2:])
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + items)
+            seen[cur].append(n)
+            continue
+        cur = None
+        out.append(u)
+    B23._need(seen == PARA_JOIN[name], f"{name}: parágrafo anchors {seen}")
+    PARA_JOIN_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]}: the page gives parágrafos their own "
+                          "heading anchors after their article; they are read as part of it (art(s). "
+                          + ", ".join(f"{a}: {', '.join(v)}" for a, v in seen.items()) + ")")
+    return out
+
+
+P.doc_units = doc_units_para_join
+E.doc_units = doc_units_para_join
+
+
+# ---- page repair: an anchored heading 'ARTÍCULO 49. (ELIMINADO).' with no words (Ley 2099 de 2021), followed by the act's
+# own art. 49: the engine kept the empty one as art. 49 and dropped the real article as a duplicate. The empty unit is a
+# numbering remnant with no text; it is left out. DROP_EMPTY: page -> unit names; a page that differs stops the parse.
+DROP_EMPTY = {L2099: ["49-ELIMINADO"]}
+DROP_EMPTY_DONE: list[str] = []
+_units_de = P.doc_units
+
+
+def doc_units_drop_empty(name: str) -> list[dict]:
+    units = _units_de(name)
+    if name not in DROP_EMPTY:
+        return units
+    out, done = [], []
+    for u in units:
+        if u["name"] in DROP_EMPTY[name]:
+            B23._need(not any(E.plain(it[1]).strip() for it in u["items"] if it[0] == "p")
+                      and not any(it[0] == "box" for it in u["items"]) and "ELIMINADO" in (u["label"] or ""),
+                      f"{name} {u['name']}: not empty")
+            done.append(u["name"])
+            continue
+        out.append(u)
+    B23._need(done == DROP_EMPTY[name], f"{name}: empty units {done}")
+    DROP_EMPTY_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]}: the page prints the heading "
+                           "'ARTÍCULO 49. (ELIMINADO).' with no words before the act's own art. 49; that empty heading is "
+                           "left out (the engine had kept it as art. 49 and dropped the real article as a duplicate)")
+    return out
+
+
+P.doc_units = doc_units_drop_empty
+E.doc_units = doc_units_drop_empty
+
+
+# ---- page repairs (batch 59). BOX_HEAD: an earlier-text box whose heading names an act that is not the one whose text
+# it gives (Ley 454 de 1998 art. 40: 'Texto original del Decreto 663 de 1994:' heads the article's own original text,
+# 'ARTÍCULO 40. Son cooperativas financieras ...', which art. 102 of Ley 795 de 2003 replaced; there is no Decreto 663
+# de 1994, and the engine dropped the box, leaving the article out of every version before 2003): page -> {article:
+# (heading as printed, heading read)}. DUP_NUM: a page that prints two articles under one number (Ley 4 de 1913: two
+# 'ARTICULO 294.' and no 293): the second is kept as its own unit (key art-0294-02), with the number the page prints;
+# the engine had dropped it as a duplicate. A page that differs stops the parse.
+BOX_HEAD = {L454: {"40": ("Texto original del Decreto 663 de 1994:", "Texto original de la Ley 454 de 1998:")}}
+DUP_NUM = {L4: {"294": "294-2"}}
+# NESTED: a marker that holds a bracketed box name (Ley 454 de 1998 art. 66: '<Artículo derogado ... Ver en <Legislación
+# Anterior> la legislación vigente hasta esta fecha.>'): the inner brackets ended the marker early, so the engine read
+# its tail as the article's text from the repeal day; they are dropped.
+NESTED = {L454: {"66": ("Ver en &lt;Legislaci&oacute;n Anterior&gt; la", "Ver en Legislaci&oacute;n Anterior la")}}
+PAGE59_DONE: list[str] = []
+L4_VIGENCIA = (
+    "Código de Régimen Político y Municipal (Ley 4 de 1913): the page states 'Esta Ley no incluye análisis de vigencia "
+    "completo' (its validity analysis is incomplete). Today's text is the text the page prints. Later laws replaced or "
+    "emptied many of its articles without a marker on this page (tacit repeal); those articles are given as printed, "
+    "with no end day. Every version comes from the page's own markers, earlier-text boxes and notes, dated by the day "
+    "they give or by the acts' in-force days. Notes that say an ordinal, numeral or inciso was 'reformado', "
+    "'adicionado' or 'modificado en los términos de' a later law and quote or cite that law's own articles (art. 97: "
+    "Ley 71 de 1916, quoting its arts. 1, 4, 7 and 8, and Ley 65 de 1939; art. 305: Ley 84 de 1915, quoting its art. 3) "
+    "give no new words for this act: the printed words stay in every version. Arts. 162 (Ley 84 de 1915) and "
+    "202 (Ley 71 de 1916) were changed by acts whose earlier wording the page does not give: they read as the "
+    "placeholder until those acts' days.")
+_units_59 = P.doc_units
+
+
+def doc_units_59(name: str) -> list[dict]:
+    units = _units_59(name)
+    if name not in BOX_HEAD and name not in DUP_NUM and name not in NESTED:
+        return units
+    out, seen = [], {}
+    for u in units:
+        n = u["name"] or ""
+        if n in BOX_HEAD.get(name, {}):
+            old, new = BOX_HEAD[name][n]
+            items = []
+            for it in u["items"]:
+                if it[0] == "box" and it[1] == "Legislación Anterior" and old in E.html.unescape(it[2]):
+                    raw = E.html.unescape(it[2])
+                    B23._need(raw.count(old) == 1 and re.search(re.escape(old) + r"</span></p><p>ART[IÍ]CULO " + n + r"\.",
+                                                                raw) is not None, f"{name} {n}: box heading")
+                    it = (it[0], it[1], raw.replace(old, new)) + tuple(it[3:])
+                    seen.setdefault(("box", n), 0)
+                    seen[("box", n)] += 1
+                items.append(it)
+            u = dict(u, items=items)
+        if n in NESTED.get(name, {}):
+            old, new = NESTED[name][n]
+            items = []
+            for it in u["items"]:
+                if it[0] == "p" and old in it[1]:
+                    it = (it[0], it[1].replace(old, new)) + tuple(it[2:])
+                    seen[("nested", n)] = seen.get(("nested", n), 0) + 1
+                items.append(it)
+            u = dict(u, items=items)
+        if n in DUP_NUM.get(name, {}):
+            seen[("dup", n)] = seen.get(("dup", n), 0) + 1
+            if seen[("dup", n)] == 2:
+                new = DUP_NUM[name][n]
+                B23._need(re.fullmatch(r"ARTICULO " + n + r"\.\s*", u["label"] or "") is not None, f"{name} {n}: label")
+                u = dict(u, name=new, label=f"ARTICULO {new}.")
+        out.append(u)
+    want = ({("box", a): 1 for a in BOX_HEAD.get(name, {})} | {("dup", a): 2 for a in DUP_NUM.get(name, {})}
+            | {("nested", a): 1 for a in NESTED.get(name, {})})
+    B23._need(seen == want, f"{name}: page repairs {seen}")
+    t = dict((pg, t) for _, pg, _, _, t, _ in SPEC)[name]
+    for a, (old, new) in BOX_HEAD.get(name, {}).items():
+        PAGE59_DONE.append(f"{t}: art. {a}'s earlier-text box is headed '{old}' but gives the article's own original "
+                           f"text; it is read as '{new}' (there is no Decreto 663 de 1994; the article was otherwise "
+                           "missing from every version before the act that replaced it)")
+    for a in NESTED.get(name, {}):
+        PAGE59_DONE.append(f"{t}: art. {a}'s repeal marker holds a bracketed box name ('<Legislación Anterior>') "
+                           "whose brackets ended the marker early; they are dropped, so the article leaves on the "
+                           "repeal day the marker gives (the engine had read the marker's tail as its text)")
+    for a in DUP_NUM.get(name, {}):
+        PAGE59_DONE.append(f"{t}: the page prints two articles numbered {a} (and none numbered {int(a) - 1}); both are "
+                           f"kept in the page's order, each under the number the page prints, the second under the key "
+                           f"art-{int(a):04d}-02 (the engine had dropped it as a duplicate)")
+    return out
+
+
+P.doc_units = doc_units_59
+E.doc_units = doc_units_59
+
+
+# ---- amendments by Decretos 1122 de 1999 and 266 de 2000, both struck as a whole (phase2/struck.py)
+import struck  # noqa: E402
+
+struck.install(E, P, PAGES)
+
+
+# ---- Ley 222 de 1995, Título II (arts. 89 to 225, the concordato and liquidación obligatoria) repealed by Ley 1116 de
+# 2006 art. 126 from the day that act took effect (batch 26's staged-repeal machinery). The page prints each article of
+# the title under '<Título II. derogado por el artículo 126 de la Ley 1116 de 2006, a partir del 28 de junio de 2007>'.
+# Ley 1116 'comenzará a regir seis (6) meses después de su promulgación' (Diario Oficial No. 46.494 of 27 December 2006):
+# the corpus dates that day 2007-06-27 everywhere else (Código Civil, Estatuto Tributario, Régimen de Insolvencia
+# Empresarial), by the same month count it uses for every 'six months after promulgation' act; kept here so the
+# repealing law has one day.
+B26 = B27.B26
+B26.STAGES.clear()
+B26.STAGE_CHECK.clear()
+B26.STAGES[L222] = [
+    (re.compile(r"(?:<span class=\"b_aj\">)?&lt;T(?:&iacute;|í)tulo II\. derogado por el art(?:&iacute;|í)culo (?:<A [^>]*>)?"
+                r"126(?:</A>)? de la (?:&#160;)?\s*Ley 1116 de 2006, a partir del 28 de junio de 2007&gt;(?:</span>)?\s*"),
+     "ley-1116-2006", "2007-06-27", 137,
+     "Ley 1116 de 2006 (Régimen de Insolvencia Empresarial), art. 126: 'la presente ley comenzará a regir seis (6) meses "
+     "después de su promulgación y deroga el Título II de la Ley 222 de 1995, la cual estará vigente hasta la fecha en que "
+     "entre a regir la presente ley'. The page marks arts. 89 to 225 '<Título II. derogado por el artículo 126 de la Ley "
+     "1116 de 2006, a partir del 28 de junio de 2007>'; they leave the record on the day the corpus gives Ley 1116 de 2006 "
+     "everywhere (27 June 2007, six months after its promulgation in Diario Oficial No. 46.494 of 27 December 2006, by the "
+     "month count used for every such act); the page's '28 de junio' is the day after"),
+]
+B26.STAGE_CHECK[L222] = ("ley_1116_2006", "126", "Salvo lo que se indica en los incisos anteriores, la presente ley comenzará "
+                         "a regir seis (6) meses después de su promulgación y deroga el Título II de la Ley 222 de 1995")
+
+
+# Título II's headings leave titulos.md with its articles (same day, same credit).
+TITLE_GONE = {L222: ("### TITULO II.", "### TITULO III.", "2007-06-27", "ley-1116-2006")}
+TITLE_GONE_DONE: list[str] = []
+
+
+def with_title_gone(page, build):
+    def run():
+        act = build()
+        first, nxt, day, law = TITLE_GONE[page]
+        n = 0
+        for v in act["versions"]:
+            if v["from"] < day or "units" not in v:
+                continue
+            ls = v["units"]["titulos"]["text"].split("\n")
+            i = next(k for k, x in enumerate(ls) if x.startswith(first))
+            j = next(k for k, x in enumerate(ls) if x.startswith(nxt))
+            n = j - i
+            v["units"] = dict(v["units"], titulos=dict(v["units"]["titulos"], text="\n".join(ls[:i] + ls[j:])))
+            if v["from"] == day:
+                v["credits"]["titulos"] = [law]
+        B23._need(n > 10, f"{page}: title headings {n}")
+        TITLE_GONE_DONE.append(f"{dict((pg, t) for _, pg, _, _, t, _ in SPEC)[page]}: the {n} headings of Título II "
+                               f"(from '{first[4:]}' up to '{nxt[4:]}') leave titulos.md on {day} with the title's "
+                               "articles, credited to the same act")
+        return act
+    return run
+
+
+# ---- Ley 200 de 1995 replaced as a whole by Ley 734 de 2002 (the repeal-version pattern of batches 24 and 31: a last
+# version with no provisions on the repeal day, credited to the repealing act). The page prints no repeal marker on the
+# articles; its head note names Ley 734 de 2002 as the new Código Disciplinario Único and quotes its art. 224, which
+# Ley 734's own page prints.
+WHOLE_REPEAL = {L200: {
+    "law": "ley-734-2002", "day": "2002-05-05",
+    "head": "Mediante la Ley 734 de 2002, publicada en el Diario Oficial No 44.708, de 13 de febrero de 2002, se expidió el "
+            "nuevo Código Disciplinario Único",
+    "check": ("ley_0734_2002", "224", "La presente ley regirá tres meses después de su sanción y deroga las disposiciones "
+              "que le sean contrarias"),
+    "note": "Ley 734 de 2002 (Código Disciplinario Único), sanctioned 5 February 2002 and in force three months later, on "
+            "5 May 2002 (its art. 224: 'La presente ley regirá tres meses después de su sanción y deroga las disposiciones "
+            "que le sean contrarias, salvo las normas referidas a los aspectos disciplinarios previstos en la Ley 190 de "
+            "1995 y el régimen especial disciplinario establecido para los miembros de la fuerza pública'), issued a new "
+            "Código Disciplinario Único that regulates the whole matter of Ley 200 de 1995, which leaves the record on "
+            "that day (the page's head note names Ley 734 de 2002 as the new code)."}}
+WHOLE_DONE: list[str] = []
+# Ley 130 de 1913 (jurisdicción contencioso-administrativa), which repealed Ley 4's arts. 112-119 and 181-182: the page's
+# notes on each of those articles say 'Rige a partir del 1 de marzo de 1914' (the general rule would give 9 April 1914,
+# two months after its publication of 9 February 1914).
+E.HAND_RULES["ley-130-1913"] = ("1914-03-01", "Ley 130 de 1913, published in Diario Oficial No. 15.123 of 9 February 1914: "
+                                "'Rige a partir del 1 de marzo de 1914' (the notes on Ley 4 de 1913's page)")
+# Ley 734 de 2002's day as the corpus gives it in 99-batch8 (its own art. 224: three months after its sanction of 5 February
+# 2002); the engine's general reading counts from its publication (13 February).
+# Ley 1816 de 2016, art. 42: 'La presente ley entra a regir el 1o de enero del año 2017' (the general reading misses '1o de'
+# without a full stop and fell back to the default rule; fix_dates.py patched the published part the same way).
+E.HAND_RULES["ley-1816-2016"] = ("2017-01-01", "Ley 1816 de 2016, art. 42: 'La presente ley entra a regir el 1o de enero del "
+                                 "año 2017'")
+# Decreto Ley 1851 de 2021 (Procuraduría), art. 27: 'El presente decreto entrará en vigencia el 29 de marzo de 2022 excepto
+# el artículo 26 que entra a regir de manera inmediata' (art. 26 adds posts to a planta, no words of Decreto Ley 262 de
+# 2000); the general reading missed the date and fell back to the default rule.
+E.HAND_RULES["dec-1851-2021"] = ("2022-03-29", "Decreto Ley 1851 de 2021, art. 27: 'El presente decreto entrará en vigencia "
+                                 "el 29 de marzo de 2022 excepto el artículo 26 que entra a regir de manera inmediata'")
+E.HAND_RULES["ley-734-2002"] = ("2002-05-05", "Ley 734 de 2002, art. 224: 'La presente ley regirá tres meses después de su "
+                                "sanción' (sanctioned 5 February 2002)")
+
+
+def with_whole_repeal(page, build):
+    def run():
+        act = build()
+        r = WHOLE_REPEAL[page]
+        head = " ".join(E.plain(it[1]) for it in P.doc_units(page)[0]["items"] if it[0] == "p")
+        B23._need(r["head"] in head, f"{page}: head note")
+        pg, art, words = r["check"]
+        B23._need(words in B3.article_text(P.doc_units(pg), art), f"{pg} art. {art}")
+        law, day = E.register(r["law"]), r["day"]
+        B23._need(E.law_day(law) == day, f"{law}: in force {E.law_day(law)}, expected {day}")
+        vs = act["versions"]
+        B23._need(vs[-1]["from"] < day, f"{page}: a version on or after the repeal day ({vs[-1]['from']})")
+        state = {}
+        for v in vs:
+            if "units" in v:
+                state = dict(v["units"])
+        vs.append({"from": day, "units": {}, "credits": {k: [law] for k in sorted(state)},
+                   "source_url": vs[-1]["source_url"], "sha256": vs[-1]["sha256"], "note": r["note"]})
+        WHOLE_DONE.append(f"{act['title']}: {r['note']} The last version, on {day}, holds no provisions, credited to Ley "
+                          "734 de 2002; the version before it is checked against the text the page prints.")
+        return act
+    return run
+
+
+B3 = B23.B3 if hasattr(B23, "B3") else __import__("parse_batch3")
+
+
+# ---- Ley 1530 de 2012 repealed by Ley 2056 de 2020 art. 211 from 1 January 2021, save its arts. 106 to 126 and 128 (kept
+# for the transitional procedures of Ley 2056's arts. 199 and 200). The page prints every article under a marker naming the
+# repeal: '<Ley derogada a partir del 12 de enero de 2021 por el artículo 211 de la Ley 2056 de 2020>', the 22 kept articles
+# '<... de la Ley 2056 de 2020, sobre este artículo tener en cuenta los efectos de la transitoriedad ...>'. A last version on
+# the repeal day takes out every other article and the headings of the titles and chapters left with no article, credited to
+# Ley 2056 de 2020; the kept articles stay to today as printed. PARTIAL_REPEAL: page -> spec; a page that differs stops.
+PARTIAL_REPEAL = {L1530: {
+    "law": "ley-2056-2020", "day": "2021-01-01",
+    "marker": "Ley derogada a partir del 12 de enero de 2021 por el artículo 211 de la Ley 2056 de 2020",
+    "kept_tail": ", sobre este artículo tener en cuenta los efectos de la transitoriedad de los procedimientos administrativos a "
+                 "que se refieren los artículos 199 y 200 de la Ley 2056 de 2020",
+    "kept": [str(n) for n in range(106, 127)] + ["128"],
+    "heads": ["### TÍTULO VI. SISTEMA DE MONITOREO", "### CAPÍTULO II. DEL PROCEDIMIENTO PREVENTIVO",
+              "### CAPÍTULO III. DISPOSICIONES COMUNES A LOS PROCEDIMIENTOS"],
+    "head_note": "Ley derogada a partir del 1 de enero de 2021 por el artículo 211 de la Ley 2056 de 2020 con excepción de los "
+                 "artículos del 106 al 126 y 128 para efectos de la transitoriedad de los procedimientos administrativos a que "
+                 "se refieren los artículos 199 y 200 de la Ley 2056 de 2020",
+    "check": ("ley_2056_2020", "211", "La presente ley rige a partir del 1 de enero de 2021 y deroga todas las disposiciones "
+              "que le sean contrarias, en especial la Ley 1530 de 2012, con excepción de los artículos del 106 al 126 y 128 "
+              "para efectos de la transitoriedad de los procedimientos administrativos a que se refieren los artículos 199 y "
+              "200 de la presente ley"),
+    "note": "Ley 2056 de 2020 (Sistema General de Regalías), art. 211: 'La presente ley rige a partir del 1 de enero de 2021 y "
+            "deroga todas las disposiciones que le sean contrarias, en especial la Ley 1530 de 2012, con excepción de los "
+            "artículos del 106 al 126 y 128 para efectos de la transitoriedad de los procedimientos administrativos a que se "
+            "refieren los artículos 199 y 200 de la presente ley'. Every other article leaves the record on 1 January 2021; "
+            "arts. 106 to 126 and 128 stay, for the preventive, corrective and sanctioning procedures that Ley 2056's arts. "
+            "199 and 200 leave under them."}}
+PARTIAL_DONE: list[str] = []
+
+
+def with_partial_repeal(page, build):
+    def run():
+        act = build()
+        r = PARTIAL_REPEAL[page]
+        units = P.doc_units(page)
+        head = " ".join(E.plain(it[1]) for it in units[0]["items"] if it[0] == "p")
+        B23._need(r["head_note"] in head, f"{page}: head note")
+        pg, art, words = r["check"]
+        B23._need(B3.article_text(P.doc_units(pg), art).startswith(words), f"{pg} art. {art}")
+        law, day = E.register(r["law"]), r["day"]
+        B23._need(E.law_day(law) == day, f"{law}: in force {E.law_day(law)}, expected {day}")
+        kept, gone = [], []
+        for u in units:
+            n = u["name"] or ""
+            if not re.fullmatch(r"\d+", n):
+                continue
+            p0 = next(it[1] for it in u["items"] if it[0] == "p" and E.plain(it[1]).strip())  # first non-empty paragraph
+            ms = [m for m in E.markers(p0) if m.startswith(r["marker"])]
+            B23._need(len(ms) == 1 and ms[0] in (r["marker"], r["marker"] + r["kept_tail"]), f"{page} art. {n}: marker {ms}")
+            (kept if ms[0] != r["marker"] else gone).append(n)
+        B23._need(kept == r["kept"], f"{page}: kept articles {kept}")
+        vs = act["versions"]
+        B23._need(vs[-1]["from"] < day, f"{page}: a version on or after the repeal day ({vs[-1]['from']})")
+        state = {}
+        for v in vs:
+            if "units" in v:
+                state = dict(v["units"])
+            for k, x in (v.get("changes") or {}).items():
+                if x is None:
+                    state.pop(k, None)
+                else:
+                    state[k] = x
+        keep = {E.unit_key(n)[0] for n in kept}
+        B23._need(keep <= set(state) and {E.unit_key(n)[0] for n in gone} == set(state) - keep - {"titulos"},
+                  f"{page}: units in force before the repeal")
+        lines = state["titulos"]["text"].split(chr(10))
+        heads = [next(l for l in lines if l.startswith(h)) for h in r["heads"]]
+        B23._need(all(sum(l.startswith(h) for l in lines) == 1 for h in r["heads"]), f"{page}: kept headings")
+        new = {k: x for k, x in state.items() if k in keep}
+        new["titulos"] = dict(state["titulos"], text=chr(10).join(heads) + chr(10))
+        cr = {k: [law] for k in sorted(state) if k not in keep}
+        vs.append({"from": day, "units": new, "credits": cr, "source_url": vs[-1]["source_url"], "sha256": vs[-1]["sha256"],
+                   "note": r["note"]})
+        PARTIAL_DONE.append(
+            f"{act['title']}: {r['note']} The page prints every article under the marker '<{r['marker']}>' (the 22 kept ones "
+            "with the words 'sobre este artículo tener en cuenta los efectos de la transitoriedad ...'); its own head note and "
+            "Ley 2056's art. 211 give 1 January 2021, so the markers' '12 de enero' is read as that day. The markers are not "
+            f"part of the text. The version of {day} keeps the {len(kept)} articles and the headings above them "
+            f"({'; '.join(h[4:] for h in heads)}); the version before it is checked against the text the page prints.")
+        return act
+    return run
+
+# ---- page repair (batch 68): chapter-named units right after an article that quotes a whole part of another act (Ley
+# 795 de 2003 art. 45: 'Sustitúyase la Parte Séptima del Estatuto Orgánico del Sistema Financiero, la cual quedará así:'
+# then units 'CAPITULO II', 'CAPITULO III', 'CAPITULO IV' holding EOSF arts. 209-212 as rewritten). The engine read them
+# as the act's own headings, so their words went into titulos.md. They are joined to the article as quoted text (coordinator
+# rule: quoted text stays inside the amending article). QUOTED_HEADS: page -> {article: unit names}; a page that differs
+# stops the parse.
+QUOTED_HEADS = {"ley_0795_2003": {"45": ["CAPITULO II", "CAPITULO III", "CAPITULO IV"]}}
+QUOTED_HEADS_DONE: list[str] = []
+_units_qheads = P.doc_units
+
+
+def doc_units_qheads(name: str) -> list[dict]:
+    units = _units_qheads(name)
+    if name not in QUOTED_HEADS:
+        return units
+    want = {n: a for a, ns in QUOTED_HEADS[name].items() for n in ns}
+    out, done = [], []
+    for u in units:
+        a = want.get(u["name"])
+        if a and out and out[-1]["name"] == a:
+            out[-1] = dict(out[-1], items=list(out[-1]["items"]) + [("p", u["label"])] + list(u["items"]), nosplit=True)
+            done.append(u["name"])
+            continue
+        out.append(u)
+    B23._need(done == [n for ns in QUOTED_HEADS[name].values() for n in ns], f"{name}: quoted chapters {done}")
+    t = dict((pg, t) for _, pg, _, _, t, _ in SPEC_ALL)[name]
+    QUOTED_HEADS_DONE.append(f"{t}: " + "; ".join(f"art. {a} quotes the chapters {', '.join(ns)} of the part it substitutes, "
+                                                      "which the page gives anchors of their own; they are read as the "
+                                                      "article's quoted text, not as the act's headings"
+                                                      for a, ns in QUOTED_HEADS[name].items())
+                             + (f"; art(s). {', '.join(QUOTED_TAILS[name])}: likewise the chapter block printed after it"
+                                if name in QUOTED_TAILS else "") + ".")
+    return out
+
+
+P.doc_units = doc_units_qheads
+E.doc_units = doc_units_qheads
+
+
+sys.path.insert(0, HERE)
+import hand_fixes  # noqa: E402  (batch74/hand_fixes.py)
+
+hand_fixes.install(sys.modules[__name__])
+
+
+def main(argv):
+    P.write_part = write_part
+    B13.B8.finish_part = B30.finish_part
+    B29.ACTS = ACTS
+    B29.HEADING_FIXES_29 = []
+    B15.setup(ACTS)
+    for slug, page, *_ in ACTS:
+        build = B29.cut_signatures(slug, B13.BUILDERS[slug])
+        build = B24.with_close(page, build) if page in B24.REPEALS else build
+        build = B26.with_stages(page, build) if page in B26.STAGES else build
+        build = with_whole_repeal(page, build) if page in WHOLE_REPEAL else build
+        build = with_partial_repeal(page, build) if page in PARTIAL_REPEAL else build
+        B13.BUILDERS[slug] = with_title_gone(page, build) if page in TITLE_GONE else build
+    B13.PART, B13.BATCH, B13.HEADING_FIXES_13 = PART, BATCH, HEADING_FIXES_58
+    B13.main(argv)
+
+
+if __name__ == "__main__":
+    main(sys.argv[1:])
