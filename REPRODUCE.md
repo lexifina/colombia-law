@@ -134,6 +134,8 @@ This file is written by the build on 2026-11-01, the day the source data was ret
 | Secretaría General del Senado, basedoc: Seguridad vial y tránsito: planes estratégicos de seguridad vial (Ley 2050 de 2020), Jornada ordinaria y nocturna de trabajo (Ley 1846 de 2017), Licencia de maternidad y de paternidad (Ley 1468 de 2011) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Sanción penal de la discriminación contra las personas con discapacidad (Ley 1752 de 2015), Proceso administrativo de restablecimiento de derechos (Ley 1878 de 2018), Consultorios jurídicos (Ley 2113 de 2021) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 | Secretaría General del Senado, basedoc: Condiciones mínimas de los centros de protección, centros de día e instituciones de atención de adultos mayores (Ley 1315 de 2009), Protección de las víctimas de crímenes con ácido (Ley 1639 de 2013), Sistema Nacional de Alertas Tempranas para la Prevención de la Violencia Sexual contra Niños, Niñas y Adolescentes (Ley 2137 de 2021) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
+| Secretaría General del Senado, basedoc: Programa Familias en Acción (Ley 1532 de 2012), Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021), Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
+| Secretaría General del Senado, basedoc: Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017), Beneficios a las personas adultas mayores (Ley 1171 de 2007), Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023) and the acts that amended them | <http://www.secretariasenado.gov.co/senado/basedoc/> | 2026-10-31 | Official legal text is free to reproduce (Ley 23 de 1982, art. 41). The compilation's editorial notes (Avance Jurídico) are not reproduced; only the official text and the facts the notes state are used. |
 
 Every word of law in this repository comes from these sources. Lexifina reads them and records each act's dated versions, and the laws that made each change, in one corpus file. This repository is built from that file.
 
@@ -564,20 +566,26 @@ Every word of law in this repository comes from these sources. Lexifina reads th
 | `centros-de-proteccion-adultos-mayores` | Condiciones mínimas de los centros de protección, centros de día e instituciones de atención de adultos mayores (Ley 1315 de 2009) | 2 | 2009-07-13 to 2017-07-19 |
 | `victimas-de-crimenes-con-acido` | Protección de las víctimas de crímenes con ácido (Ley 1639 de 2013) | 1 | 2013-07-02 to 2013-07-02 |
 | `alertas-tempranas-violencia-sexual-ninos` | Sistema Nacional de Alertas Tempranas para la Prevención de la Violencia Sexual contra Niños, Niñas y Adolescentes (Ley 2137 de 2021) | 1 | 2021-08-04 to 2021-08-04 |
+| `familias-en-accion` | Programa Familias en Acción (Ley 1532 de 2012) | 3 | 2012-06-07 to 2023-12-31 |
+| `igualdad-de-la-mujer-acceso-laboral-y-educacion` | Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021) | 1 | 2021-07-29 to 2021-07-29 |
+| `segundas-oportunidades-poblacion-pospenada` | Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022) | 1 | 2022-05-17 to 2022-05-17 |
+| `proteccion-al-adulto-mayor-2017` | Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017) | 2 | 2017-07-19 to 2026-03-26 |
+| `beneficios-personas-adultas-mayores` | Beneficios a las personas adultas mayores (Ley 1171 de 2007) | 1 | 2007-12-07 to 2007-12-07 |
+| `cuidadores-personas-con-discapacidad` | Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023) | 2 | 2023-06-28 to 2025-06-25 |
 
-The build made 2968 commits:
+The build made 2978 commits:
 
 | Commits | Kind |
 | ---: | --- |
-| 423 | first version of an act |
-| 2542 | one law on its in-force day |
+| 429 | first version of an act |
+| 2546 | one law on its in-force day |
 | 3 | changes no amendment note explains, credited to the publisher |
 
 Other counts:
 - 6 commits on the branch `futuro`: laws not yet in force on 2026-11-01.
 - 47 commits dated 1 January 1970: in force before 1970, with the real day in their `In-force` trailer.
-- 2683 laws in the record.
-- 6857 tags.
+- 2688 laws in the record.
+- 6981 tags.
 
 ## Dates
 
@@ -589,15 +597,15 @@ When a law gives no date of its own, the default rule applies: Ley 4 de 1913 (C�
 
 `tools/build.py` turns the corpus into this history in one pass: one commit per law, on the day it took effect. The same corpus always gives the same commit hashes. `tools/check_repo.py` reads every version back from git and compares it with the corpus. `tools/on.py` shows the law as it stood on any date. The corpus format is described in `tools/SCHEMA.md`.
 
-- Corpus: sha256 `87d87c5491535fba3b83b767c2ca1c5a48d744bc23387c9f60f92945a8e176b0` (92639063 bytes).
+- Corpus: sha256 `446d542b8a2bdd4adcaae2bc7377e4dc3318908ec6ad37ce02c8003f0f94878e` (92759181 bytes).
 - Builder blob hashes (`git hash-object`): `build.py` `a4faa25af85facb64b956b372f6b528aafdd7ec1`, `check.py` `3d00541d258745461ab52b1b0cb4e1716a27a95d`, `on.py` `644a6c0857fbcc72562032b58d57aa113fee0641`.
 - Python 3.12.10; git version 2.46.0.windows.1.
 
 ## Checks
 
-4192 versions of 423 acts read back from git on the day each took effect and on the day before: 0 mismatches. Trailers: 0 commits whose trailers git cannot parse. Health: 0 merge commits on main, 0 commit dates that go backwards, 0 commits dated after the build.
+Not yet run for this build.
 
-A second build from the same corpus into an empty folder gave identical hashes for all 2962 history commits and 6857 tags (history tip `1386b9a8c0a7ca7e3e533eefa72ced4fe184eb76`).
+No second build of this corpus has been compared yet.
 
 ## Decisions made by hand
 
@@ -5057,6 +5065,34 @@ words read 'patrono(s)', from it 'empleador(es)', credited to Ley 50 de 1990 (as
 - In force 2013-07-02: Ley 1639 de 2013 (Ley 1639 de 2013, art. 6: 'La presente ley rige a partir de su promulgación.' (sanctioned 2013-07-02, Diario Oficial of 2013-07-02)).
 - In force 2017-07-19: Ley 1850 de 2017 (Ley 1850 de 2017: 'ARTÍCULO 18. VIGENCIA. La presente ley rige a partir de su promulgación y deroga las que le sean contrarias.').
 - In force 2021-08-04: Ley 2137 de 2021 (Ley 2137 de 2021, art. 10: 'La presente ley rige a partir de su promulgación y deroga las normas que le sean contrarias".' (sanctioned 2021-08-04, Diario Oficial of 2021-08-04)).
+- Programa Familias en Acción (Ley 1532 de 2012), Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021), Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022): versions are rebuilt per article from the basedoc's earlier texts, inline amendment markers and Notas de Vigencia, as for the Constitution and the Código Civil. Where the source names an act but gives no text after it, the article reads '[La fuente no da el texto vigente en esta fecha.]' for that period.
+- Constitutional Court rulings that struck text are laws of kind 'court', dated by the ruling's day as the source gives it; rulings that upheld text on a condition are court laws with a note and change no words.
+- In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives applies to that provision. The list below gives the day and the rule for each act.
+- Dates come only from the act itself: the Diario Oficial day on the act's own page wins over a day the code's notes give; a note's Diario Oficial day is not given to an act named only inside another act's quoted title; and an act whose vigencia clause has a general rule and exceptions is dated by the rule that covers the changed provision (Ley 890 de 2004: arts. 7 to 13 immediately, the rest from 1 January 2005; Ley 2502 de 2025: art. 296 of the Código Penal one year after promulgation; Ley 2080 de 2021: from publication).
+- The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text differs from today's only by that or by a change no note names, today's text is used from the latest named act's day. Articles where that happened: none.
+- Programa Familias en Acción (Ley 1532 de 2012): first version from 2012-06-07: Ley 1532 de 2012, art. 15: 'La presente ley rige a partir de su promulgación y deroga las normas que le sean contrarias.' (sanctioned 2012-06-07, Diario Oficial of 2012-06-07)
+- Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021): first version from 2021-07-29: Ley 2117 de 2021, art. 6: 'La presente ley rige a partir de su promulgación, modifica las disposiciones expresamente referidas y deroga aquellas que le sean contrarias.' (sanctioned 2021-07-29, Diario Oficial of 2021-07-29)
+- Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022): first version from 2022-05-17: Ley 2208 de 2022, art. 13: 'La presente ley rige a partir de la fecha de su sanción y publicación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2022-05-17, Diario Oficial of 2022-05-17)
+- Programa Familias en Acción (Ley 1532 de 2012): Decreto Ley 1960 de 2023, art. 10 ('El presente Decreto Ley rige a partir de su publicación y deroga a partir del 31 de diciembre de 2023 la Ley 1532 de 2012 y la Ley 1948 de 2019'), repealed Ley 1532 de 2012 from 31 December 2023 (the page marks each article '<Ley derogada, a partir del 31 de diciembre de 2023, por el artículo 10 del Decreto Ley 1960 de 2023>'). The page prints every article's last text under the marker naming the repeal (18 articles); the marker is not part of the text. The last version, on 2023-12-31, holds no provisions; the version before it is checked against the text the page prints.
+- Programa Familias en Acción (Ley 1532 de 2012) and the other acts of batch 122: the signature blocks printed after the last article ('La Presidenta del honorable Senado de la República, ...') are not part of the text: igualdad-de-la-mujer-acceso-laboral-y-educacion art-0006.
+- In force 2012-06-07: Ley 1532 de 2012 (Ley 1532 de 2012, art. 15: 'La presente ley rige a partir de su promulgación y deroga las normas que le sean contrarias.' (sanctioned 2012-06-07, Diario Oficial of 2012-06-07)).
+- In force 2019-01-08: Ley 1948 de 2019 (Ley 1948 de 2019, art. 13: 'La presente ley rige a partir de su promulgación y deroga las normas que sean contrarias' (promulgated in Diario Oficial No. 50.830 of 8 January 2019)).
+- In force 2021-07-29: Ley 2117 de 2021 (Ley 2117 de 2021, art. 6: 'La presente ley rige a partir de su promulgación, modifica las disposiciones expresamente referidas y deroga aquellas que le sean contrarias.' (sanctioned 2021-07-29, Diario Oficial of 2021-07-29)).
+- In force 2022-05-17: Ley 2208 de 2022 (Ley 2208 de 2022, art. 13: 'La presente ley rige a partir de la fecha de su sanción y publicación y deroga todas las disposiciones que le sean contrarias.' (sanctioned 2022-05-17, Diario Oficial of 2022-05-17)).
+- In force 2023-11-15: Decreto 1960 de 2023 (Decreto 1960 de 2023: 'ARTÍCULO 10. VIGENCIA Y DEROGATORIAS. El presente Decreto Ley rige a partir de su publicación y deroga a partir del 31 de diciembre de 2023 la Ley 1532 de 2012 y la Ley 1948 de 2019.').
+- Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017), Beneficios a las personas adultas mayores (Ley 1171 de 2007), Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023): versions are rebuilt per article from the basedoc's earlier texts, inline amendment markers and Notas de Vigencia, as for the Constitution and the Código Civil. Where the source names an act but gives no text after it, the article reads '[La fuente no da el texto vigente en esta fecha.]' for that period.
+- Constitutional Court rulings that struck text are laws of kind 'court', dated by the ruling's day as the source gives it; rulings that upheld text on a condition are court laws with a note and change no words.
+- In-force days of amending acts: the act's own vigencia clause as its basedoc page gives it; otherwise the default rule (Ley 4 de 1913, art. 52: two months after promulgation). A day a provision's own note gives applies to that provision. The list below gives the day and the rule for each act.
+- Dates come only from the act itself: the Diario Oficial day on the act's own page wins over a day the code's notes give; a note's Diario Oficial day is not given to an act named only inside another act's quoted title; and an act whose vigencia clause has a general rule and exceptions is dated by the rule that covers the changed provision (Ley 890 de 2004: arts. 7 to 13 immediately, the rest from 1 January 2005; Ley 2502 de 2025: art. 296 of the Código Penal one year after promulgation; Ley 2080 de 2021: from publication).
+- The source's earlier texts often leave out the article's epigraph (its title); where the latest earlier text differs from today's only by that or by a change no note names, today's text is used from the latest named act's day. Articles where that happened: none.
+- Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017): first version from 2017-07-19: Ley 1850 de 2017, art. 18: 'La presente ley rige a partir de su promulgación y deroga las que le sean contrarias.' (sanctioned 2017-07-19, Diario Oficial of 2017-07-19)
+- Beneficios a las personas adultas mayores (Ley 1171 de 2007): first version from 2007-12-07: Ley 1171 de 2007, art. 17: 'La presente ley rige a partir de su promulgación.' (sanctioned 2007-12-07, Diario Oficial of 2007-12-07)
+- Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023): first version from 2023-06-28: Ley 2297 de 2023, art. 19: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2023-06-28, Diario Oficial of 2023-06-28)
+- Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017) and the other acts of batch 123: the signature blocks printed after the last article ('La Presidenta del honorable Senado de la República, ...') are not part of the text: proteccion-al-adulto-mayor-2017 art-0018, beneficios-personas-adultas-mayores art-0017, cuidadores-personas-con-discapacidad art-0019.
+- In force 2007-12-07: Ley 1171 de 2007 (Ley 1171 de 2007, art. 17: 'La presente ley rige a partir de su promulgación.' (sanctioned 2007-12-07, Diario Oficial of 2007-12-07)).
+- In force 2017-07-19: Ley 1850 de 2017 (Ley 1850 de 2017, art. 18: 'La presente ley rige a partir de su promulgación y deroga las que le sean contrarias.' (sanctioned 2017-07-19, Diario Oficial of 2017-07-19)).
+- In force 2023-06-28: Ley 2297 de 2023 (Ley 2297 de 2023, art. 19: 'La presente ley rige a partir del momento de su promulgación y deroga las disposiciones que le sean contrarias.' (sanctioned 2023-06-28, Diario Oficial of 2023-06-28)).
+- In force 2025-06-25: Ley 2466 de 2025 (Ley 2466 de 2025: 'ARTÍCULO 70. VIGENCIA Y DEROGATORIAS. La presente ley rige a partir de su promulgación y deroga o modifica todas las que le sean contrarias o incompatibles. Se deroga el literal b) del artículo 162 del Código Sustantivo del Trabajo.').
 
 ## What AI did and did not do
 
@@ -5075,6 +5111,8 @@ Model use at data-build time:
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: Lexifina's code is deterministic code, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
+- None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
+- None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.
 - None at data-build time: the code that reads the source pages and writes this part is deterministic, written with Claude Code (claude-opus-5-5); no model reads, writes or summarises legal text.

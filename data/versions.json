@@ -28536,6 +28536,114 @@
      "sha256": "a58e88db54d0f84dfcef04af13f7ac02021473f77dd61467e97bce7d377a4d38"
     }
    ]
+  },
+  {
+   "slug": "familias-en-accion",
+   "short": "FAcc12",
+   "title": "Programa Familias en Acción (Ley 1532 de 2012)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1532_2012.html",
+   "versions": [
+    {
+     "from": "2012-06-07",
+     "units": 15,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1532_2012.html",
+     "sha256": "6c31c23e8c1e5c3c92220ea59d53d19178f5216420e1ea23e922681f678cf35b"
+    },
+    {
+     "from": "2019-01-08",
+     "units": 19,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1532_2012.html",
+     "sha256": "6c31c23e8c1e5c3c92220ea59d53d19178f5216420e1ea23e922681f678cf35b"
+    },
+    {
+     "from": "2023-12-31",
+     "units": 0,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1532_2012.html",
+     "sha256": "6c31c23e8c1e5c3c92220ea59d53d19178f5216420e1ea23e922681f678cf35b"
+    }
+   ]
+  },
+  {
+   "slug": "igualdad-de-la-mujer-acceso-laboral-y-educacion",
+   "short": "IgMu21",
+   "title": "Igualdad de la mujer en el acceso laboral y en educación en sectores de baja participación (Ley 2117 de 2021)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2117_2021.html",
+   "versions": [
+    {
+     "from": "2021-07-29",
+     "units": 6,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2117_2021.html",
+     "sha256": "fa72bcb5eff935ab1120dcb4392c1127d0e134306f582fcf3ebafb5506016f50"
+    }
+   ]
+  },
+  {
+   "slug": "segundas-oportunidades-poblacion-pospenada",
+   "short": "SegO22",
+   "title": "Ley de Segundas Oportunidades: empleo y formación para la población pospenada (Ley 2208 de 2022)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2208_2022.html",
+   "versions": [
+    {
+     "from": "2022-05-17",
+     "units": 14,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2208_2022.html",
+     "sha256": "9b4a9e4bc1829f4b6457181c4bf517b8c66d393c50a246e65049c306c3dabec6"
+    }
+   ]
+  },
+  {
+   "slug": "proteccion-al-adulto-mayor-2017",
+   "short": "PAMa17",
+   "title": "Medidas de protección al adulto mayor y maltrato intrafamiliar por abandono (Ley 1850 de 2017)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1850_2017.html",
+   "versions": [
+    {
+     "from": "2017-07-19",
+     "units": 18,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1850_2017.html",
+     "sha256": "916d114f8e42362412c9ce9fc51b45bd1e65468e26e132f8057aa5215361bb27"
+    },
+    {
+     "from": "2026-03-26",
+     "units": 18,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1850_2017.html",
+     "sha256": "916d114f8e42362412c9ce9fc51b45bd1e65468e26e132f8057aa5215361bb27"
+    }
+   ]
+  },
+  {
+   "slug": "beneficios-personas-adultas-mayores",
+   "short": "BAMa07",
+   "title": "Beneficios a las personas adultas mayores (Ley 1171 de 2007)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1171_2007.html",
+   "versions": [
+    {
+     "from": "2007-12-07",
+     "units": 18,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_1171_2007.html",
+     "sha256": "c3e2e10b6f8b49d03b01916f4687cb83701c46b1ac2d48364c9052411c3fafe4"
+    }
+   ]
+  },
+  {
+   "slug": "cuidadores-personas-con-discapacidad",
+   "short": "CuiD23",
+   "title": "Autonomía de las personas con discapacidad y sus cuidadores o asistentes personales (Ley 2297 de 2023)",
+   "url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2297_2023.html",
+   "versions": [
+    {
+     "from": "2023-06-28",
+     "units": 19,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2297_2023.html",
+     "sha256": "7162e641c8479f28a18fa7a50bd3babfd735ed8fe7980c1fa70b8e443f9739e3"
+    },
+    {
+     "from": "2025-06-25",
+     "units": 19,
+     "source_url": "http://www.secretariasenado.gov.co/senado/basedoc/ley_2297_2023.html",
+     "sha256": "7162e641c8479f28a18fa7a50bd3babfd735ed8fe7980c1fa70b8e443f9739e3"
+    }
+   ]
   }
  ]
 }
