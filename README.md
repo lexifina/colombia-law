@@ -481,6 +481,10 @@ The source has **no dated snapshots**. Each version here is rebuilt from those e
 - **Court rulings** (Corte Constitucional) are dated by the day of the ruling, as the source gives it.
 - `--before="YYYY-MM-DD"` alone uses your clock's time of day, so a change that took effect that day may be missed before noon. Use `T23:59:59Z` as above, or the tool.
 
+## The `futuro` branch
+
+Laws already passed but not yet in force are on the branch `futuro`, each dated by the day it will take effect. Published history only grows, on `main` and on `futuro` alike: when `main` gains newer commits, the future branch replays main's newer commits on top of its own (the same text, author, date and message, as new commits), and then adds any new laws not yet in force. So `git log main..futuro` lists those replayed copies too. The `In-force` trailer of each commit gives the day it takes effect, and `tools/on.py` reads the branch by that day.
+
 ## What "author" means
 
 The author of a commit is the act or ruling that made the change, with an e-mail address that cannot exist (`al-2-2015@secretariasenado.invalid`), so `git blame` and `git log --author` name them. The committer is always Lexifina.
