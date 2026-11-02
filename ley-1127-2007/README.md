@@ -1,0 +1,9 @@
+# Por medio de la cual se adiciona la Sección 5ª al Capítulo IV del Título II de la Ley 5ª de 1992 Reglamento del Congreso. Creación legal de las Comisiones Regionales Interparlamentarias (Ley 1127 de 2007)
+
+L1127-2007 · 1 versions, from 2007-02-14 (latest in force: 2007-02-14) · <http://www.secretariasenado.gov.co/senado/basedoc/ley_1127_2007.html>
+
+| Provision | File | Changes | Last changed |
+| --- | --- | ---: | --- |
+| Art. 1 | [art-0001.md](art-0001.md) | 0 |  |
+| Art. 2 | [art-0002.md](art-0002.md) | 0 |  |
+| Art. 3 | [art-0003.md](art-0003.md) | 0 |  |
