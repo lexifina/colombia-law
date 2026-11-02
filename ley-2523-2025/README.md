@@ -1,0 +1,11 @@
+# Por medio de la cual la Nación y el Congreso de Colombia se vinculan a la conmemoración de los 100 años de fundación del municipio de Mistrató, en el departamento de Risaralda, rinden homenaje a sus habitantes y se dictan otras disposiciones (Ley 2523 de 2025)
+
+L2523-2025 · 1 versions, from 2025-08-06 (latest in force: 2025-08-06) · <http://www.secretariasenado.gov.co/senado/basedoc/ley_2523_2025.html>
+
+| Provision | File | Changes | Last changed |
+| --- | --- | ---: | --- |
+| Art. 1 | [art-0001.md](art-0001.md) | 0 |  |
+| Art. 2 | [art-0002.md](art-0002.md) | 0 |  |
+| Art. 3 | [art-0003.md](art-0003.md) | 0 |  |
+| Art. 4 | [art-0004.md](art-0004.md) | 0 |  |
+| Art. 5 | [art-0005.md](art-0005.md) | 0 |  |
