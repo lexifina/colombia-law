@@ -64,6 +64,7 @@ Cada cambio se atribuye a la ley, el decreto, el Acto Legislativo o la sentencia
 - `tools/verify.py` compara la última versión de cada norma en el corpus con el texto actual de la página de la basedoc, sin las marcas editoriales ni las palabras tachadas.
 - El mismo corpus produce los mismos hashes de commit (`tools/build.py`). [`REPRODUCE.md`](REPRODUCE.md) todavía no registra ningún resultado de estas verificaciones para la compilación actual, ni ninguna segunda compilación comparada.
 - La historia solo admite agregados (`tools/append.py`): las normas nuevas y las versiones posteriores se añaden encima, y ningún commit publicado se reescribe.
+- [vulnerabilities/](vulnerabilities/): posibles errores de técnica normativa en el derecho colombiano, hallados por los detectores de global-law y comprobados a mano.
 
 ## Qué no muestra
 

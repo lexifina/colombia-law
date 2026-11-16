@@ -64,6 +64,7 @@ Each change is credited to the law, decree, Acto Legislativo or ruling that made
 - `tools/verify.py` compares each act's latest version in the corpus with today's text on the basedoc page, editorial markers and struck words removed.
 - The same corpus gives the same commit hashes (`tools/build.py`). [`REPRODUCE.md`](REPRODUCE.md) records no result of these checks for the present build yet, and no second build compared.
 - History is append-only (`tools/append.py`): new acts and later versions go on top, and no published commit is rewritten.
+- [vulnerabilities/](vulnerabilities/README.en.md): possible drafting mistakes in Colombian law, found by global-law's detectors and checked by hand.
 
 ## What it does not show
 
